@@ -1,0 +1,45 @@
+/* No metas safe-area a todos los elementos */
+* {
+  box-sizing: border-box;
+}
+
+body:has(.you-might-like:in-view) .add-cart {
+  display: none;
+}
+
+/* Modificar la barra de desplazamiento en navegadores basados en WebKit */
+*::-webkit-scrollbar {
+  width: 0px; /* Ancho reducido */
+  transition: opacity 0.3s ease-in-out; /* Transición suave */
+}
+
+/* Cambiar el fondo de la barra de desplazamiento */
+*::-webkit-scrollbar-track {
+  background: transparent; /* Color de fondo */
+  border-radius: 0px; /* Bordes redondeados */
+  opacity: 0; /* Ocultar inicialmente */
+}
+
+/* Cambiar el color de la barra de desplazamiento */
+*::-webkit-scrollbar-thumb {
+  background: #1e1e1e; /* Color de la barra */
+  border-radius: 10px; /* Bordes redondeados */
+  opacity: 0; /* Ocultar inicialmente */
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Cambiar el color de la barra al pasar el cursor */
+*::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color más oscuro en hover */
+}
+
+/* Mostrar el scrollbar cuando el usuario hace hover o scroll */
+*:hover::-webkit-scrollbar-thumb,
+*:hover::-webkit-scrollbar-track,
+*:active::-webkit-scrollbar-thumb,
+*:active::-webkit-scrollbar-track {
+  opacity: 1;
+}
+select option {
+  font-size: 1rem; /* tamaño normal para el desplegable */
+}
