@@ -1,7 +1,7 @@
 export const Pedidos = () => {
   const data = [
     {
-      id: 1,
+      id: 14234123,
       name: 'Diego Iribe Carrazco',
       address: 'Sens 2640 montecarlo residencial, Culiacan, Sin.',
       pedidos: [
@@ -12,7 +12,7 @@ export const Pedidos = () => {
       ]
     },
     {
-      id: 2,
+      id: 2432423,
       name: 'Sergio Iribe Carrazco',
       address: 'Sens 2640 montecarlo residencial, Culiacan, Sin.',
       pedidos: [
@@ -23,7 +23,7 @@ export const Pedidos = () => {
       ]
     },
     {
-      id: 3,
+      id: 3234234,
       name: 'Juan Fermin Lopez',
       address: 'Sens 2640 montecarlo residencial, Culiacan, Sin.',
       pedidos: [
@@ -62,44 +62,46 @@ export const Pedidos = () => {
         </svg>
         <p className="text-xs font-light">Filtrar</p>
       </div>
-      <div>
+      <div className="space-y-6">
         {data.map((item) => (
-          <div className="p-6 first:mt-6 " key={item.id}>
-            <p className="text-[10px] font-light text-neutral-500">
-              N{item.id}
-            </p>
-
-            <div>
-              <p className="font-semibold text-md">{item.name}</p>
-              <div className="grid grid-cols-2 gap-3 mt-4">
-                <div>
-                  <p className="text-xs font-light text-neutral-500">Pedido</p>
-                  {item.pedidos.map((item) => (
-                    <div className="mt-1">
-                      <p className="text-sm font-light ">{item.name}</p>
-                      <p className="text-[10px] font-light text-neutral-500">
-                        #{item.id}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-                <div>
-                  <p className="mb-1 text-xs font-light text-neutral-500">
-                    Direccion
-                  </p>
-                  <p className="text-sm font-light ">{item.address}</p>
-                </div>
+          <div
+            className="p-6 rounded-md bg-neutral-50 first:mt-6"
+            key={item.id}
+          >
+            <div className="flex justify-between">
+              <div>
+                <p className="font-semibold text-md">{item.name}</p>
+                <p className="-mt-0.5 text-xs pl-0.5 font-light text-neutral-500">
+                  #{item.id}
+                </p>
+              </div>
+              <div className="flex items-center justify-center w-6 h-6 bg-white rounded-full">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-plus-icon lucide-plus"
+                >
+                  <path d="M5 12h14" />
+                  <path d="M12 5v14" />
+                </svg>
               </div>
             </div>
-            <div className="flex items-center justify-between mt-2">
+
+            <div className="flex items-center justify-between mt-4">
               {/* Fecha */}
-              <p className="p-1 text-[10px] font-light rounded-sm text-neutral-500">
-                14 May, 2025
-              </p>
+              <p className="text-xs font-light ">14 May, 2025</p>
               {/* Status */}
-              <p className="p-1 text-[10px] font-semibold text-blue-500 bg-blue-100 rounded-sm  ">
-                Enviado
-              </p>
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                <p className="text-xs font-light ">Enviado</p>
+              </div>
             </div>
           </div>
         ))}
