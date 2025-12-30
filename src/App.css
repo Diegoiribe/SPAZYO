@@ -2,6 +2,14 @@
 * {
   box-sizing: border-box;
 }
+@layer base {
+  html {
+    background: var(--page-bg-html, #ffffff);
+  }
+  body {
+    background: var(--page-bg-body, #ffffff);
+  }
+}
 
 body:has(.you-might-like:in-view) .add-cart {
   display: none;
