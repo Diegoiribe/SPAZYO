@@ -66,9 +66,9 @@ export const OrdersTemplate = ({ setOrderState, orderState }) => {
           </div>
         </div>
 
-        <div className="flex flex-col items-end p-2 bg-black rounded-sm">
-          <p className="text-xs font-medium text-white uppercase">Total</p>
-          <p className="mt-1 text-xs font-light text-white uppercase">
+        <div className="flex flex-col items-end p-2 font-light border rounded-md bg-neutral-50 border-neutral-100">
+          <p className="text-xs font-light uppercase text-neutral-500">Total</p>
+          <p className="mt-1 text-xs font-light uppercase text-neutral-500">
             $
             {new Intl.NumberFormat('en-US', {
               minimumFractionDigits: 2,
