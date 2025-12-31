@@ -66,9 +66,8 @@ export const Product = ({ isToggleOpen, setIsToggleOpen }) => {
     return () => observer.disconnect();
   }, []);
 
-
   return (
-    <div className="p-6">
+    <div className="p-6 mt-15 ">
       <div className="sticky top-0 z-50">
         <Header isToggleOpen={isToggleOpen} setIsToggleOpen={setIsToggleOpen} />
       </div>
@@ -78,10 +77,11 @@ export const Product = ({ isToggleOpen, setIsToggleOpen }) => {
       <div
         className={`fixed bottom-0 left-0 p-6 right-0 z-50 bg-white
     transition-all duration-500 ease-out
-    ${showAddCart && !isToggleOpen
-            ? 'opacity-100 translate-y-0'
-            : 'opacity-0 translate-y-full pointer-events-none'
-          }`}
+    ${
+      showAddCart && !isToggleOpen
+        ? 'opacity-100 translate-y-0'
+        : 'opacity-0 translate-y-full pointer-events-none'
+    }`}
       >
         <AddCart />
       </div>

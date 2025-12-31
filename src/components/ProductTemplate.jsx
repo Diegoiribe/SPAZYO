@@ -1,26 +1,25 @@
 import React from 'react';
-import { data } from '../data/db'
-import { useParams } from 'react-router-dom'
-
-
+import { data } from '../data/db';
+import { useParams } from 'react-router-dom';
 
 export const ProductTemplate = () => {
-
-  const { id } = useParams()
-  const product = data.filter((p) => p.id == id)
-
+  const { id, idColor } = useParams();
+  const product = data?.[0]?.zayca?.products?.find((p) => p.id === Number(id));
+  const selectedVariant = product?.variants.find(
+    (v) => v.id === Number(idColor)
+  );
 
   return (
     <div>
       {/* First Image */}
       <img
-        className="object-cover w-full rounded-sm h-3/4"
-        src={product[0].img}
-        alt=""
+        className="object-cover w-full rounded-xs h-3/4"
+        src={selectedVariant?.img}
+        alt={product?.name}
       />
 
       {/* Description */}
-      <p className="pb-10 text-sm font-light text-neutral-800 pt-15">
+      <p className="pb-10 text-xs font-light uppercase text-neutral-800 pt-15">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis
         molestias quaerat animi nihil eum, vel quisquam tempore voluptates dicta
         dolorem odit atque adipisci autem iste ratione? Dolore, iste. Optio, ad?
@@ -31,7 +30,7 @@ export const ProductTemplate = () => {
       </p>
       {/* Mas fotos */}
       <div>
-        {product[0].imgs.map((item, index) => (
+        {selectedVariant?.imgs.map((item, index) => (
           <img
             className="object-cover w-full mb-6 rounded-sm h-3/4"
             key={index}

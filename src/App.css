@@ -30,15 +30,15 @@ body:has(.you-might-like:in-view) .add-cart {
 
 /* Cambiar el color de la barra de desplazamiento */
 *::-webkit-scrollbar-thumb {
-  background: #1e1e1e; /* Color de la barra */
-  border-radius: 10px; /* Bordes redondeados */
+  background: #000; /* Color de la barra */
+  border-radius: 0px; /* Bordes redondeados */
   opacity: 0; /* Ocultar inicialmente */
   transition: opacity 0.3s ease-in-out;
 }
 
 /* Cambiar el color de la barra al pasar el cursor */
 *::-webkit-scrollbar-thumb:hover {
-  background: #555; /* Color más oscuro en hover */
+  background: #000; /* Color más oscuro en hover */
 }
 
 /* Mostrar el scrollbar cuando el usuario hace hover o scroll */
@@ -46,7 +46,7 @@ body:has(.you-might-like:in-view) .add-cart {
 *:hover::-webkit-scrollbar-track,
 *:active::-webkit-scrollbar-thumb,
 *:active::-webkit-scrollbar-track {
-  opacity: 1;
+  opacity: 0;
 }
 select option {
   font-size: 1rem; /* tamaño normal para el desplegable */

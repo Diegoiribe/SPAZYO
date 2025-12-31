@@ -4,7 +4,7 @@ import { Pedidos } from './Pedidos';
 
 export const Admin = ({ isToggleOpen, setIsToggleOpen, isAdmin }) => {
   return (
-    <div className="p-6">
+    <div className="p-6 mt-15">
       <div className='className="sticky top-0 z-50"'>
         <Header
           isVisible={true}
