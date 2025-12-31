@@ -78,13 +78,13 @@ export const OrdersTemplate = ({ setOrderState, orderState }) => {
         </div>
 
         <div className="">
-          <p className="mt-1 text-sm font-medium uppercase">{order.name}</p>
+          <p className="mt-1 text-sm font-light uppercase">{order.name}</p>
           <p className="mt-1 text-xs font-light text-neutral-500">
             #{order.id}
           </p>
         </div>
         <div>
-          <p className="text-sm font-medium uppercase ">Direccion</p>
+          <p className="text-sm font-light uppercase ">Direccion</p>
           <p className="mt-1 text-xs font-light uppercase text-neutral-600">
             {order.address.calle}
           </p>
