@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 export const CatalogTemplate = () => {
   return (
-    <div className="grid grid-cols-2 gap-6">
+    <div className="grid grid-cols-2 gap-x-6 gap-y-2">
       {data[0].zayca.products.map((item) => (
         <Link
           to={`/product/${item.id}/${item.variants[0].id}`}
@@ -13,7 +13,7 @@ export const CatalogTemplate = () => {
         >
           <img src={item.img} alt="" className="rounded-sm " />
           <div className="flex items-center gap-4 pt-2 pl-2">
-            <p className="text-[12px] font-light truncate text-neutral-800">
+            <p className="text-[12px] uppercase font-light truncate text-neutral-800">
               {item.name}
             </p>
             <div className="flex items-center gap-1">

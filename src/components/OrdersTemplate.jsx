@@ -43,7 +43,7 @@ export const OrdersTemplate = ({ setOrderState, orderState }) => {
             [&::-webkit-scrollbar]:hidden"
           >
             {order.bag.map((item) => (
-              <div className="flex flex-col w-48 gap-4 pt-2">
+              <div key={item.id} className="flex flex-col w-48 gap-4 pt-2">
                 <img src={item.img} alt="" className="w-48 rounded-xs" />
                 <div className="flex justify-between gap-3">
                   <p className="pb-1 -mt-1 text-xs font-light uppercase truncate text-neutral-600">

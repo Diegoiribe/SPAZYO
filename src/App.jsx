@@ -4,10 +4,12 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Product } from './pages/Product';
 import { Catalog } from './pages/Catalog';
 import { Admin } from './pages/Admin';
+import { Drop } from './pages/Drop';
 
 function App() {
   const isAdmin = true;
   const [isToggleOpen, setIsToggleOpen] = useState(false);
+  const [isBagOpen, setIsBagOpen] = useState(false);
 
   return (
     <Router>
@@ -18,6 +20,8 @@ function App() {
             <Product
               isToggleOpen={isToggleOpen}
               setIsToggleOpen={setIsToggleOpen}
+              isBagOpen={isBagOpen}
+              setIsBagOpen={setIsBagOpen}
             />
           }
         />
@@ -27,6 +31,19 @@ function App() {
             <Catalog
               isToggleOpen={isToggleOpen}
               setIsToggleOpen={setIsToggleOpen}
+              isBagOpen={isBagOpen}
+              setIsBagOpen={setIsBagOpen}
+            />
+          }
+        />
+        <Route
+          path="/newdrop"
+          element={
+            <Drop
+              isToggleOpen={isToggleOpen}
+              setIsToggleOpen={setIsToggleOpen}
+              isBagOpen={isBagOpen}
+              setIsBagOpen={setIsBagOpen}
             />
           }
         />
@@ -37,6 +54,8 @@ function App() {
               isAdmin={isAdmin}
               isToggleOpen={isToggleOpen}
               setIsToggleOpen={setIsToggleOpen}
+              isBagOpen={isBagOpen}
+              setIsBagOpen={setIsBagOpen}
             />
           }
         />

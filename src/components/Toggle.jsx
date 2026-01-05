@@ -60,14 +60,21 @@ export const Toggle = ({ setIsToggleOpen, isToggleOpen, isAdmin = false }) => {
               <p className="text-xs uppercase text-neutral-500">Switch to</p>
               <Link
                 to="/"
-                className="text-sm text-black uppercase cursor-pointer"
+                className="text-xs font-semibold text-black uppercase cursor-pointer"
                 onClick={() => setIsToggleOpen(false)}
               >
-                Catalogo
+                view all
+              </Link>
+              <Link
+                to="/newdrop"
+                className="text-xs font-semibold text-[#ff2222] uppercase cursor-pointer"
+                onClick={() => setIsToggleOpen(false)}
+              >
+                new drop
               </Link>
               <Link
                 to="/pedido"
-                className="text-sm text-black uppercase cursor-pointer"
+                className="text-xs font-semibold text-black uppercase cursor-pointer"
                 onClick={() => setIsToggleOpen(false)}
               >
                 Rastrear pedido
@@ -82,9 +89,7 @@ export const Toggle = ({ setIsToggleOpen, isToggleOpen, isAdmin = false }) => {
               <p
                 className="text-sm text-black uppercase cursor-pointer"
                 onClick={() => setIsToggleOpen(false)}
-              >
-                Ventas
-              </p>
+              ></p>
               <p
                 className="text-sm text-black uppercase cursor-pointer"
                 onClick={() => setIsToggleOpen(false)}
@@ -101,9 +106,7 @@ export const Toggle = ({ setIsToggleOpen, isToggleOpen, isAdmin = false }) => {
               <p
                 className="text-sm text-black uppercase cursor-pointer"
                 onClick={() => setIsToggleOpen(false)}
-              >
-                Metricas
-              </p>
+              ></p>
             </div>
           )}
         </div>

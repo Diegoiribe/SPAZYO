@@ -1,8 +1,8 @@
 import React from 'react';
 import { Header } from '../components/Header';
-import { CatalogTemplate } from '../components/CatalogTemplate';
+import { DropTemplate } from '../components/DropTemplate';
 
-export const Catalog = ({
+export const Drop = ({
   isToggleOpen,
   setIsToggleOpen,
   isBagOpen,
@@ -19,11 +19,7 @@ export const Catalog = ({
           setIsBagOpen={setIsBagOpen}
         />
       </div>
-
-      <p className="mb-2 text-[11px] font-semibold uppercase truncate text-neutral-800">
-        view all
-      </p>
-      <CatalogTemplate />
+      <DropTemplate />
     </div>
   );
 };
