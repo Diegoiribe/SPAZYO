@@ -5,6 +5,8 @@ import { Product } from './pages/Product';
 import { Catalog } from './pages/Catalog';
 import { Admin } from './pages/Admin';
 import { Drop } from './pages/Drop';
+import { Register } from './pages/Register';
+import { LogIn } from './pages/LogIn';
 
 function App() {
   const isAdmin = true;
@@ -47,6 +49,8 @@ function App() {
             />
           }
         />
+        <Route path="/login" element={<LogIn />} />
+        <Route path="/register" element={<Register />} />
         <Route
           path="/admin"
           element={

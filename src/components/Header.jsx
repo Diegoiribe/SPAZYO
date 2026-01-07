@@ -8,7 +8,8 @@ export const Header = ({
   setIsToggleOpen,
   isAdmin,
   isBagOpen,
-  setIsBagOpen
+  setIsBagOpen,
+  setPage
 }) => {
   console.log(isBagOpen);
 
@@ -25,6 +26,7 @@ export const Header = ({
         isToggleOpen={isToggleOpen}
         setIsToggleOpen={setIsToggleOpen}
         isAdmin={isAdmin}
+        setPage={setPage}
       />
 
       <div

@@ -4,7 +4,12 @@ import { ProductTemplate } from '../components/ProductTemplate';
 import { YouMightLike } from '../components/YouMightLike';
 import { AddCart } from '../components/AddCart';
 
-export const Product = ({ isToggleOpen, setIsToggleOpen }) => {
+export const Product = ({
+  isToggleOpen,
+  setIsToggleOpen,
+  isBagOpen,
+  setIsBagOpen
+}) => {
   const youMightLikeRef = useRef(null);
   const [showAddCart, setShowAddCart] = useState(true);
   const lastScrollY = useRef(0);
@@ -69,7 +74,12 @@ export const Product = ({ isToggleOpen, setIsToggleOpen }) => {
   return (
     <div className="p-6 mt-15 ">
       <div className="sticky top-0 z-50">
-        <Header isToggleOpen={isToggleOpen} setIsToggleOpen={setIsToggleOpen} />
+        <Header
+          isToggleOpen={isToggleOpen}
+          setIsToggleOpen={setIsToggleOpen}
+          isBagOpen={isBagOpen}
+          setIsBagOpen={setIsBagOpen}
+        />
       </div>
       <div>
         <ProductTemplate />
@@ -78,7 +88,7 @@ export const Product = ({ isToggleOpen, setIsToggleOpen }) => {
         className={`fixed bottom-0 left-0 p-6 right-0 z-50 bg-white
     transition-all duration-500 ease-out
     ${
-      showAddCart && !isToggleOpen
+      showAddCart && !isToggleOpen && !isBagOpen
         ? 'opacity-100 translate-y-0'
         : 'opacity-0 translate-y-full pointer-events-none'
     }`}

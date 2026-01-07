@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-export const Toggle = ({ setIsToggleOpen, isToggleOpen, isAdmin = false }) => {
+export const Toggle = ({
+  setIsToggleOpen,
+  isToggleOpen,
+  isAdmin = false,
+  setPage
+}) => {
   const [shouldRender, setShouldRender] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -57,24 +62,26 @@ export const Toggle = ({ setIsToggleOpen, isToggleOpen, isAdmin = false }) => {
           {/* Contenido de la sidebar */}
           {!isAdmin ? (
             <div className="flex flex-col gap-3 p-10 mt-24 ">
-              <p className="text-xs uppercase text-neutral-500">Switch to</p>
+              <p className="text-xs font-semibold uppercase text-neutral-400">
+                Switch to
+              </p>
               <Link
                 to="/"
-                className="text-xs font-semibold text-black uppercase cursor-pointer"
+                className="text-sm font-light text-black uppercase cursor-pointer"
                 onClick={() => setIsToggleOpen(false)}
               >
                 view all
               </Link>
               <Link
                 to="/newdrop"
-                className="text-xs font-semibold text-[#ff2222] uppercase cursor-pointer"
+                className="text-sm font-light text-[#ff2222] uppercase cursor-pointer"
                 onClick={() => setIsToggleOpen(false)}
               >
                 new drop
               </Link>
               <Link
                 to="/pedido"
-                className="text-xs font-semibold text-black uppercase cursor-pointer"
+                className="text-sm font-light text-black uppercase cursor-pointer"
                 onClick={() => setIsToggleOpen(false)}
               >
                 Rastrear pedido
@@ -92,14 +99,20 @@ export const Toggle = ({ setIsToggleOpen, isToggleOpen, isAdmin = false }) => {
               ></p>
               <p
                 className="text-sm text-black uppercase cursor-pointer"
-                onClick={() => setIsToggleOpen(false)}
+                onClick={() => {
+                  setPage('inventario');
+                  setIsToggleOpen(false);
+                }}
               >
                 Inventario
               </p>
 
               <p
                 className="text-sm text-black uppercase cursor-pointer"
-                onClick={() => setIsToggleOpen(false)}
+                onClick={() => {
+                  setPage('pedidos');
+                  setIsToggleOpen(false);
+                }}
               >
                 Pedidos
               </p>
