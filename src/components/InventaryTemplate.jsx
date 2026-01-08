@@ -1,14 +1,31 @@
 import React from 'react';
-import { data } from '../data/db';
+import { useState, useEffect } from 'react';
+import { get } from '../api/http';
 
 export const InventaryTemplate = ({ setProductState, productState }) => {
-  const product = data?.[0]?.zayca?.products?.find(
-    (o) => o.id === productState.orderId
-  );
+  const [productInventary, setProductInventary] = useState([]);
+  const product = productInventary.find((o) => o.id === productState.productId);
 
-  const [activeVariantIndex, setActiveVariantIndex] = React.useState(0);
+  const [activeVariantIndex, setActiveVariantIndex] = useState(0);
 
   const activeVariant = product?.variants?.[activeVariantIndex];
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [activeVariantIndex]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await get('/products');
+        console.log('Data fetched:', data);
+        setProductInventary(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
 
   const colorMap = {
     black: '#1f1f1f',
@@ -20,8 +37,14 @@ export const InventaryTemplate = ({ setProductState, productState }) => {
     brown: '#6b4f3a',
     yellow: '#c9b458',
     beige: '#d6c7a1',
-    orange: '#d16a2c'
+    orange: '#d16a2c',
+    'Total Orange': '#d16a2c',
+    'Green Apple': '#5f7f5b',
+    'All-Star': '#000000'
   };
+
+  console.log('product', product);
+  console.log('activeVariant', activeVariant);
 
   return (
     product && (
@@ -118,8 +141,8 @@ export const InventaryTemplate = ({ setProductState, productState }) => {
             [scrollbar-width:none]
             [&::-webkit-scrollbar]:hidden"
           >
-            {(activeVariant.imgs ?? []).map((imgObj, idx) => (
-              <img src={imgObj.img} key={idx} alt="" className=" rounded-xs" />
+            {activeVariant?.photos?.map((photo, idx) => (
+              <img src={photo} key={idx} alt="" className="rounded-xs" />
             ))}
           </div>
         </div>

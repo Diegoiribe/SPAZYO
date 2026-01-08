@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 // URL por defecto → localhost
-let currentBaseURL = 'https://api.spazyo.xyz';
+let currentBaseURL = 'https://zayca.spazyo.xyz';
 
 // Mapeo de URLs
 const BASE_URLS = {

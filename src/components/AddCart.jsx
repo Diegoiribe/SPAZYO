@@ -1,11 +1,25 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { data } from '../data/db';
+import { useState, useEffect } from 'react';
+import { get } from '../api/http';
 
 export const AddCart = () => {
   const { id, idColor } = useParams();
   const navigate = useNavigate();
+  const [productAdd, setProductAdd] = useState([]);
+  const product = productAdd.find((p) => p.id === Number(id));
 
-  const product = data?.[0]?.zayca?.products?.find((p) => p.id === Number(id));
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await get('/products');
+        console.log('Data fetched:', data);
+        setProductAdd(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
 
   if (!product) return null;
 
@@ -19,8 +33,13 @@ export const AddCart = () => {
     brown: '#6b4f3a',
     yellow: '#c9b458',
     beige: '#d6c7a1',
-    orange: '#d16a2c'
+    orange: '#d16a2c',
+    'Total Orange': '#d16a2c',
+    'Green Apple': '#5f7f5b',
+    'All-Star': '#000000'
   };
+
+  console.log('product', product);
 
   return (
     <div className="py-2 bg-white">
@@ -43,7 +62,7 @@ export const AddCart = () => {
                 key={variant.id}
                 onClick={() => navigate(`/product/${id}/${variant.id}`)}
                 className={`
-                  w-4.5 h-4.5  cursor-pointer border border-neutral-200
+                  w-3.5 h-3.5 rounded-xs  cursor-pointer border border-neutral-200
                   ${isActive ? ' scale-100 ' : ''}
                   transition
                 `}

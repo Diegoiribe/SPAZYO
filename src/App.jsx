@@ -1,12 +1,28 @@
 import './App.css';
 import { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation
+} from 'react-router-dom';
+import { useEffect } from 'react';
 import { Product } from './pages/Product';
 import { Catalog } from './pages/Catalog';
 import { Admin } from './pages/Admin';
 import { Drop } from './pages/Drop';
 import { Register } from './pages/Register';
 import { LogIn } from './pages/LogIn';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [pathname]);
+
+  return null;
+}
 
 function App() {
   const isAdmin = true;
@@ -15,6 +31,7 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route
           path="/product/:id/:idColor"
