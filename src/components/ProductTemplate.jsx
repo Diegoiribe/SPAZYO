@@ -29,7 +29,7 @@ export const ProductTemplate = () => {
       {/* First Image */}
       <img
         className="object-cover w-full rounded-xs h-3/4"
-        src={selectedVariant?.photoPrimary}
+        src={selectedVariant?.photos[0]}
         alt={product?.name}
       />
 
@@ -43,7 +43,7 @@ export const ProductTemplate = () => {
       </p>
       {/* Mas fotos */}
       <div>
-        {selectedVariant?.photos.map((item, index) => (
+        {selectedVariant?.photos.slice(1).map((item, index) => (
           <img
             className="object-cover w-full mb-6 rounded-sm h-3/4"
             key={index}

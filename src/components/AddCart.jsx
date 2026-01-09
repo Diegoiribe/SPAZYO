@@ -23,24 +23,6 @@ export const AddCart = () => {
 
   if (!product) return null;
 
-  const colorMap = {
-    black: '#1f1f1f',
-    white: '#f2f2f2',
-    gray: '#9ca3af',
-    red: '#7a0c1d',
-    blue: '#4a6a8a',
-    green: '#5f7f5b',
-    brown: '#6b4f3a',
-    yellow: '#c9b458',
-    beige: '#d6c7a1',
-    orange: '#d16a2c',
-    'Total Orange': '#d16a2c',
-    'Green Apple': '#5f7f5b',
-    'All-Star': '#000000'
-  };
-
-  console.log('product', product);
-
   return (
     <div className="py-2 bg-white">
       <div className="flex items-center justify-between">
@@ -62,12 +44,12 @@ export const AddCart = () => {
                 key={variant.id}
                 onClick={() => navigate(`/product/${id}/${variant.id}`)}
                 className={`
-                  w-3.5 h-3.5 rounded-xs  cursor-pointer border border-neutral-200
+                  w-3.5 h-3.5 rounded-xs  cursor-pointer border border-neutral-100
                   ${isActive ? ' scale-100 ' : ''}
                   transition
                 `}
                 style={{
-                  backgroundColor: colorMap[variant.color]
+                  backgroundColor: variant.color
                 }}
               />
             );

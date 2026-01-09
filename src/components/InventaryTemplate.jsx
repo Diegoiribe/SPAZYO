@@ -27,22 +27,6 @@ export const InventaryTemplate = ({ setProductState, productState }) => {
     fetchData();
   }, []);
 
-  const colorMap = {
-    black: '#1f1f1f',
-    white: '#f2f2f2',
-    gray: '#9ca3af',
-    red: '#7a0c1d',
-    blue: '#4a6a8a',
-    green: '#5f7f5b',
-    brown: '#6b4f3a',
-    yellow: '#c9b458',
-    beige: '#d6c7a1',
-    orange: '#d16a2c',
-    'Total Orange': '#d16a2c',
-    'Green Apple': '#5f7f5b',
-    'All-Star': '#000000'
-  };
-
   console.log('product', product);
   console.log('activeVariant', activeVariant);
 
@@ -151,16 +135,16 @@ export const InventaryTemplate = ({ setProductState, productState }) => {
           {activeVariant && (
             <>
               <div
-                className="w-3 h-3 border border-neutral-200"
+                className="w-3 h-3 border border-neutral-100"
                 style={{
-                  backgroundColor: colorMap[activeVariant.color]
+                  backgroundColor: activeVariant.color
                 }}
               />
               <p className="-mt-0.5 text-xs font-light uppercase text-neutral-600">
                 |
               </p>
               <p className="text-xs font-light -mt-0.25 uppercase text-neutral-600">
-                {activeVariant.color}
+                {activeVariant.colorName}
               </p>
             </>
           )}

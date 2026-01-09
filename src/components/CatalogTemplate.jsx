@@ -19,23 +19,6 @@ export const CatalogTemplate = () => {
     fetchData();
   }, []);
 
-  const colorMap = {
-    black: '#1f1f1f',
-    white: '#f2f2f2',
-    gray: '#9ca3af',
-    red: '#7a0c1d',
-    blue: '#4a6a8a',
-    green: '#5f7f5b',
-    brown: '#6b4f3a',
-    yellow: '#c9b458',
-    beige: '#d6c7a1',
-    orange: '#d16a2c',
-
-    'Total Orange': '#d16a2c',
-    'Green Apple': '#5f7f5b',
-    'All-Star': '#000000'
-  };
-
   return (
     <div className="grid grid-cols-2 gap-x-6 gap-y-2">
       {productsCatalog.map((item) => (
@@ -45,7 +28,7 @@ export const CatalogTemplate = () => {
           key={item.id}
         >
           <img
-            src={item.variants[0].photoPrimary}
+            src={item.variants[0].photos[0]}
             alt=""
             className="object-contain rounded-sm h-58 "
           />
@@ -55,9 +38,9 @@ export const CatalogTemplate = () => {
             </p>
             <div className="flex items-center gap-1">
               <div
-                className="w-2.75 h-2.75 border border-neutral-200 "
+                className="w-2.75 h-2.75 border border-neutral-100 "
                 style={{
-                  backgroundColor: colorMap[item.variants[0].color]
+                  backgroundColor: item.variants[0].color
                 }}
               />
               <p className="text-[12px] font-light uppercase text-neutral-800">

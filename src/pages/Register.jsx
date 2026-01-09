@@ -2,35 +2,51 @@ import { Check, Dot } from 'lucide-react';
 import { Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
 import { post } from '../api/http';
+import { useNavigate } from 'react-router-dom';
 
 export const Register = () => {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({
+  const [step, setStep] = useState(4);
+  const [formDataUser, setformDataUser] = useState({
     email: '',
     password: '',
     name: '',
     lastName: '',
-    gender: '',
-    birthday: ''
+    state: '',
+    country: ''
+  });
+
+  const [formDataStore, setformDataStore] = useState({
+    isLocal: false,
+    latitude: null,
+    longitude: null,
+    locationPreview: '',
+    name: '',
+    dominio: '',
+    email: ''
   });
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setformDataUser({ ...formDataUser, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleChangeStore = (e) => {
+    setformDataStore({ ...formDataStore, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmitUser = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
     const data = {
-      firstName: formData.name.trim(),
-      lastName: formData.lastName.trim(),
-      email: formData.email.trim(),
-      gender: formData.gender,
-      password: formData.password,
-      birthDate: formData.birthday // ISO (yyyy-mm-dd) con type="date"
+      firstName: formDataUser.name.trim(),
+      lastName: formDataUser.lastName.trim(),
+      email: formDataUser.email.trim(),
+      state: formDataUser.state,
+      password: formDataUser.password,
+      country: formDataUser.country // ISO (yyyy-mm-dd) con type="date"
     };
 
     try {
@@ -38,8 +54,8 @@ export const Register = () => {
 
       // auto-login (si tu backend no devuelve token en register)
       const loginRes = await post('/auth/login', {
-        email: formData.email,
-        password: formData.password
+        email: formDataUser.email,
+        password: formDataUser.password
       });
       localStorage.setItem('token', loginRes.token);
       setIsLoading(false);
@@ -50,13 +66,34 @@ export const Register = () => {
     }
   };
 
-  const handleSubscription = async (endpoint) => {
+  const handleSubmitStore = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    const data = {
+      name: formDataStore.name.trim(),
+      isLocal: formDataStore.isLocal,
+      latitude: formDataStore.latitude,
+      longitude: formDataStore.longitude,
+      locationPreview: formDataStore.locationPreview.trim(),
+      dominio: formDataStore.dominio,
+      email: formDataStore.email.trim()
+    };
+
     try {
-      const { url } = await post(endpoint); // 👈 tu post ya devuelve data
-      window.location.replace(url);
-    } catch (err) {
-      console.error('Checkout error:', err);
-      // opcional: mostrar toast
+      await post('/store', data);
+
+      // auto-login (si tu backend no devuelve token en register)
+      const loginRes = await post('/auth/login', {
+        email: formDataUser.email,
+        password: formDataUser.password
+      });
+      localStorage.setItem('token', loginRes.token);
+      setIsLoading(false);
+      navigate('/admin');
+    } catch (error) {
+      setIsLoading(false);
+      console.error('Error registering/logging in:', error);
     }
   };
 
@@ -66,14 +103,14 @@ export const Register = () => {
     const requiredFields = [
       { name: 'name', label: 'Nombre' },
       { name: 'lastName', label: 'Apellido' },
-      { name: 'gender', label: 'Género' },
-      { name: 'birthday', label: 'Nacimiento' },
+      { name: 'state', label: 'Estado' },
+      { name: 'country', label: 'Pais' },
       { name: 'email', label: 'Email' },
       { name: 'password', label: 'Contraseña' }
     ];
 
     for (const field of requiredFields) {
-      if (!formData[field.name]?.trim()) {
+      if (!formDataUser[field.name]?.trim()) {
         alert(`Por favor, completa el campo: ${field.label}`);
         return false; // Detiene validación si hay un campo vacío
       }
@@ -84,7 +121,7 @@ export const Register = () => {
   };
 
   return (
-    <div className="min-h-screen p-8">
+    <div className="flex flex-col items-center justify-center min-h-screen p-8 ">
       {step === 1 && (
         <div className="flex items-center justify-center h-[87dvh] ">
           <div className="flex flex-col items-center">
@@ -96,7 +133,7 @@ export const Register = () => {
             </p>
             <div className="relative mb-5">
               <input
-                value={formData.email}
+                value={formDataUser.email}
                 onChange={handleChange}
                 type="email"
                 name="email"
@@ -113,7 +150,7 @@ export const Register = () => {
             </div>
             <div className="relative mb-5 w-72">
               <input
-                value={formData.password}
+                value={formDataUser.password}
                 onChange={handleChange}
                 name="password"
                 type={showPassword ? 'text' : 'password'}
@@ -159,46 +196,46 @@ export const Register = () => {
         </div>
       )}
       {step === 2 && (
-        <div className="flex items-center justify-center h-[87dvh] ">
-          <div className="flex flex-col items-center">
+        <div className="flex items-center justify-center ">
+          <div className="flex flex-col items-center justify-center">
             <h1 className="mb-5 text-2xl font-semibold text-center">
               Crea tu cuenta
             </h1>
             <p className="mb-10 text-sm font-light text-center text-black/80 w-72">
-              Dinos un poco sobre ti: ingresa tu información personal
+              Dinos un poco sobre ti, ingresa tu información personal
             </p>
-            <form onSubmit={handleSubmit} className="mb-20">
-              <div className="flex items-center gap-2">
+            <form onSubmit={handleSubmitUser} className="">
+              <div className="grid grid-cols-2 gap-2 w-72">
                 <div className="relative mb-5">
                   <input
-                    value={formData.name}
+                    value={formDataUser.name}
                     onChange={handleChange}
                     type="text"
                     name="name"
                     id="name"
                     required
-                    className="w-32 px-4 py-3 border rounded-full outline-none border-black/30 peer focus:border-blue-500"
+                    className="w-full px-4 py-3 border rounded-full outline-none border-black/20 peer focus:border-blue-400"
                   />
                   <label
                     htmlFor="name"
-                    className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-sm peer-valid:-top-[1px] peer-valid:text-sm peer-focus:text-blue-500"
+                    className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-sm peer-focus:text-blue-400"
                   >
                     Nombre
                   </label>
                 </div>
                 <div className="relative mb-5">
                   <input
-                    value={formData.lastName}
+                    value={formDataUser.lastName}
                     onChange={handleChange}
                     type="text"
                     name="lastName"
                     id="lastName"
                     required
-                    className="w-48 px-4 py-3 border rounded-full outline-none border-black/30 peer focus:border-blue-500"
+                    className="w-full px-4 py-3 border rounded-full outline-none border-black/20 peer focus:border-blue-400"
                   />
                   <label
                     htmlFor="lastName"
-                    className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-sm peer-valid:-top-[1px] peer-valid:text-sm peer-focus:text-blue-500"
+                    className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-sm peer-focus:text-blue-400"
                   >
                     Apellido
                   </label>
@@ -206,58 +243,40 @@ export const Register = () => {
               </div>
               <div className="relative mb-5 w-72">
                 <input
-                  value={formData.birthday}
+                  value={formDataUser.country}
                   onChange={handleChange}
-                  type="date"
-                  name="birthday"
-                  id="birthdate"
+                  type="text"
+                  name="country"
+                  id="country"
                   required
-                  className="w-full px-4 py-3 border rounded-full outline-none border-black/30 peer focus:border-blue-500"
+                  className="w-full px-4 py-3 border rounded-full outline-none border-black/20 peer focus:border-blue-400"
                 />
                 <label
-                  htmlFor="birthdate"
-                  className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-sm peer-valid:-top-[1px] peer-valid:text-sm peer-focus:text-blue-500 "
+                  htmlFor="country"
+                  className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-sm peer-focus:text-blue-400"
                 >
-                  Fecha de nacimiento
+                  Pais
                 </label>
               </div>
-              <div className="relative mb-5 w-82">
-                <select
-                  name="gender"
-                  value={formData.gender}
+              <div className="relative mb-5 w-72">
+                <input
+                  value={formDataUser.state}
                   onChange={handleChange}
-                  id="gender"
+                  type="text"
+                  name="state"
+                  id="state"
                   required
-                  className="w-full px-4 py-3 pr-10 bg-white border rounded-full outline-none appearance-none peer border-black/30 focus:border-blue-500"
-                >
-                  <option value="" disabled>
-                    {' '}
-                  </option>
-                  <option value="masculino">Masculino</option>
-                  <option value="femenino">Femenino</option>
-                </select>
-
+                  className="w-full px-4 py-3 border rounded-full outline-none border-black/20 peer focus:border-blue-400"
+                />
                 <label
-                  htmlFor="gender"
-                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-white px-1
-               text-black/40 transition-all duration-200
-               peer-focus:-top-[1px] peer-focus:text-sm peer-focus:text-blue-500
-               peer-valid:-top-[1px] peer-valid:text-sm"
+                  htmlFor="state"
+                  className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-sm peer-focus:text-blue-400 "
                 >
-                  Sexo
+                  Estado
                 </label>
-
-                {/* Flecha del select */}
-                <svg
-                  className="absolute w-4 h-4 -translate-y-1/2 pointer-events-none right-3 top-1/2"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path d="M5.5 7.5l4.5 5 4.5-5" />
-                </svg>
               </div>
               <button
-                className={`px-4 py-3  text-white bg-black rounded-full cursor-pointer w-82 ${
+                className={`px-4 py-3  text-white bg-black rounded-full cursor-pointer text-sm w-72 ${
                   isLoading ? 'opacity-50 cursor-not-allowed' : ''
                 }`}
                 disabled={isLoading}
@@ -270,160 +289,198 @@ export const Register = () => {
                 Continuar
               </button>
             </form>
-            <div className="flex items-center justify-center gap-3">
-              <p className="text-sm underline text-neutral-500">
-                Terminos de Uso
-              </p>
-              <div className="w-[1.5px] h-4 bg-black"></div>
-              <p className="text-sm underline text-neutral-500">
-                Politica de privacidad
-              </p>
-            </div>
           </div>
         </div>
       )}
       {step === 3 && (
-        <div className="flex items-center justify-center h-[87dvh] w-full ">
-          <div className="max-w-3xl">
-            <p className="mb-5 text-4xl font-bold">
-              Unete a <span className="italic font-light">Plan4Me</span>
-            </p>
+        <div className="flex items-center justify-center ">
+          <div className="flex flex-col items-center justify-center">
+            <h1 className="mb-10 text-2xl font-semibold text-center">
+              Crea tu tienda
+            </h1>
+            <form onSubmit={handleSubmitStore} className="">
+              <div className="relative mb-5 w-72">
+                <input
+                  value={formDataStore.name}
+                  onChange={handleChangeStore}
+                  type="text"
+                  name="name"
+                  id="nameTienda"
+                  required
+                  className="w-full px-4 py-3 border rounded-full outline-none border-black/20 peer focus:border-blue-400"
+                />
+                <label
+                  htmlFor="nameTienda"
+                  className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-sm peer-focus:text-blue-400"
+                >
+                  Nombre
+                </label>
+              </div>
+              <div className="relative w-72">
+                <input
+                  value={formDataStore.dominio}
+                  onChange={handleChangeStore}
+                  type="text"
+                  name="dominio"
+                  id="dominio"
+                  required
+                  className="w-full px-4 py-3 border rounded-full outline-none border-black/20 peer focus:border-blue-400"
+                />
+                <label
+                  htmlFor="dominio"
+                  className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-sm peer-focus:text-blue-400"
+                >
+                  Dominio
+                </label>
+              </div>
+              <p className="px-4 py-1 mb-5 text-xs text-neutral-400">
+                {formDataStore.dominio === ''
+                  ? 'https://tudominio.spazyo.com'
+                  : `https://www.${formDataStore.dominio}.spazyo.com`}
+              </p>
 
-            <div className="flex items-center gap-1 mb-10">
-              <p className="px-4 py-1 font-medium text-black bg-orange-100 rounded-full cursor-pointer">
-                Mensual
-              </p>
-              <p className="px-4 py-1 font-medium rounded-full cursor-pointer">
-                Trimestral
-              </p>
-              <p className="px-4 py-1 font-medium rounded-full cursor-pointer">
-                Anual
-              </p>
-            </div>
-            <div className="flex gap-20 bg-orange-100 p-15 rounded-3xl">
-              <div className="w-[29%]">
-                <h1 className="mb-2 text-2xl font-bold text-orange-300">
-                  Premium
-                </h1>
-                <p className="mb-10 text-sm text-black/70">
-                  Plan, compras y progreso sin complicaciones
-                </p>
-                <p className="mb-10 text-2xl font-bold text-black">
-                  <span className="text-sm font-normal text-black/70">$</span>
-                  199{' '}
-                  <span className="text-sm font-normal text-black/70">
-                    / por mes
-                  </span>
-                </p>
-                <div className="inline-flex flex-col w-full gap-3">
-                  <button
-                    className="w-full px-6 py-2 font-medium text-white bg-black rounded-full cursor-pointer"
-                    onClick={() =>
-                      handleSubscription('/api/payments/checkout-premium')
-                    }
-                  >
-                    Comenzar
-                  </button>
-                  <button
-                    className="px-6 py-2 font-medium text-black border border-black rounded-full cursor-pointer"
-                    onClick={() =>
-                      handleSubscription('/api/payments/checkout-trial')
-                    }
-                  >
-                    Prueba gratis
-                  </button>
-                </div>
+              <div className="relative mb-5 w-72">
+                <input
+                  value={formDataStore.email}
+                  onChange={handleChangeStore}
+                  type="email"
+                  name="email"
+                  id="emailTienda"
+                  required
+                  className="w-full px-4 py-3 border rounded-full outline-none border-black/20 peer focus:border-blue-400"
+                />
+                <label
+                  htmlFor="emailTienda"
+                  className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-sm peer-focus:text-blue-400 "
+                >
+                  Correo de soporte
+                </label>
               </div>
-              <div className="w-[71%] text-black">
-                <p className="mb-10 text-sm text-black/70">
-                  Funciones premium exclusivas{' '}
+              <div className="px-1 mb-5 w-72">
+                <div className="flex justify-between mb-5">
+                  <p className="text-sm ">Tienda local</p>
+                  <input
+                    type="checkbox"
+                    checked={formDataStore.isLocal}
+                    onChange={(e) =>
+                      setformDataStore({
+                        ...formDataStore,
+                        isLocal: e.target.checked
+                      })
+                    }
+                    className="
+    w-4 h-4
+    appearance-none
+    rounded
+    border border-neutral-400
+    relative
+    checked:bg-black
+    checked:border-black
+
+    checked:after:content-['✓']
+    checked:after:absolute
+    checked:after:inset-0
+    checked:after:flex
+    checked:after:items-center
+    checked:after:justify-center
+    checked:after:text-white
+    checked:after:text-[10px]
+  "
+                  />
+                </div>
+                <p className="text-xs font-light">
+                  Haz que tus clientes puedan recoger sus pedidos en tu negocio
                 </p>
-                <div className="flex gap-2 ">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    className="w-6 h-6 lucide lucide-circle-check-icon lucide-circle-check"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="m9 12 2 2 4-4" />
-                  </svg>
-                  <p className="mb-5 text-sm font-medium">
-                    Dieta 100% personalizada: ajustada a tus metas (bajar de
-                    peso, ganar masa, mantenerte).
-                  </p>
-                </div>
-                <div className="flex gap-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    className="w-6 h-6 lucide lucide-circle-check-icon lucide-circle-check"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="m9 12 2 2 4-4" />
-                  </svg>
-                  <p className="mb-5 text-sm font-medium">
-                    Lista de compras automática: olvídate de cálculos, lleva
-                    todo lo que necesitas en un solo clic.
-                  </p>
-                </div>
-                <div className="flex gap-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    className="w-8 h-8 lucide lucide-circle-check-icon lucide-circle-check"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="m9 12 2 2 4-4" />
-                  </svg>
-                  <p className="mb-5 text-sm font-medium">
-                    Ajuste dinámico por “pecados”: si te sales del plan, la app
-                    equilibra el resto de tus comidas para mantener tu progreso.
-                  </p>
-                </div>
-                <div className="flex gap-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    className="w-6 h-6 lucide lucide-circle-check-icon lucide-circle-check"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="m9 12 2 2 4-4" />
-                  </svg>
-                  <p className="text-sm font-medium">
-                    Acceso multiplataforma: tu plan disponible siempre, desde
-                    cualquier dispositivo.
-                  </p>
-                </div>
               </div>
-            </div>
+              {formDataStore.isLocal && (
+                <>
+                  {/* Ubicación del negocio */}
+                  <div className="mb-6 w-72">
+                    <button
+                      type="button"
+                      className="px-4 py-3 text-sm font-light border rounded-full cursor-pointer border-black/20 w-72"
+                      onClick={() => {
+                        if (!navigator.geolocation) {
+                          alert('Tu navegador no soporta geolocalización');
+                          return;
+                        }
+
+                        navigator.geolocation.getCurrentPosition(
+                          async (position) => {
+                            const lat = position.coords.latitude;
+                            const lng = position.coords.longitude;
+
+                            try {
+                              const res = await fetch(
+                                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`
+                              );
+                              const data = await res.json();
+
+                              setformDataStore({
+                                ...formDataStore,
+                                latitude: lat,
+                                longitude: lng,
+                                locationPreview:
+                                  data.display_name || 'Ubicación detectada'
+                              });
+                            } catch {
+                              setformDataStore({
+                                ...formDataStore,
+                                latitude: lat,
+                                longitude: lng,
+                                locationPreview: 'Ubicación detectada'
+                              });
+                            }
+                          },
+                          () => {
+                            alert('No se pudo obtener tu ubicación');
+                          }
+                        );
+                      }}
+                    >
+                      Usar mi ubicación actual
+                    </button>
+
+                    {formDataStore.locationPreview && (
+                      <div className="px-1 mt-5 ">
+                        <p className="text-xs font-light ">
+                          {formDataStore.locationPreview}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </>
+              )}
+              <div className="flex justify-end w-72">
+                <button
+                  className={`px-3 py-3  text-white bg-black rounded-full cursor-pointer text-sm  ${
+                    isLoading ? 'opacity-50 cursor-not-allowed' : ''
+                  }`}
+                  disabled={isLoading}
+                  onClick={() => {
+                    if (validateStep()) {
+                      setStep(4);
+                    }
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-arrow-right-icon lucide-arrow-right"
+                  >
+                    <path d="M5 12h14" />
+                    <path d="m12 5 7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}
