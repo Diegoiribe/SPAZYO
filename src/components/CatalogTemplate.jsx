@@ -9,13 +9,14 @@ export const CatalogTemplate = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await get('/products');
+        const data = await get('/products', null, 'tenant');
         console.log('Data fetched:', data);
         setProductsCatalog(data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
+
     fetchData();
   }, []);
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Toggle } from './Toggle';
 import { Bag } from './Bag';
+import { useEffect, useState } from 'react';
 
 export const Header = ({
   isVisible = false,
@@ -11,8 +12,30 @@ export const Header = ({
   setIsBagOpen,
   setPage
 }) => {
-  console.log(isBagOpen);
+  const [bagItems, setBagItems] = useState([]);
 
+  const loadBagFromStorage = () => {
+    const storedBag = localStorage.getItem('bag');
+    setBagItems(storedBag ? JSON.parse(storedBag) : []);
+  };
+
+  useEffect(() => {
+    // initial load
+    loadBagFromStorage();
+
+    // poll localStorage every 300ms to keep badge in sync
+    const interval = setInterval(() => {
+      loadBagFromStorage();
+    }, 300);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (isBagOpen) {
+      loadBagFromStorage();
+    }
+  }, [isBagOpen]);
   return (
     <>
       <Bag
@@ -21,6 +44,8 @@ export const Header = ({
         isToggleOpen={isToggleOpen}
         setIsToggleOpen={setIsToggleOpen}
         isAdmin={isAdmin}
+        bagItems={bagItems}
+        setBagItems={setBagItems}
       />
       <Toggle
         isToggleOpen={isToggleOpen}
@@ -61,6 +86,7 @@ export const Header = ({
           <path d="M4 19h16" />
         </svg>
         {isVisible && <p className="text-2xl font-bold uppercase">zayca</p>}
+        {/* aqui */}
         {!isAdmin && (
           <div className="relative pr-6">
             <svg
@@ -87,6 +113,11 @@ export const Header = ({
               <path d="M3.103 6.034h17.794" />
               <path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z" />
             </svg>
+            {bagItems.length > 0 && !isBagOpen && (
+              <div className="absolute -bottom-1 -left-1 flex items-center justify-center w-4 h-4 text-[10px] font-medium text-white bg-red-500 rounded-full">
+                {bagItems.length}
+              </div>
+            )}
 
             <svg
               xmlns="http://www.w3.org/2000/svg"

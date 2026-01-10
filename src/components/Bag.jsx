@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import { data } from '../data/db';
 
-export const Bag = ({ isBagOpen }) => {
+export const Bag = ({ isBagOpen, bagItems, setBagItems }) => {
   const [shouldRenderBag, setShouldRenderBag] = useState(false);
   const [isVisibleBag, setIsVisibleBag] = useState(false);
 
@@ -15,6 +14,8 @@ export const Bag = ({ isBagOpen }) => {
     }
   }, [isBagOpen]);
 
+  const total = bagItems.reduce((sum, item) => sum + Number(item.price), 0);
+
   return (
     <>
       {shouldRenderBag && (
@@ -26,7 +27,9 @@ export const Bag = ({ isBagOpen }) => {
           <div className="p-10 mt-15">
             <div className="flex items-center gap-2 mb-5">
               <p className="text-sm font-semibold uppercase">shopping bag</p>
-              <p className="text-sm font-semibold uppercase">[5]</p>
+              <p className="text-sm font-semibold uppercase">
+                [{bagItems.length}]
+              </p>
             </div>
             <p className="text-[11px] text-neutral-400  font-light bg-neutral-50 p-4 rounded-sm mb-5">
               The items in the bag are not reserved until the purchase is
@@ -34,12 +37,16 @@ export const Bag = ({ isBagOpen }) => {
             </p>
             {/* ITEMS */}
             <div>
-              {data[0].zayca.bag.map((item) => (
+              {bagItems.map((item, index) => (
                 <div
                   key={`${item.id}`}
-                  className="flex justify-between gap-4 pt-2"
+                  className="flex justify-between gap-4 pt-2 last:mb-10"
                 >
-                  <img src={item.img} alt="" className="w-39 rounded-xs" />
+                  <img
+                    src={item.img}
+                    alt=""
+                    className="object-contain w-39 rounded-xs"
+                  />
                   <div className="flex flex-col w-1/2 gap-3 pt-4 pr-3">
                     <p className="pb-1 -mt-1 text-xs font-light uppercase text-neutral-600">
                       {item.name}
@@ -55,7 +62,7 @@ export const Bag = ({ isBagOpen }) => {
                         {item.size}
                       </p>
                     </div>
-                    <div className="flex flex-col justify-between h-34">
+                    <div className="flex flex-col justify-between ">
                       <p className="text-xs font-light uppercase text-neutral-600">
                         ${' '}
                         {new Intl.NumberFormat('en-US', {
@@ -63,7 +70,19 @@ export const Bag = ({ isBagOpen }) => {
                           maximumFractionDigits: 2
                         }).format(item.price)}
                       </p>
-                      <p className="-mt-1 text-xs font-semibold uppercase cursor-pointer text-neutral-600">
+                      <p
+                        className="mt-5 text-xs font-semibold uppercase cursor-pointer text-neutral-600"
+                        onClick={() => {
+                          const updatedBag = bagItems.filter(
+                            (_, i) => i !== index
+                          );
+                          setBagItems(updatedBag);
+                          localStorage.setItem(
+                            'bag',
+                            JSON.stringify(updatedBag)
+                          );
+                        }}
+                      >
                         Delete
                       </p>
                     </div>
@@ -89,7 +108,7 @@ export const Bag = ({ isBagOpen }) => {
                   {new Intl.NumberFormat('en-US', {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
-                  }).format(5000)}
+                  }).format(total)}
                 </p>
                 <p className="text-neutral-400 uppercase font-medium text-[8px]">
                   con impuestos

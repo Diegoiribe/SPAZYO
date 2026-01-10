@@ -50,7 +50,7 @@ export const Register = () => {
     };
 
     try {
-      await post('/auth/register', data);
+      await post('/auth/register', data, 'core');
 
       // auto-login (si tu backend no devuelve token en register)
       const loginRes = await post('/auth/login', {
@@ -81,7 +81,7 @@ export const Register = () => {
     };
 
     try {
-      await post('/store', data);
+      await post('/store', data, 'core');
 
       // auto-login (si tu backend no devuelve token en register)
       const loginRes = await post('/auth/login', {
