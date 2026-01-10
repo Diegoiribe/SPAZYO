@@ -8,7 +8,7 @@ export const Register = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [step, setStep] = useState(4);
+  const [step, setStep] = useState(1);
   const [formDataUser, setformDataUser] = useState({
     email: '',
     password: '',
