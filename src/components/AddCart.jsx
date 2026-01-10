@@ -7,7 +7,7 @@ export const AddCart = () => {
   const navigate = useNavigate();
   const [productAdd, setProductAdd] = useState([]);
   const [showSizes, setShowSizes] = useState(false);
-  const [selectedSize, setSelectedSize] = useState(null);
+
   const containerRef = useRef(null);
   const product = productAdd.find((p) => p.id === Number(id));
   const activeVariant = product?.variants.find((v) => v.id === Number(idColor));

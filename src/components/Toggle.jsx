@@ -11,15 +11,33 @@ export const Toggle = ({
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    if (isToggleOpen) {
-      setTimeout(() => setShouldRender(true), 300); // Delay de 300ms antes de mostrar
-      setTimeout(() => setIsVisible(true), 310); // Aplica la opacidad después del render
-    } else {
-      setIsVisible(false); // Opacidad 0 inmediatamente
-      setTimeout(() => setShouldRender(false), 600); // Oculta después de 300ms
-    }
-  }, [isToggleOpen]);
+    let showTimeout;
+    let visibleTimeout;
+    let hideTimeout;
 
+    if (isToggleOpen) {
+      showTimeout = setTimeout(() => {
+        setShouldRender(true);
+      }, 300);
+
+      visibleTimeout = setTimeout(() => {
+        setIsVisible(true);
+      }, 310);
+    } else {
+      visibleTimeout = setTimeout(() => {
+        setIsVisible(false);
+      }, 0);
+
+      hideTimeout = setTimeout(() => {
+        setShouldRender(false);
+      }, 600);
+    }
+    return () => {
+      clearTimeout(showTimeout);
+      clearTimeout(visibleTimeout);
+      clearTimeout(hideTimeout);
+    };
+  }, [isToggleOpen]);
   return (
     <>
       {shouldRender && (

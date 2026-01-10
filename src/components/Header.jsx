@@ -14,28 +14,24 @@ export const Header = ({
 }) => {
   const [bagItems, setBagItems] = useState([]);
 
-  const loadBagFromStorage = () => {
-    const storedBag = localStorage.getItem('bag');
-    setBagItems(storedBag ? JSON.parse(storedBag) : []);
-  };
-
   useEffect(() => {
-    // initial load
-    loadBagFromStorage();
+    let interval;
 
-    // poll localStorage every 300ms to keep badge in sync
-    const interval = setInterval(() => {
-      loadBagFromStorage();
-    }, 300);
+    const loadAsync = () => {
+      const storedBag = localStorage.getItem('bag');
+      setBagItems(storedBag ? JSON.parse(storedBag) : []);
+    };
 
-    return () => clearInterval(interval);
+    // async initial load
+    setTimeout(loadAsync, 0);
+
+    // polling
+    interval = setInterval(loadAsync, 300);
+
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
-
-  useEffect(() => {
-    if (isBagOpen) {
-      loadBagFromStorage();
-    }
-  }, [isBagOpen]);
   return (
     <>
       <Bag

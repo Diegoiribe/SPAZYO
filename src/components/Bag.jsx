@@ -5,13 +5,33 @@ export const Bag = ({ isBagOpen, bagItems, setBagItems }) => {
   const [isVisibleBag, setIsVisibleBag] = useState(false);
 
   useEffect(() => {
+    let showTimeout;
+    let visibleTimeout;
+    let hideTimeout;
+
     if (isBagOpen) {
-      setTimeout(() => setShouldRenderBag(true), 300); // Delay de 300ms antes de mostrar
-      setTimeout(() => setIsVisibleBag(true), 310); // Aplica la opacidad después del render
+      showTimeout = setTimeout(() => {
+        setShouldRenderBag(true);
+      }, 300);
+
+      visibleTimeout = setTimeout(() => {
+        setIsVisibleBag(true);
+      }, 310);
     } else {
-      setIsVisibleBag(false); // Opacidad 0 inmediatamente
-      setTimeout(() => setShouldRenderBag(false), 600); // Oculta después de 300ms
+      visibleTimeout = setTimeout(() => {
+        setIsVisibleBag(false);
+      }, 0);
+
+      hideTimeout = setTimeout(() => {
+        setShouldRenderBag(false);
+      }, 600);
     }
+
+    return () => {
+      clearTimeout(showTimeout);
+      clearTimeout(visibleTimeout);
+      clearTimeout(hideTimeout);
+    };
   }, [isBagOpen]);
 
   const total = bagItems.reduce((sum, item) => sum + Number(item.price), 0);
