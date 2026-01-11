@@ -40,7 +40,7 @@ export const Bag = ({ isBagOpen, bagItems, setBagItems }) => {
     <>
       {shouldRenderBag && (
         <div
-          className={`fixed top-0 left-0 h-full w-full bg-white z-50 duration-300 overflow-y-auto ${
+          className={`fixed top-0 left-0 h-full w-full bg-white z-50 backdrop-blur-xl  duration-300 overflow-y-auto ${
             isVisibleBag ? 'opacity-100' : 'opacity-0'
           }`}
         >
@@ -112,11 +112,11 @@ export const Bag = ({ isBagOpen, bagItems, setBagItems }) => {
             </div>
           </div>
           <div
-            className={`fixed bottom-0 left-0 p-6 right-0 z-100 bg-white
+            className={`fixed bottom-0 left-0 p-6 right-0 z-100 
               transition-all duration-500 ease-out
               `}
           >
-            <div className="flex justify-between h-full px-4 py-2 bg-white">
+            <div className="flex justify-between h-full px-4 py-2 ">
               <button className="flex items-center justify-center py-2 bg-black px-11 rounded-xs">
                 <p className="text-xs font-light text-white uppercase">
                   continuar

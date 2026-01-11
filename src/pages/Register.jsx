@@ -3,6 +3,7 @@ import { Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
 import { post } from '../api/http';
 import { useNavigate } from 'react-router-dom';
+import { login } from '../api/auth';
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -13,9 +14,7 @@ export const Register = () => {
     email: '',
     password: '',
     name: '',
-    lastName: '',
-    state: '',
-    country: ''
+    lastName: ''
   });
 
   const [formDataStore, setformDataStore] = useState({
@@ -38,28 +37,33 @@ export const Register = () => {
 
   const handleSubmitUser = async (e) => {
     e.preventDefault();
+
     setIsLoading(true);
+    localStorage.removeItem('token');
+    if (!validateStep()) return;
 
     const data = {
-      firstName: formDataUser.name.trim(),
-      lastName: formDataUser.lastName.trim(),
+      name: `${formDataUser.name.trim()} ${formDataUser.lastName.trim()}`,
       email: formDataUser.email.trim(),
-      state: formDataUser.state,
-      password: formDataUser.password,
-      country: formDataUser.country // ISO (yyyy-mm-dd) con type="date"
+      password: formDataUser.password
     };
 
     try {
       await post('/auth/register', data, 'core');
 
-      // auto-login (si tu backend no devuelve token en register)
-      const loginRes = await post('/auth/login', {
-        email: formDataUser.email,
-        password: formDataUser.password
-      });
+      const loginRes = await post(
+        '/auth/login',
+        {
+          email: formDataUser.email,
+          password: formDataUser.password
+        },
+        'core'
+      );
+
       localStorage.setItem('token', loginRes.token);
       setIsLoading(false);
-      setStep(3);
+      console.log('User registered and logged in', data);
+      setStep(2);
     } catch (error) {
       setIsLoading(false);
       console.error('Error registering/logging in:', error);
@@ -70,27 +74,33 @@ export const Register = () => {
     e.preventDefault();
     setIsLoading(true);
 
+    const dataUser = {
+      name: `${formDataUser.name.trim()} ${formDataUser.lastName.trim()}`,
+      email: formDataUser.email.trim(),
+      password: formDataUser.password
+    };
+
     const data = {
       name: formDataStore.name.trim(),
-      isLocal: formDataStore.isLocal,
+      hasPhysicalStore: formDataStore.isLocal,
       latitude: formDataStore.latitude,
       longitude: formDataStore.longitude,
-      locationPreview: formDataStore.locationPreview.trim(),
-      dominio: formDataStore.dominio,
-      email: formDataStore.email.trim()
+      address: formDataStore.locationPreview.trim(),
+      subdomain: formDataStore.dominio,
+      supportEmail: formDataStore.email.trim()
     };
 
     try {
-      await post('/store', data, 'core');
-
-      // auto-login (si tu backend no devuelve token en register)
-      const loginRes = await post('/auth/login', {
-        email: formDataUser.email,
-        password: formDataUser.password
-      });
-      localStorage.setItem('token', loginRes.token);
+      await post('/stores', data, 'core');
+      localStorage.removeItem('token');
+      const response = await login(dataUser);
       setIsLoading(false);
-      navigate('/admin');
+      if (response) {
+        navigate('/admin');
+      }
+
+      setIsLoading(false);
+      console.log('Store created and user logged in');
     } catch (error) {
       setIsLoading(false);
       console.error('Error registering/logging in:', error);
@@ -103,8 +113,6 @@ export const Register = () => {
     const requiredFields = [
       { name: 'name', label: 'Nombre' },
       { name: 'lastName', label: 'Apellido' },
-      { name: 'state', label: 'Estado' },
-      { name: 'country', label: 'Pais' },
       { name: 'email', label: 'Email' },
       { name: 'password', label: 'Contraseña' }
     ];
@@ -130,79 +138,6 @@ export const Register = () => {
             </h1>
             <p className="mb-10 text-sm font-light text-center text-black/80 w-82">
               Crea tu contraseña para SPAZYO
-            </p>
-            <div className="relative mb-5">
-              <input
-                value={formDataUser.email}
-                onChange={handleChange}
-                type="email"
-                name="email"
-                id="email"
-                required
-                className="px-4 py-3 border rounded-full outline-none border-black/20 peer w-72 focus:border-blue-400"
-              />
-              <label
-                htmlFor="email"
-                className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-sm  peer-focus:text-blue-400"
-              >
-                Email address
-              </label>
-            </div>
-            <div className="relative mb-5 w-72">
-              <input
-                value={formDataUser.password}
-                onChange={handleChange}
-                name="password"
-                type={showPassword ? 'text' : 'password'}
-                id="password"
-                required
-                className="w-full px-4 py-3 border rounded-full outline-none pr-15 border-black/20 peer focus:border-blue-400"
-              />
-              <label
-                htmlFor="password"
-                className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-sm  text-sm peer-focus:text-blue-400 "
-              >
-                Contraseña
-              </label>
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute p-2 -translate-y-1/2 rounded-full cursor-pointer right-4 top-1/2 text-black/60 hover:bg-black/5"
-              >
-                {showPassword ? (
-                  <EyeOff size={20} strokeWidth={1} />
-                ) : (
-                  <Eye size={20} strokeWidth={1} />
-                )}
-              </button>
-            </div>
-            <div className="px-5 py-3 mb-10 text-[14px] font-light  rounded-sm  w-72">
-              <p className="mb-3 text-sm">Tu contraseña debe contener:</p>
-              <div className="flex items-center gap-3 mb-1">
-                <Check size={16} />
-                <Dot />
-                <p className="text-sm">Al menos 8 caracteres</p>
-              </div>
-            </div>
-            <button
-              className="px-4 py-3 text-sm text-white bg-black rounded-full cursor-pointer w-72"
-              onClick={() => {
-                setStep(2);
-              }}
-            >
-              Continuar
-            </button>
-          </div>
-        </div>
-      )}
-      {step === 2 && (
-        <div className="flex items-center justify-center ">
-          <div className="flex flex-col items-center justify-center">
-            <h1 className="mb-5 text-2xl font-semibold text-center">
-              Crea tu cuenta
-            </h1>
-            <p className="mb-10 text-sm font-light text-center text-black/80 w-72">
-              Dinos un poco sobre ti, ingresa tu información personal
             </p>
             <form onSubmit={handleSubmitUser} className="">
               <div className="grid grid-cols-2 gap-2 w-72">
@@ -241,50 +176,65 @@ export const Register = () => {
                   </label>
                 </div>
               </div>
-              <div className="relative mb-5 w-72">
+              <div className="relative mb-5">
                 <input
-                  value={formDataUser.country}
+                  value={formDataUser.email}
                   onChange={handleChange}
-                  type="text"
-                  name="country"
-                  id="country"
+                  type="email"
+                  name="email"
+                  id="email"
                   required
-                  className="w-full px-4 py-3 border rounded-full outline-none border-black/20 peer focus:border-blue-400"
+                  className="px-4 py-3 border rounded-full outline-none border-black/20 peer w-72 focus:border-blue-400"
                 />
                 <label
-                  htmlFor="country"
-                  className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-sm peer-focus:text-blue-400"
+                  htmlFor="email"
+                  className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-sm  peer-focus:text-blue-400"
                 >
-                  Pais
+                  Email address
                 </label>
               </div>
               <div className="relative mb-5 w-72">
                 <input
-                  value={formDataUser.state}
+                  value={formDataUser.password}
                   onChange={handleChange}
-                  type="text"
-                  name="state"
-                  id="state"
+                  name="password"
+                  type={showPassword ? 'text' : 'password'}
+                  id="password"
                   required
-                  className="w-full px-4 py-3 border rounded-full outline-none border-black/20 peer focus:border-blue-400"
+                  className="w-full px-4 py-3 border rounded-full outline-none pr-15 border-black/20 peer focus:border-blue-400"
                 />
                 <label
-                  htmlFor="state"
-                  className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-sm peer-focus:text-blue-400 "
+                  htmlFor="password"
+                  className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-sm  text-sm peer-focus:text-blue-400 "
                 >
-                  Estado
+                  Contraseña
                 </label>
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute p-2 -translate-y-1/2 rounded-full cursor-pointer right-4 top-1/2 text-black/60 hover:bg-black/5"
+                >
+                  {showPassword ? (
+                    <EyeOff size={20} strokeWidth={1} />
+                  ) : (
+                    <Eye size={20} strokeWidth={1} />
+                  )}
+                </button>
+              </div>
+              <div className="px-5 py-3 mb-10 text-[14px] font-light  rounded-sm  w-72">
+                <p className="mb-3 text-sm">Tu contraseña debe contener:</p>
+                <div className="flex items-center gap-3 mb-1">
+                  <Check size={16} />
+                  <Dot />
+                  <p className="text-sm">Al menos 8 caracteres</p>
+                </div>
               </div>
               <button
-                className={`px-4 py-3  text-white bg-black rounded-full cursor-pointer text-sm w-72 ${
+                type="submit"
+                className={`px-4 py-3 text-white bg-black rounded-full cursor-pointer text-sm w-72 ${
                   isLoading ? 'opacity-50 cursor-not-allowed' : ''
                 }`}
                 disabled={isLoading}
-                onClick={() => {
-                  if (validateStep()) {
-                    setStep(3);
-                  }
-                }}
               >
                 Continuar
               </button>
@@ -292,7 +242,7 @@ export const Register = () => {
           </div>
         </div>
       )}
-      {step === 3 && (
+      {step === 2 && (
         <div className="flex items-center justify-center ">
           <div className="flex flex-col items-center justify-center">
             <h1 className="mb-10 text-2xl font-semibold text-center">
@@ -333,7 +283,7 @@ export const Register = () => {
                   Dominio
                 </label>
               </div>
-              <p className="px-4 py-1 mb-5 text-xs text-neutral-400">
+              <p className="px-4 py-1 mb-5 text-xs lowercase text-neutral-400">
                 {formDataStore.dominio === ''
                   ? 'https://tudominio.spazyo.com'
                   : `https://www.${formDataStore.dominio}.spazyo.com`}
@@ -457,11 +407,6 @@ export const Register = () => {
                     isLoading ? 'opacity-50 cursor-not-allowed' : ''
                   }`}
                   disabled={isLoading}
-                  onClick={() => {
-                    if (validateStep()) {
-                      setStep(4);
-                    }
-                  }}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

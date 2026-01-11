@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { InventaryTemplate } from '../components/InventaryTemplate';
 import { get } from '../api/http';
+import { CreateProduct } from '../components/CreateProduct';
 
 export const Inventario = () => {
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [productsInventary, setProductsInventary] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('ALL');
 
@@ -48,24 +50,9 @@ export const Inventario = () => {
     );
   };
 
-  const colorMap = {
-    black: '#1f1f1f',
-    white: '#f2f2f2',
-    gray: '#9ca3af',
-    red: '#7a0c1d',
-    blue: '#4a6a8a',
-    green: '#5f7f5b',
-    brown: '#6b4f3a',
-    yellow: '#c9b458',
-    beige: '#d6c7a1',
-    orange: '#d16a2c',
-    'Total Orange': '#d16a2c',
-    'Green Apple': '#5f7f5b',
-    'All-Star': '#000000'
-  };
-
   return (
     <div className="">
+      <CreateProduct isCreateOpen={isCreateOpen} />
       {!productState.isOpen ? (
         <>
           <p className="pb-5 text-2xl font-semibold uppercase">Inventario</p>
@@ -117,7 +104,10 @@ export const Inventario = () => {
               </svg>
             </div>
           </div>
-          <div className="inline-flex items-center gap-2 p-2 ml-2 border rounded-md cursor-pointer bg-neutral-50 border-neutral-100">
+          <div
+            className="inline-flex items-center gap-2 p-2 ml-2 border rounded-md cursor-pointer bg-neutral-50 border-neutral-100"
+            onClick={() => setIsCreateOpen(true)}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="14"
@@ -161,7 +151,7 @@ export const Inventario = () => {
                         key={variant.id}
                         className="w-3 h-3 border border-neutral-200"
                         style={{
-                          backgroundColor: colorMap[variant.color]
+                          backgroundColor: variant.color
                         }}
                       />
                     ))}
