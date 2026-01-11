@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { post } from '../api/http';
 
 export const CreateProduct = ({ isCreateOpen }) => {
   const [shouldRenderCreate, setShouldRenderCreate] = useState(false);
@@ -38,8 +39,9 @@ export const CreateProduct = ({ isCreateOpen }) => {
     };
   };
   // Handler to build and log product payload
-  const handleSubmitProduct = () => {
+  const handleSubmitProduct = async () => {
     const payload = buildProductPayload(formDataProduct);
+    await post('/products', payload, 'core');
     console.log('PRODUCT PAYLOAD →', payload);
   };
 
