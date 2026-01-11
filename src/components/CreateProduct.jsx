@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { post } from '../api/http';
 
-export const CreateProduct = ({ isCreateOpen }) => {
+export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
   const [shouldRenderCreate, setShouldRenderCreate] = useState(false);
   const [isVisibleCreate, setIsVisibleCreate] = useState(false);
   const [formDataProduct, setFormDataProduct] = useState({
@@ -153,11 +153,32 @@ export const CreateProduct = ({ isCreateOpen }) => {
     <>
       {shouldRenderCreate && (
         <div
-          className={`fixed top-20 left-0 h-full w-full bg-white  z-50 duration-300 overflow-y-auto  ${
+          className={`fixed top-15 left-0 h-full w-full bg-white  z-50 duration-300 overflow-y-auto  ${
             isVisibleCreate ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          <div className="flex flex-col gap-10 p-6 mb-30">
+          <div className="flex flex-col gap-5 p-6 mb-30">
+            <div
+              className="flex items-center gap-2 cursor-pointer"
+              onClick={() => setIsCreateOpen(false)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                className=" lucide lucide-arrow-left-icon lucide-arrow-left"
+              >
+                <path d="m12 19-7-7 7-7" />
+                <path d="M19 12H5" />
+              </svg>
+              <p className="text-sm font-medium uppercase ">Crear Producto</p>
+            </div>
             <div className="relative ">
               <input
                 value={formDataProduct.name}
@@ -165,14 +186,19 @@ export const CreateProduct = ({ isCreateOpen }) => {
                 type="text"
                 name="name"
                 id="name"
-                placeholder="Nombre del producto"
                 required
-                className="w-full py-2 font-medium uppercase border-b outline-none border-b-neutral-100 placeholder:font-light placeholder:capitalize"
+                className="w-full px-4 py-3 text-sm border rounded-full outline-none border-black/20 peer focus:border-blue-400"
               />
+              <label
+                htmlFor="name"
+                className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-xs peer-focus:text-blue-400"
+              >
+                Nombre
+              </label>
             </div>
 
             {/* Fixed add images button */}
-            <label className="inline-flex items-center w-full gap-1 text-sm font-light leading-none cursor-pointer text-neutral-500">
+            <label className="inline-flex items-center w-full gap-1 text-xs font-light leading-none cursor-pointer text-neutral-500">
               <span className="text-lg leading-none">+</span>
               Agregar imágenes
               <input
@@ -191,7 +217,7 @@ export const CreateProduct = ({ isCreateOpen }) => {
               scrollbar-hide
               [-ms-overflow-style:none]
               [scrollbar-width:none]
-              [&::-webkit-scrollbar]:hidden -mt-7 h-82 object-cover"
+              [&::-webkit-scrollbar]:hidden -mt-2"
               >
                 {formDataProduct.images.map((img, index) => (
                   <img
@@ -203,19 +229,8 @@ export const CreateProduct = ({ isCreateOpen }) => {
                 ))}
               </div>
             )}
-            <div className="relative ">
-              <input
-                value={formDataProduct.description}
-                onChange={handleChange}
-                type="text"
-                name="description"
-                id="description"
-                placeholder="Descripcion del producto"
-                required
-                className="w-full py-2 font-medium uppercase border-b outline-none border-b-neutral-100 placeholder:font-light placeholder:capitalize"
-              />
-            </div>
-            <div className="flex items-center gap-2 ">
+
+            <div className="flex items-center gap-2 my-5">
               <input
                 type="color"
                 value={formDataProduct.color}
@@ -230,9 +245,45 @@ export const CreateProduct = ({ isCreateOpen }) => {
               </span>
             </div>
 
+            <div className="relative ">
+              <input
+                value={formDataProduct.categoria}
+                onChange={handleChange}
+                type="text"
+                name="name"
+                id="name"
+                required
+                className="w-full px-4 py-3 text-sm border rounded-full outline-none border-black/20 peer focus:border-blue-400"
+              />
+              <label
+                htmlFor="name"
+                className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-xs peer-focus:text-blue-400"
+              >
+                Descripcion
+              </label>
+            </div>
+
+            <div className="relative mb-5 -mt-1">
+              <input
+                value={formDataProduct.description}
+                onChange={handleChange}
+                type="text"
+                name="name"
+                id="name"
+                required
+                className="w-full px-4 py-3 text-sm border rounded-full outline-none border-black/20 peer focus:border-blue-400"
+              />
+              <label
+                htmlFor="name"
+                className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-xs peer-focus:text-blue-400"
+              >
+                Categoria
+              </label>
+            </div>
+
             <div className="">
               <div className="overflow-hidden border rounded-md border-neutral-100">
-                <div className="grid grid-cols-2 px-4 py-2 text-sm font-light uppercase bg-neutral-50 border-neutral-100 text-neutral-500 ">
+                <div className="grid grid-cols-2 px-4 py-2 text-xs font-light uppercase bg-neutral-50 border-neutral-100 text-neutral-500 ">
                   <span>Talla</span>
                   <span className="text-right">Cantidad</span>
                 </div>
@@ -240,7 +291,7 @@ export const CreateProduct = ({ isCreateOpen }) => {
                 {formDataProduct.sizes.map((row, index) => (
                   <div
                     key={index}
-                    className="grid items-center grid-cols-2 px-4 py-3 border-t text-neutral-700 border-neutral-100"
+                    className="grid items-center grid-cols-2 px-4 py-3 text-xs border-t text-neutral-700 border-neutral-100"
                   >
                     <input
                       type="text"
@@ -273,27 +324,16 @@ export const CreateProduct = ({ isCreateOpen }) => {
               <button
                 type="button"
                 onClick={handleAddSizeRow}
-                className="flex items-center gap-1 mt-3 text-sm font-light text-neutral-500"
+                className="flex items-center gap-1 px-1 mt-3 text-xs font-light text-neutral-500"
               >
                 <span className="text-lg leading-none">+</span>
                 Agregar talla
               </button>
             </div>
-            <div className="relative ">
-              <input
-                value={formDataProduct.categoria}
-                onChange={handleChange}
-                type="text"
-                name="categoria"
-                id="categoria"
-                placeholder="Categoria del producto"
-                required
-                className="w-full py-2 font-medium uppercase border-b outline-none border-b-neutral-100 placeholder:font-light placeholder:capitalize"
-              />
-            </div>
+
             <div>
               <div className="flex flex-col p-3 font-light border rounded-md bg-neutral-50 border-neutral-100">
-                <label className="w-full text-sm font-light uppercase text-end text-neutral-500">
+                <label className="w-full text-xs font-light uppercase text-end text-neutral-500">
                   Price
                 </label>
                 <input
@@ -303,7 +343,7 @@ export const CreateProduct = ({ isCreateOpen }) => {
                   value={formDataProduct.price}
                   onChange={handlePriceChange}
                   placeholder="0.00"
-                  className="mt-1 font-light text-right bg-transparent outline-none text-neutral-700"
+                  className="mt-1 text-xs font-light text-right bg-transparent outline-none text-neutral-700"
                 />
               </div>
 
@@ -311,14 +351,14 @@ export const CreateProduct = ({ isCreateOpen }) => {
                 <button
                   type="button"
                   onClick={handleSubmitProduct}
-                  className="flex items-center gap-2 px-4 py-2 text-sm text-white bg-black rounded-sm font-meidum"
+                  className="flex items-center gap-2 px-1 text-xs font-semibold text-blue-400 rounded-sm"
                 >
                   Crear
                 </button>
                 <button
                   type="button"
                   onClick={handleAddVariant}
-                  className="flex items-center gap-2 text-sm font-light text-neutral-500"
+                  className="flex items-center gap-2 px-1 text-xs font-light text-neutral-500"
                 >
                   Agregar variante →
                 </button>

@@ -52,7 +52,10 @@ export const Inventario = () => {
 
   return (
     <div className="">
-      <CreateProduct isCreateOpen={isCreateOpen} />
+      <CreateProduct
+        isCreateOpen={isCreateOpen}
+        setIsCreateOpen={setIsCreateOpen}
+      />
       {!productState.isOpen ? (
         <>
           <p className="pb-5 text-2xl font-semibold uppercase">Inventario</p>
