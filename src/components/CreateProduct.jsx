@@ -187,7 +187,7 @@ export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
                 name="name"
                 id="name"
                 required
-                className="w-full px-4 py-3 text-sm border rounded-full outline-none border-black/20 peer focus:border-blue-400"
+                className="w-full px-4 py-3 text-sm uppercase border rounded-full outline-none border-black/20 peer focus:border-blue-400"
               />
               <label
                 htmlFor="name"
@@ -247,17 +247,17 @@ export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
 
             <div className="relative ">
               <input
-                value={formDataProduct.categoria}
+                value={formDataProduct.description}
                 onChange={handleChange}
                 type="text"
-                name="name"
-                id="name"
+                name="description"
+                id="description"
                 required
-                className="w-full px-4 py-3 text-sm border rounded-full outline-none border-black/20 peer focus:border-blue-400"
+                className="w-full px-4 py-3 text-sm uppercase border rounded-full outline-none border-black/20 peer focus:border-blue-400"
               />
               <label
-                htmlFor="name"
-                className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-xs peer-focus:text-blue-400"
+                htmlFor="description"
+                className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-xs peer-focus:text-blue-400 uppercase"
               >
                 Descripcion
               </label>
@@ -265,16 +265,16 @@ export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
 
             <div className="relative mb-5 -mt-1">
               <input
-                value={formDataProduct.description}
+                value={formDataProduct.categoria}
                 onChange={handleChange}
                 type="text"
-                name="name"
-                id="name"
+                name="categoria"
+                id="categoria"
                 required
-                className="w-full px-4 py-3 text-sm border rounded-full outline-none border-black/20 peer focus:border-blue-400"
+                className="w-full px-4 py-3 text-sm uppercase border rounded-full outline-none border-black/20 peer focus:border-blue-400"
               />
               <label
-                htmlFor="name"
+                htmlFor="categoria"
                 className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-xs peer-focus:text-blue-400"
               >
                 Categoria
