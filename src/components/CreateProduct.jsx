@@ -187,7 +187,9 @@ export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
                 name="name"
                 id="name"
                 required
-                className="w-full px-4 py-3 text-sm uppercase border rounded-full outline-none border-black/20 peer focus:border-blue-400"
+                className="w-full px-4 py-3 text-base
+    scale-[0.875]
+    origin-left uppercase border rounded-full outline-none border-black/20 peer focus:border-blue-400"
               />
               <label
                 htmlFor="name"
@@ -253,11 +255,13 @@ export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
                 name="description"
                 id="description"
                 required
-                className="w-full px-4 py-3 text-sm uppercase border rounded-full outline-none border-black/20 peer focus:border-blue-400"
+                className="w-full px-4 py-3 text-base
+    scale-[0.875]
+    origin-left uppercase border placeholder:capitalize rounded-full outline-none border-black/20 peer focus:border-blue-400"
               />
               <label
                 htmlFor="description"
-                className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-xs peer-focus:text-blue-400 uppercase"
+                className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-xs peer-focus:text-blue-400 "
               >
                 Descripcion
               </label>
@@ -271,7 +275,9 @@ export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
                 name="categoria"
                 id="categoria"
                 required
-                className="w-full px-4 py-3 text-sm uppercase border rounded-full outline-none border-black/20 peer focus:border-blue-400"
+                className="w-full px-4 py-3 text-base
+    scale-[0.875]
+    origin-left uppercase placeholder:capitalize  border rounded-full outline-none border-black/20 peer focus:border-blue-400"
               />
               <label
                 htmlFor="categoria"
@@ -291,7 +297,7 @@ export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
                 {formDataProduct.sizes.map((row, index) => (
                   <div
                     key={index}
-                    className="grid items-center grid-cols-2 px-4 py-3 text-xs border-t text-neutral-700 border-neutral-100"
+                    className="grid items-center grid-cols-2 px-4 py-3 border-t text-neutral-700 border-neutral-100"
                   >
                     <input
                       type="text"
@@ -300,7 +306,8 @@ export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
                         handleSizeChange(index, 'size', e.target.value)
                       }
                       placeholder="Ej: S"
-                      className="w-full outline-none"
+                      className="w-full outline-none origin-left text-base
+    scale-[0.75]"
                     />
 
                     <input
@@ -315,7 +322,8 @@ export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
                           e.target.value === '' ? 0 : Number(e.target.value)
                         )
                       }
-                      className="w-20 ml-auto text-right outline-none"
+                      className="w-20 origin-left ml-auto text-right outline-none text-base
+    scale-[0.75]"
                     />
                   </div>
                 ))}
@@ -343,7 +351,8 @@ export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
                   value={formDataProduct.price}
                   onChange={handlePriceChange}
                   placeholder="0.00"
-                  className="mt-1 text-xs font-light text-right bg-transparent outline-none text-neutral-700"
+                  className="mt-1 origin-right text-base
+    scale-[0.75]  font-light text-right bg-transparent outline-none text-neutral-700"
                 />
               </div>
 
