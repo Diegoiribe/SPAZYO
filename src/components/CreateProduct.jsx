@@ -179,7 +179,7 @@ export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
               </svg>
               <p className="text-sm font-medium uppercase ">Crear Producto</p>
             </div>
-            <div className="relative ">
+            <div className="relative w-full border rounded-full placeholder:capitalize border-black/20 peer focus-within:border-blue-400">
               <input
                 value={formDataProduct.name}
                 onChange={handleChange}
@@ -187,9 +187,8 @@ export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
                 name="name"
                 id="name"
                 required
-                className="w-full px-4 py-3 text-base
-    scale-[0.875]
-    origin-left uppercase border rounded-full outline-none border-black/20 peer focus:border-blue-400"
+                className="px-4 py-3 text-base  scale-[0.875]
+    origin-left  uppercase peer w-full outline-none placeholder:capitalize "
               />
               <label
                 htmlFor="name"
@@ -247,7 +246,7 @@ export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
               </span>
             </div>
 
-            <div className="relative ">
+            <div className="relative w-full border rounded-full placeholder:capitalize border-black/20 peer focus-within:border-blue-400">
               <input
                 value={formDataProduct.description}
                 onChange={handleChange}
@@ -255,9 +254,8 @@ export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
                 name="description"
                 id="description"
                 required
-                className="w-full px-4 py-3 text-base
-    scale-[0.875]
-    origin-left uppercase border placeholder:capitalize rounded-full outline-none border-black/20 peer focus:border-blue-400"
+                className="px-4 py-3 text-base  scale-[0.875]
+    origin-left  uppercase peer w-full outline-none placeholder:capitalize "
               />
               <label
                 htmlFor="description"
@@ -267,7 +265,7 @@ export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
               </label>
             </div>
 
-            <div className="relative mb-5 -mt-1">
+            <div className="relative w-full mb-5 -mt-1 border rounded-full placeholder:capitalize border-black/20 peer focus-within:border-blue-400">
               <input
                 value={formDataProduct.categoria}
                 onChange={handleChange}
@@ -275,9 +273,8 @@ export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
                 name="categoria"
                 id="categoria"
                 required
-                className="w-full px-4 py-3 text-base
-    scale-[0.875]
-    origin-left uppercase placeholder:capitalize  border rounded-full outline-none border-black/20 peer focus:border-blue-400"
+                className="px-4 py-3 text-base  scale-[0.875]
+    origin-left  uppercase peer w-full outline-none placeholder:capitalize "
               />
               <label
                 htmlFor="categoria"
