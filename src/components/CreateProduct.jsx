@@ -151,7 +151,7 @@ export const CreateProduct = ({ isCreateOpen }) => {
     <>
       {shouldRenderCreate && (
         <div
-          className={`fixed top-15 left-0 h-full w-full bg-white  z-50 duration-300 overflow-y-auto ${
+          className={`fixed top-20 left-0 h-full w-full bg-white  z-50 duration-300 overflow-y-auto ${
             isVisibleCreate ? 'opacity-100' : 'opacity-0'
           }`}
         >
@@ -165,7 +165,7 @@ export const CreateProduct = ({ isCreateOpen }) => {
                 id="name"
                 placeholder="Nombre del producto"
                 required
-                className="w-full text-sm font-medium uppercase rounded-md outline-none "
+                className="w-full text-sm font-medium uppercase rounded-md outline-none placeholder:text-black"
               />
             </div>
 
@@ -189,7 +189,7 @@ export const CreateProduct = ({ isCreateOpen }) => {
               scrollbar-hide
               [-ms-overflow-style:none]
               [scrollbar-width:none]
-              [&::-webkit-scrollbar]:hidden mb-5 "
+              [&::-webkit-scrollbar]:hidden -mt-7 h-82 object-cover"
               >
                 {formDataProduct.images.map((img, index) => (
                   <img
@@ -210,7 +210,7 @@ export const CreateProduct = ({ isCreateOpen }) => {
                 id="description"
                 placeholder="Descripcion del producto"
                 required
-                className="w-full text-sm font-medium uppercase rounded-md outline-none "
+                className="w-full text-sm font-medium uppercase rounded-md outline-none placeholder:text-black"
               />
             </div>
             <div className="flex items-center gap-2 ">
@@ -286,7 +286,7 @@ export const CreateProduct = ({ isCreateOpen }) => {
                 id="categoria"
                 placeholder="Categoria del producto"
                 required
-                className="w-full text-sm font-medium uppercase rounded-md outline-none "
+                className="w-full text-sm font-medium uppercase rounded-md outline-none placeholder:text-black"
               />
             </div>
             <div>
