@@ -159,7 +159,7 @@ export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
         >
           <div className="flex flex-col gap-5 p-6 mb-30">
             <div
-              className="flex items-center gap-2 cursor-pointer"
+              className="flex items-center gap-2 mb-5 cursor-pointer"
               onClick={() => setIsCreateOpen(false)}
             >
               <svg
