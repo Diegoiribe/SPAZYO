@@ -153,11 +153,11 @@ export const CreateProduct = ({ isCreateOpen }) => {
     <>
       {shouldRenderCreate && (
         <div
-          className={`fixed top-20 left-0 h-full w-full bg-white  z-50 duration-300 overflow-y-auto ${
+          className={`fixed top-20 left-0 h-full w-full bg-white  z-50 duration-300 overflow-y-auto  ${
             isVisibleCreate ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          <div className="flex flex-col gap-10 p-6">
+          <div className="flex flex-col gap-10 p-6 mb-30">
             <div className="relative ">
               <input
                 value={formDataProduct.name}
@@ -167,12 +167,12 @@ export const CreateProduct = ({ isCreateOpen }) => {
                 id="name"
                 placeholder="Nombre del producto"
                 required
-                className="w-full text-sm font-medium uppercase rounded-md outline-none placeholder:text-black"
+                className="w-full py-2 font-medium uppercase border-b outline-none border-b-neutral-100 placeholder:font-light placeholder:capitalize"
               />
             </div>
 
             {/* Fixed add images button */}
-            <label className="inline-flex items-center w-full gap-1 text-xs font-light leading-none cursor-pointer text-neutral-500">
+            <label className="inline-flex items-center w-full gap-1 text-sm font-light leading-none cursor-pointer text-neutral-500">
               <span className="text-lg leading-none">+</span>
               Agregar imágenes
               <input
@@ -198,7 +198,7 @@ export const CreateProduct = ({ isCreateOpen }) => {
                     key={index}
                     src={URL.createObjectURL(img)}
                     alt="preview"
-                    className=" rounded-xs"
+                    className="rounded-sm "
                   />
                 ))}
               </div>
@@ -212,7 +212,7 @@ export const CreateProduct = ({ isCreateOpen }) => {
                 id="description"
                 placeholder="Descripcion del producto"
                 required
-                className="w-full text-sm font-medium uppercase rounded-md outline-none placeholder:text-black"
+                className="w-full py-2 font-medium uppercase border-b outline-none border-b-neutral-100 placeholder:font-light placeholder:capitalize"
               />
             </div>
             <div className="flex items-center gap-2 ">
@@ -222,17 +222,17 @@ export const CreateProduct = ({ isCreateOpen }) => {
                 onChange={handleColorChange}
                 className="w-4 h-4 cursor-pointer rounded-xs border-neutral-100"
               />
-              <p className="-mt-0.5 text-xs font-light uppercase text-neutral-600">
+              <p className="-mt-0.5 text-sm font-light uppercase text-neutral-600">
                 |
               </p>
-              <span className="text-xs font-light uppercase text-neutral-600">
+              <span className="text-sm font-light uppercase text-neutral-600">
                 {formDataProduct.color}
               </span>
             </div>
 
             <div className="">
               <div className="overflow-hidden border rounded-md border-neutral-100">
-                <div className="grid grid-cols-2 px-4 py-2 text-xs font-light uppercase bg-neutral-50 border-neutral-100 text-neutral-500 ">
+                <div className="grid grid-cols-2 px-4 py-2 text-sm font-light uppercase bg-neutral-50 border-neutral-100 text-neutral-500 ">
                   <span>Talla</span>
                   <span className="text-right">Cantidad</span>
                 </div>
@@ -240,7 +240,7 @@ export const CreateProduct = ({ isCreateOpen }) => {
                 {formDataProduct.sizes.map((row, index) => (
                   <div
                     key={index}
-                    className="grid items-center grid-cols-2 px-4 py-3 text-sm border-t text-neutral-700 border-neutral-100"
+                    className="grid items-center grid-cols-2 px-4 py-3 border-t text-neutral-700 border-neutral-100"
                   >
                     <input
                       type="text"
@@ -273,7 +273,7 @@ export const CreateProduct = ({ isCreateOpen }) => {
               <button
                 type="button"
                 onClick={handleAddSizeRow}
-                className="flex items-center gap-1 mt-3 text-xs font-light text-neutral-500"
+                className="flex items-center gap-1 mt-3 text-sm font-light text-neutral-500"
               >
                 <span className="text-lg leading-none">+</span>
                 Agregar talla
@@ -288,12 +288,12 @@ export const CreateProduct = ({ isCreateOpen }) => {
                 id="categoria"
                 placeholder="Categoria del producto"
                 required
-                className="w-full text-sm font-medium uppercase rounded-md outline-none placeholder:text-black"
+                className="w-full py-2 font-medium uppercase border-b outline-none border-b-neutral-100 placeholder:font-light placeholder:capitalize"
               />
             </div>
             <div>
               <div className="flex flex-col p-3 font-light border rounded-md bg-neutral-50 border-neutral-100">
-                <label className="w-full text-xs font-light uppercase text-end text-neutral-500">
+                <label className="w-full text-sm font-light uppercase text-end text-neutral-500">
                   Price
                 </label>
                 <input
@@ -303,7 +303,7 @@ export const CreateProduct = ({ isCreateOpen }) => {
                   value={formDataProduct.price}
                   onChange={handlePriceChange}
                   placeholder="0.00"
-                  className="mt-1 text-sm font-light text-right bg-transparent outline-none text-neutral-700"
+                  className="mt-1 font-light text-right bg-transparent outline-none text-neutral-700"
                 />
               </div>
 
@@ -311,14 +311,14 @@ export const CreateProduct = ({ isCreateOpen }) => {
                 <button
                   type="button"
                   onClick={handleSubmitProduct}
-                  className="flex items-center gap-2 px-4 py-2 text-xs text-white bg-black rounded-sm font-meidum"
+                  className="flex items-center gap-2 px-4 py-2 text-sm text-white bg-black rounded-sm font-meidum"
                 >
                   Crear
                 </button>
                 <button
                   type="button"
                   onClick={handleAddVariant}
-                  className="flex items-center gap-2 text-xs font-light text-neutral-500"
+                  className="flex items-center gap-2 text-sm font-light text-neutral-500"
                 >
                   Agregar variante →
                 </button>
