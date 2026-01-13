@@ -18,3 +18,8 @@ export const patch = async (endpoint, data, scope) => {
   const res = await resolveInstance(scope).patch(endpoint, data);
   return res.data;
 };
+
+export const del = async (endpoint, scope) => {
+  const res = await resolveInstance(scope).delete(endpoint);
+  return res.data;
+};
