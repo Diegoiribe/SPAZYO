@@ -81,7 +81,7 @@ function App() {
             />
           }
         />
-        <Route path="/index" element={<Index />} />
+        <Route path="/landing" element={<Index />} />
       </Routes>
     </Router>
   );
