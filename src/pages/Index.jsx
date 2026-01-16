@@ -4,76 +4,33 @@ export const Index = () => {
   const shops = [
     {
       id: 1,
-      img: 'https://static.zara.net/assets/public/1187/230a/5f27436ea875/e83bcaddee9d/04416226800-a1/04416226800-a1.jpg?ts=1768389751475&w=468',
+      img: 'https://i.pinimg.com/736x/7e/2d/c4/7e2dc48969476067c12a3abc218d1e68.jpg',
       brand: 'ZARA',
       bg: '#f5f5f5'
     },
     {
       id: 2,
-      img: 'https://static.zara.net/assets/public/3662/1d46/d2d54917a44f/9c0eb418e1fe/08281289800-a1/08281289800-a1.jpg?ts=1762331489955&w=468',
+      img: 'https://i.pinimg.com/736x/5a/4f/74/5a4f74cd46f8bf282784e07484c48205.jpg',
       brand: 'COS',
       bg: '#eeeeee'
     },
     {
       id: 3,
-      img: '',
+      img: 'https://i.pinimg.com/736x/33/99/6b/33996ba2abad45519447384ba0020912.jpg',
       brand: '',
       bg: '#ffffff'
     },
     {
       id: 4,
-      img: 'https://static.zara.net/assets/public/85c0/8ccd/04eb4d1b99d2/65394270aaaa/06987403711-a1/06987403711-a1.jpg?ts=1768232413375&w=468',
+      img: 'https://i.pinimg.com/736x/09/62/2f/09622f568e023bdb0eecc9735c2f9e63.jpg',
       brand: 'ARKET',
       bg: '#f2f2f2'
     },
     {
       id: 5,
-      img: 'https://static.zara.net/assets/public/8bcc/067a/275742e7b3dd/7ef8dd2f8c65/00155752800-a5/00155752800-a5.jpg?ts=1764325397594&w=468',
+      img: 'https://i.pinimg.com/1200x/83/c9/c7/83c9c768c187620d0ca6361dc22db811.jpg',
       brand: 'MASSIMO DUTTI',
       bg: '#ededed'
-    },
-    {
-      id: 6,
-      img: '',
-      brand: '',
-      bg: '#ffffff'
-    },
-    {
-      id: 7,
-      img: 'https://static.zara.net/assets/public/85c0/8ccd/04eb4d1b99d2/65394270aaaa/06987403711-a1/06987403711-a1.jpg?ts=1768232413375&w=468',
-      brand: 'ARKET',
-      bg: '#f2f2f2'
-    },
-    {
-      id: 8,
-      img: 'https://static.zara.net/assets/public/8bcc/067a/275742e7b3dd/7ef8dd2f8c65/00155752800-a5/00155752800-a5.jpg?ts=1764325397594&w=468',
-      brand: 'MASSIMO DUTTI',
-      bg: '#ededed'
-    },
-    {
-      id: 9,
-      img: 'https://static.zara.net/assets/public/85c0/8ccd/04eb4d1b99d2/65394270aaaa/06987403711-a1/06987403711-a1.jpg?ts=1768232413375&w=468',
-      brand: 'ARKET',
-      bg: '#f2f2f2'
-    },
-    {
-      id: 10,
-      img: 'https://static.zara.net/assets/public/8bcc/067a/275742e7b3dd/7ef8dd2f8c65/00155752800-a5/00155752800-a5.jpg?ts=1764325397594&w=468',
-      brand: 'MASSIMO DUTTI',
-      bg: '#ededed'
-    },
-
-    {
-      id: 11,
-      img: 'https://static.zara.net/assets/public/85c0/8ccd/04eb4d1b99d2/65394270aaaa/06987403711-a1/06987403711-a1.jpg?ts=1768232413375&w=468',
-      brand: 'ARKET',
-      bg: '#f2f2f2'
-    },
-    {
-      id: 12,
-      img: '',
-      brand: '',
-      bg: '#ffffff'
     }
   ];
 
@@ -127,26 +84,21 @@ export const Index = () => {
         </div>
       </div>
       {/* shops */}
-      <div className="grid grid-cols-4 gap-2 mt-10">
+      <div
+        className="flex
+            gap-1
+            overflow-x-auto
+            scrollbar-hide
+            [-ms-overflow-style:none]
+            [scrollbar-width:none]
+            [&::-webkit-scrollbar]:hidden mt-15"
+      >
         {shops.map((shop) => (
-          <div
-            key={shop.id}
-            className="relative overflow-hidden rounded-xs aspect-[3/5]"
-            style={{ backgroundColor: shop.bg }}
-          >
-            <img
-              src={shop.img}
-              alt={shop.brand}
-              className="absolute inset-0 object-cover w-full h-full"
-            />
-
-            {/* Overlay */}
-            <div className="absolute inset-0 flex items-center justify-center ">
-              <span className="text-sm font-semibold tracking-widest text-white uppercase">
-                {shop.brand}
-              </span>
-            </div>
-          </div>
+          <img
+            src={shop.img}
+            className="object-cover min-w-46 h-72 rounded-xs"
+            alt=""
+          />
         ))}
       </div>
     </div>
