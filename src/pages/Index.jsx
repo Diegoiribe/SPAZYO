@@ -94,11 +94,7 @@ export const Index = () => {
             [&::-webkit-scrollbar]:hidden mt-15"
       >
         {shops.map((shop) => (
-          <img
-            src={shop.img}
-            className="object-cover min-w-46 h-72 rounded-xs"
-            alt=""
-          />
+          <img src={shop.img} className="object-cover rounded-xs" alt="" />
         ))}
       </div>
     </div>
