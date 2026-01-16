@@ -13,6 +13,7 @@ import { Admin } from './pages/Admin';
 import { Drop } from './pages/Drop';
 import { Register } from './pages/Register';
 import { LogIn } from './pages/LogIn';
+import { Index } from './pages';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -80,6 +81,7 @@ function App() {
             />
           }
         />
+        <Route path="/index" element={<Index />} />
       </Routes>
     </Router>
   );
