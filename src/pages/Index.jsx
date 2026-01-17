@@ -105,7 +105,7 @@ export const Index = () => {
         </div>
       </div>
       {/* shops */}
-      <div className="relative mt-20">
+      <div className="relative mb-5 mt-15">
         {/* Mosaic container */}
         <div
           className="relative w-full h-[420px] rounded-xs overflow-hidden"
