@@ -151,7 +151,7 @@ export const VariantCreate = ({
   console.log(isCreateVariantOpen);
   console.log(formDataProduct);
   return (
-    <>
+    <div className="max-w-md mx-auto">
       {shouldRenderCreate && (
         <div
           className={`fixed top-15 left-0 h-full w-full bg-white  z-50 duration-300 overflow-y-auto  ${
@@ -329,6 +329,6 @@ export const VariantCreate = ({
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
