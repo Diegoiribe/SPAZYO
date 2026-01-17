@@ -1,36 +1,33 @@
 import React from 'react';
+import mosaico from '../assets/mosaico.svg';
+import cos from '../assets/cos.jpg';
+import chanel from '../assets/chanel.jpg';
 
 export const Index = () => {
-  const shops = [
+  const mosaicOverlays = [
     {
       id: 1,
-      img: 'https://i.pinimg.com/736x/7e/2d/c4/7e2dc48969476067c12a3abc218d1e68.jpg',
-      brand: 'ZARA',
-      bg: '#f5f5f5'
+      colStart: 2,
+      rowStart: 2,
+      colSpan: 1,
+      rowSpan: 1,
+      img: 'https://i.pinimg.com/1200x/bc/43/0d/bc430dcd9a0d737e67bddac812cd3d84.jpg'
     },
     {
       id: 2,
-      img: 'https://i.pinimg.com/736x/5a/4f/74/5a4f74cd46f8bf282784e07484c48205.jpg',
-      brand: 'COS',
-      bg: '#eeeeee'
+      colStart: 4,
+      rowStart: 3,
+      colSpan: 1,
+      rowSpan: 1,
+      img: cos
     },
     {
       id: 3,
-      img: 'https://i.pinimg.com/736x/33/99/6b/33996ba2abad45519447384ba0020912.jpg',
-      brand: '',
-      bg: '#ffffff'
-    },
-    {
-      id: 4,
-      img: 'https://i.pinimg.com/736x/09/62/2f/09622f568e023bdb0eecc9735c2f9e63.jpg',
-      brand: 'ARKET',
-      bg: '#f2f2f2'
-    },
-    {
-      id: 5,
-      img: 'https://i.pinimg.com/1200x/83/c9/c7/83c9c768c187620d0ca6361dc22db811.jpg',
-      brand: 'MASSIMO DUTTI',
-      bg: '#ededed'
+      colStart: 5,
+      rowStart: 5,
+      colSpan: 1,
+      rowSpan: 1,
+      img: chanel
     }
   ];
 
@@ -84,18 +81,43 @@ export const Index = () => {
         </div>
       </div>
       {/* shops */}
-      <div
-        className="flex
-            gap-1
-            overflow-x-auto
-            scrollbar-hide
-            [-ms-overflow-style:none]
-            [scrollbar-width:none]
-            [&::-webkit-scrollbar]:hidden mt-15"
-      >
-        {shops.map((shop) => (
-          <img src={shop.img} className="object-cover rounded-xs" alt="" />
-        ))}
+      <div className="relative mt-20">
+        {/* Mosaic container */}
+        <div
+          className="relative w-full h-[420px] rounded-xs overflow-hidden"
+          style={{
+            backgroundImage: `url(${mosaico})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+          }}
+        >
+          {/* Grid overlay */}
+          <div className="absolute inset-0 grid grid-cols-6 grid-rows-6">
+            {/* Grid lines */}
+            {Array.from({ length: 36 }).map((_, i) => (
+              <div key={`cell-${i}`} className="border-2 border-white " />
+            ))}
+
+            {/* Mosaic overlays */}
+            {mosaicOverlays.map((item) => (
+              <div
+                key={item.id}
+                className="relative z-10 flex items-center justify-center"
+                style={{
+                  gridColumn: `${item.colStart} / span ${item.colSpan}`,
+                  gridRow: `${item.rowStart} / span ${item.rowSpan}`,
+                  backgroundColor: item.bg
+                }}
+              >
+                <img
+                  src={item.img}
+                  alt=""
+                  className="object-cover w-4/4 h-4/4"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
