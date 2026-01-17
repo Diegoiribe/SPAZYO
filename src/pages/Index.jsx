@@ -8,30 +8,50 @@ export const Index = () => {
     {
       id: 1,
       colStart: 2,
-      rowStart: 2,
+      rowStart: 1,
       colSpan: 1,
-      rowSpan: 1
+      rowSpan: 1,
+      letter: 'S'
     },
     {
       id: 2,
       colStart: 4,
-      rowStart: 3,
+      rowStart: 2,
       colSpan: 1,
-      rowSpan: 1
+      rowSpan: 1,
+      letter: 'P'
     },
     {
       id: 3,
-      colStart: 5,
-      rowStart: 5,
+      colStart: 6,
+      rowStart: 3,
       colSpan: 1,
-      rowSpan: 1
+      rowSpan: 1,
+      letter: 'A'
     },
     {
       id: 4,
+      colStart: 3,
+      rowStart: 4,
+      colSpan: 1,
+      rowSpan: 1,
+      letter: 'Z'
+    },
+    {
+      id: 5,
+      colStart: 5,
+      rowStart: 5,
+      colSpan: 1,
+      rowSpan: 1,
+      letter: 'Y'
+    },
+    {
+      id: 6,
       colStart: 1,
       rowStart: 6,
       colSpan: 1,
-      rowSpan: 1
+      rowSpan: 1,
+      letter: 'O'
     }
   ];
 
@@ -66,13 +86,13 @@ export const Index = () => {
         <div className="flex flex-col items-center ">
           <p className="text-4xl font-light text-center w-72">
             The fastest way to create{' '}
-            <span className="text-neutral-300">shops</span>
+            <span className="text-purple-300">shops</span>
           </p>
           <div className="flex items-center justify-center gap-3 mt-8 text-xs font-light">
             <p className="text-center">Create your account</p>
-            <p className="text-6xl font-bold rotate-180 text-neutral-300">⃔</p>
+            <p className="text-6xl font-bold text-purple-300 rotate-180">⃔</p>
             <p className="text-center">Upload your items</p>
-            <p className="text-6xl font-bold text-neutral-300">⃕ </p>
+            <p className="text-6xl font-bold text-purple-300">⃕ </p>
             <p className="text-center">Start to sell in all world</p>
           </div>
 
@@ -112,7 +132,11 @@ export const Index = () => {
                   gridRow: `${item.rowStart} / span ${item.rowSpan}`,
                   backgroundColor: item.bg
                 }}
-              ></div>
+              >
+                <p className="text-4xl font-black text-purple-300">
+                  {item.letter}
+                </p>
+              </div>
             ))}
           </div>
         </div>
