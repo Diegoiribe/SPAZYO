@@ -16,7 +16,7 @@ export const Pedidos = () => {
   };
 
   return (
-    <div className="">
+    <div className="max-w-md mx-auto">
       {!orderState.isOpen ? (
         <>
           <p className="pb-5 text-2xl font-semibold uppercase">Pedidos</p>

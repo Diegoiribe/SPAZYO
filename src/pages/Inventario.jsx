@@ -51,7 +51,7 @@ export const Inventario = () => {
   };
 
   return (
-    <div className="">
+    <div className="max-w-md mx-auto">
       <CreateProduct
         isCreateOpen={isCreateOpen}
         setIsCreateOpen={setIsCreateOpen}

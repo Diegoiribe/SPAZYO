@@ -14,7 +14,7 @@ export const Admin = ({
   const [page, setPage] = useState('pedidos');
 
   return (
-    <div className="p-6 mt-15">
+    <div className="max-w-md p-6 mx-auto mt-15">
       <div className='className="sticky top-0 z-50"'>
         <Header
           isVisible={true}

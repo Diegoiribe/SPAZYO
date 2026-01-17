@@ -54,7 +54,7 @@ export const Index = () => {
   ];
 
   return (
-    <div className="px-6">
+    <div className="max-w-md px-6 mx-auto">
       {/* band */}
 
       {/* header */}
