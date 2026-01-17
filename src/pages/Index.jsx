@@ -15,7 +15,7 @@ export const Index = () => {
     },
     {
       id: 2,
-      colStart: 4,
+      colStart: 5,
       rowStart: 2,
       colSpan: 1,
       rowSpan: 1,
@@ -24,22 +24,22 @@ export const Index = () => {
     {
       id: 3,
       colStart: 6,
-      rowStart: 3,
+      rowStart: 4,
       colSpan: 1,
       rowSpan: 1,
       letter: 'A'
     },
     {
       id: 4,
-      colStart: 3,
-      rowStart: 4,
+      colStart: 1,
+      rowStart: 3,
       colSpan: 1,
       rowSpan: 1,
       letter: 'Z'
     },
     {
       id: 5,
-      colStart: 5,
+      colStart: 3,
       rowStart: 5,
       colSpan: 1,
       rowSpan: 1,
@@ -47,12 +47,24 @@ export const Index = () => {
     },
     {
       id: 6,
-      colStart: 1,
+      colStart: 5,
       rowStart: 6,
       colSpan: 1,
       rowSpan: 1,
       letter: 'O'
     }
+  ];
+
+  const topics = [
+    { label: 'Crear tu tienda', color: 'bg-purple-300 text-white' },
+    { label: 'Ventas en línea', color: 'bg-neutral-100 text-neutral-800' },
+    { label: 'Pagos', color: 'bg-neutral-100 text-neutral-800' },
+    { label: 'Gestión de productos', color: 'bg-purple-300 text-white' },
+    { label: 'Inventario', color: 'bg-neutral-100 text-neutral-800' },
+    { label: 'Pedidos', color: 'bg-neutral-100 text-neutral-800' },
+    { label: 'Automatización', color: 'bg-neutral-100 text-neutral-800' },
+    { label: 'Ecommerce', color: 'bg-neutral-100 text-neutral-800' },
+    { label: 'Vender en cualquier lugar', color: 'bg-purple-300 text-white' }
   ];
 
   return (
@@ -139,6 +151,106 @@ export const Index = () => {
               </div>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* What do we do */}
+      <div className="mt-20">
+        <p className="mb-5 text-xs font-light tracking-[0.3em]  uppercase text-neutral-400">
+          What do we do?
+        </p>
+
+        <div className="flex items-stretch gap-3 pl-2">
+          <div className="w-[2px] bg-black"></div>
+
+          <p className="text-sm font-light leading-relaxed">
+            Creamos una forma simple de vender en línea. Diseña tu tienda, sube
+            tus productos y empieza a vender sin costos iniciales.{' '}
+            <span className="font-medium text-purple-300">SPAZYO</span> es
+            gratis de usar: solo cobramos una comisión cuando realizas una
+            venta.
+          </p>
+        </div>
+      </div>
+      {/* How it works */}
+      <div className="p-5 mt-20 bg-neutral-100 rounded-xs">
+        <p className="text-xs mb-10 font-light tracking-[0.3em]  uppercase">
+          How ir works
+        </p>
+        <div className="flex items-stretch gap-3 pl-2">
+          <div className="w-[2px] bg-black"></div>
+
+          <p className="text-sm font-light leading-relaxed">
+            Crea tu cuenta, configura tu tienda y sube tus productos. SPAZYO se
+            encarga de la infraestructura, los pagos y la gestión de pedidos
+            para que tú solo te enfoques en vender.
+          </p>
+        </div>
+        <img
+          className="mt-10 rounded-xs"
+          src="https://media.gq.com.mx/photos/635810d9b430aa98c0db89df/16:9/w_2560%2Cc_limit/zara-pre-owned-que-es-como-funciona-cuando-llega-a-mexico.jpg"
+          alt=""
+        />
+      </div>
+      {/* Why Spazyo? */}
+      <div className="relative mt-20">
+        {/* Label */}
+        <p className="mb-5 text-xs font-light tracking-[0.35em] uppercase text-neutral-400">
+          Why Spazyo?
+        </p>
+
+        {/* Title + avatars */}
+        <div className="relative">
+          <h2 className="max-w-md text-4xl font-light leading-tight">
+            Built for creators who care about design
+          </h2>
+
+          {/* Avatars near title */}
+        </div>
+
+        {/* Soft wave */}
+        <svg
+          viewBox="0 0 1000 120"
+          className="w-full h-10 mt-15"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0 60 C 200 20, 400 100, 600 60 S 1000 60, 1000 60"
+            stroke="#D8B4FE"
+            strokeWidth="16"
+            fill="none"
+            strokeLinecap="round"
+          />
+        </svg>
+
+        {/* Testimonial card */}
+        <div className="mt-15">
+          <div className="p-5 text-white bg-black shadow-lg rounded-xs">
+            <p className="text-sm font-light leading-relaxed ">
+              Spazyo nos permitió lanzar nuestra tienda sin sacrificar diseño ni
+              libertad. Todo es simple, claro y sin costos ocultos.
+            </p>
+
+            <p className="mt-5 text-xs font-light text-neutral-300">
+              Ana María López, Fundadora de @Mayco
+            </p>
+          </div>
+        </div>
+      </div>
+      {/* Pricing */}
+      <div className="mt-20">
+        <div className="">
+          <p className="mb-5 text-xs font-light tracking-[0.35em] uppercase text-neutral-400">
+            Pricing
+          </p>
+
+          <p className="text-3xl font-light leading-tight">
+            Free to use —
+            <span className="text-purple-300"> we only charge a </span>
+            <span className="font-medium">10% commission</span>
+            <span className="text-purple-300"> per sale.</span>
+          </p>
         </div>
       </div>
     </div>
