@@ -86,13 +86,13 @@ export const Index = () => {
         <div className="flex flex-col items-center ">
           <p className="text-4xl font-light text-center w-72">
             The fastest way to create{' '}
-            <span className="text-purple-300">shops</span>
+            <span className="text-rose-400">shops</span>
           </p>
           <div className="flex items-center justify-center gap-3 mt-8 text-xs font-light">
             <p className="text-center">Create your account</p>
-            <p className="text-6xl font-bold text-purple-300 rotate-180">⃔</p>
+            <p className="text-6xl font-bold rotate-180 text-rose-400">⃔</p>
             <p className="text-center">Upload your items</p>
-            <p className="text-6xl font-bold text-purple-300">⃕ </p>
+            <p className="text-6xl font-bold text-rose-400">⃕ </p>
             <p className="text-center">Start to sell in all world</p>
           </div>
 
@@ -133,7 +133,7 @@ export const Index = () => {
                   backgroundColor: item.bg
                 }}
               >
-                <p className="text-4xl font-black text-purple-300">
+                <p className="text-4xl font-black text-rose-400">
                   {item.letter}
                 </p>
               </div>
