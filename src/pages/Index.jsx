@@ -231,7 +231,7 @@ export const Index = () => {
             Pricing
           </p>
 
-          <p className="text-4xl font-light leading-tight">
+          <p className="text-3xl font-light leading-tight">
             Free to use —
             <span className="text-purple-300"> we only charge a </span>
             <span className="font-medium">10% commission</span>
