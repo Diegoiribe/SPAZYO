@@ -1,7 +1,5 @@
 import React from 'react';
 import mosaico from '../assets/mosaico.svg';
-import cos from '../assets/cos.jpg';
-import chanel from '../assets/chanel.jpg';
 
 export const Index = () => {
   const mosaicOverlays = [
@@ -53,18 +51,6 @@ export const Index = () => {
       rowSpan: 1,
       letter: 'O'
     }
-  ];
-
-  const topics = [
-    { label: 'Crear tu tienda', color: 'bg-purple-300 text-white' },
-    { label: 'Ventas en línea', color: 'bg-neutral-100 text-neutral-800' },
-    { label: 'Pagos', color: 'bg-neutral-100 text-neutral-800' },
-    { label: 'Gestión de productos', color: 'bg-purple-300 text-white' },
-    { label: 'Inventario', color: 'bg-neutral-100 text-neutral-800' },
-    { label: 'Pedidos', color: 'bg-neutral-100 text-neutral-800' },
-    { label: 'Automatización', color: 'bg-neutral-100 text-neutral-800' },
-    { label: 'Ecommerce', color: 'bg-neutral-100 text-neutral-800' },
-    { label: 'Vender en cualquier lugar', color: 'bg-purple-300 text-white' }
   ];
 
   return (
@@ -239,13 +225,13 @@ export const Index = () => {
         </div>
       </div>
       {/* Pricing */}
-      <div className="mt-20">
+      <div className="mt-20 mb-40">
         <div className="">
           <p className="mb-5 text-xs font-light tracking-[0.35em] uppercase text-neutral-400">
             Pricing
           </p>
 
-          <p className="text-3xl font-light leading-tight">
+          <p className="text-4xl font-light leading-tight">
             Free to use —
             <span className="text-purple-300"> we only charge a </span>
             <span className="font-medium">10% commission</span>
