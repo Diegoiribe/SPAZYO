@@ -10,24 +10,28 @@ export const Index = () => {
       colStart: 2,
       rowStart: 2,
       colSpan: 1,
-      rowSpan: 1,
-      img: 'https://i.pinimg.com/1200x/bc/43/0d/bc430dcd9a0d737e67bddac812cd3d84.jpg'
+      rowSpan: 1
     },
     {
       id: 2,
       colStart: 4,
       rowStart: 3,
       colSpan: 1,
-      rowSpan: 1,
-      img: cos
+      rowSpan: 1
     },
     {
       id: 3,
       colStart: 5,
       rowStart: 5,
       colSpan: 1,
-      rowSpan: 1,
-      img: chanel
+      rowSpan: 1
+    },
+    {
+      id: 4,
+      colStart: 1,
+      rowStart: 6,
+      colSpan: 1,
+      rowSpan: 1
     }
   ];
 
@@ -60,7 +64,7 @@ export const Index = () => {
       {/* slogan */}
       <div className="flex items-center justify-center mt-15">
         <div className="flex flex-col items-center ">
-          <p className="text-4xl font-light text-center">
+          <p className="text-4xl font-light text-center w-72">
             The fastest way to create{' '}
             <span className="text-neutral-300">shops</span>
           </p>
@@ -102,19 +106,13 @@ export const Index = () => {
             {mosaicOverlays.map((item) => (
               <div
                 key={item.id}
-                className="relative z-10 flex items-center justify-center"
+                className="relative z-10 flex items-center justify-center bg-white"
                 style={{
                   gridColumn: `${item.colStart} / span ${item.colSpan}`,
                   gridRow: `${item.rowStart} / span ${item.rowSpan}`,
                   backgroundColor: item.bg
                 }}
-              >
-                <img
-                  src={item.img}
-                  alt=""
-                  className="object-cover w-4/4 h-4/4"
-                />
-              </div>
+              ></div>
             ))}
           </div>
         </div>
