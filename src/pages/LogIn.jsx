@@ -102,7 +102,13 @@ export const LogIn = () => {
             <p className="text-xs font-medium">O</p>
             <div className="w-28 h-[1px] bg-black/30"></div>
           </div>
-          <div className="flex items-center gap-5 px-4 py-3 text-black bg-white border rounded-full cursor-pointer w-72 border-black/30">
+          <div
+            className="flex items-center gap-5 px-4 py-3 text-black bg-white border rounded-full cursor-pointer w-72 border-black/30"
+            onClick={() => {
+              window.location.href =
+                '55935514264-u6vkreu9lcv7uf0nr7p1tanv0iae6vvv.apps.googleusercontent.com';
+            }}
+          >
             <div
               style={{
                 backgroundImage: `url(https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Google_Favicon_2025.svg/330px-Google_Favicon_2025.svg.png)`,

@@ -46,7 +46,7 @@ function App() {
           }
         />
         <Route
-          path="/"
+          path="/main"
           element={
             <Catalog
               isToggleOpen={isToggleOpen}
@@ -81,7 +81,7 @@ function App() {
             />
           }
         />
-        <Route path="/landing" element={<Index />} />
+        <Route path="/" element={<Index />} />
       </Routes>
     </Router>
   );

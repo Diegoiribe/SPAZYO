@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-export const Toggle = ({
-  setIsToggleOpen,
-  isToggleOpen,
-  isAdmin = false,
-  setPage
+export const ToggleLanding = ({
+  setIsToggleLandingOpen,
+  isToggleLangingOpen
 }) => {
   const [shouldRender, setShouldRender] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -15,7 +13,7 @@ export const Toggle = ({
     let visibleTimeout;
     let hideTimeout;
 
-    if (isToggleOpen) {
+    if (isToggleLangingOpen) {
       showTimeout = setTimeout(() => {
         setShouldRender(true);
       }, 300);
@@ -37,7 +35,7 @@ export const Toggle = ({
       clearTimeout(visibleTimeout);
       clearTimeout(hideTimeout);
     };
-  }, [isToggleOpen]);
+  }, [isToggleLangingOpen]);
   return (
     <>
       {shouldRender && (
@@ -49,15 +47,15 @@ export const Toggle = ({
           {/* Botón de cerrar */}
           <div className="flex items-center gap-5 p-10">
             <Link
-              to={isAdmin ? '/admin' : '/main'}
+              to={'/'}
               className="overflow-hidden text-4xl font-bold text-black uppercase"
-              onClick={() => setIsToggleOpen(false)}
+              onClick={() => setIsToggleLandingOpen(false)}
             >
-              ZAyca
+              spazyo
             </Link>
             <div className="flex items-center justify-end p-4">
               <button
-                onClick={() => setIsToggleOpen(false)}
+                onClick={() => setIsToggleLandingOpen(false)}
                 className="text-black cursor-pointer"
               >
                 <svg
@@ -78,68 +76,25 @@ export const Toggle = ({
           </div>
 
           {/* Contenido de la sidebar */}
-          {!isAdmin ? (
-            <div className="flex flex-col gap-3 p-10 mt-24 ">
-              <p className="text-xs font-semibold uppercase text-neutral-300">
-                Switch to
-              </p>
-              <Link
-                to="/main"
-                className="text-sm font-light text-black cursor-pointer"
-                onClick={() => setIsToggleOpen(false)}
-              >
-                View all
-              </Link>
-              <Link
-                to="/newdrop"
-                className="text-sm font-light text-[#ff2222]  cursor-pointer"
-                onClick={() => setIsToggleOpen(false)}
-              >
-                New drop
-              </Link>
-              <Link
-                to="/pedido"
-                className="text-sm font-light text-black cursor-pointer"
-                onClick={() => setIsToggleOpen(false)}
-              >
-                Rastrear pedido
-              </Link>
-            </div>
-          ) : (
-            /* Si esta logeado admin */
-
-            <div className="flex flex-col gap-3 p-10 mt-24 ">
-              <p className="text-xs uppercase text-neutral-300">Dashboard</p>
-
-              <p
-                className="text-sm text-black uppercase cursor-pointer"
-                onClick={() => setIsToggleOpen(false)}
-              ></p>
-              <p
-                className="text-sm text-black cursor-pointer"
-                onClick={() => {
-                  setPage('inventario');
-                  setIsToggleOpen(false);
-                }}
-              >
-                Inventario
-              </p>
-
-              <p
-                className="text-sm text-black cursor-pointer"
-                onClick={() => {
-                  setPage('pedidos');
-                  setIsToggleOpen(false);
-                }}
-              >
-                Pedidos
-              </p>
-              <p
-                className="text-sm text-black uppercase cursor-pointer"
-                onClick={() => setIsToggleOpen(false)}
-              ></p>
-            </div>
-          )}
+          <div className="flex flex-col gap-3 p-10 mt-24 ">
+            <p className="text-xs font-semibold uppercase text-neutral-300">
+              Switch to
+            </p>
+            <Link
+              to="/login"
+              className="text-sm font-light text-black cursor-pointer"
+              onClick={() => setIsToggleLandingOpen(false)}
+            >
+              Iniciar sesion
+            </Link>
+            <Link
+              to="/register"
+              className="text-sm font-light text-black cursor-pointer"
+              onClick={() => setIsToggleLandingOpen(false)}
+            >
+              Registrarse
+            </Link>
+          </div>
         </div>
       )}
     </>

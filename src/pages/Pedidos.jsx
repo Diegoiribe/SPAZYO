@@ -1,12 +1,27 @@
 import { OrdersTemplate } from '../components/OrdersTemplate';
 import { data } from '../data/db';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { get } from '../api/http';
 
 export const Pedidos = () => {
+  const [productsOrders, setProductsOrders] = useState([]);
   const [orderState, setOrderState] = useState({
     isOpen: false,
     orderId: null
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await get('/products', null, 'tenant');
+        console.log('Data fetched:', data);
+        setProductsOrders(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
 
   const openOrder = (id) => {
     setOrderState({

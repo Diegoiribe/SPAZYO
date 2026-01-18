@@ -1,7 +1,11 @@
 import React from 'react';
 import mosaico from '../assets/mosaico.svg';
+import { ToggleLanding } from '../components/ToggleLanding';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export const Index = () => {
+  const [isToggleLangingOpen, setIsToggleLangingOpen] = useState(false);
   const mosaicOverlays = [
     {
       id: 1,
@@ -56,11 +60,14 @@ export const Index = () => {
   return (
     <div className="max-w-md px-6 mx-auto">
       {/* band */}
-
+      <ToggleLanding
+        isToggleLangingOpen={isToggleLangingOpen}
+        setIsToggleLandingOpen={setIsToggleLangingOpen}
+      />
       {/* header */}
       <div className="flex flex-row-reverse items-center justify-between px-1 mt-3">
         <h1 className="text-2xl font-bold uppercase">Spazyo</h1>
-        <div>
+        <div onClick={() => setIsToggleLangingOpen(true)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -80,26 +87,29 @@ export const Index = () => {
         </div>
       </div>
       {/* slogan */}
-      <div className="flex items-center justify-center mt-15">
+      <div className="flex items-center justify-center mt-20">
         <div className="flex flex-col items-center ">
-          <p className="text-4xl font-light text-center w-72">
-            The fastest way to create{' '}
-            <span className="text-purple-300">shops</span>
+          <p className="text-4xl font-light text-center ">
+            La manera mas rapida para crear{' '}
+            <span className="text-purple-300">tiendas</span>
           </p>
           <div className="flex items-center justify-center gap-3 mt-8 text-xs font-light">
-            <p className="text-center">Create your account</p>
+            <p className="text-center">Crea tu cuenta</p>
             <p className="text-6xl font-bold text-purple-300 rotate-180">⃔</p>
-            <p className="text-center">Upload your items</p>
+            <p className="text-center">Sube tus productos</p>
             <p className="text-6xl font-bold text-purple-300">⃕ </p>
-            <p className="text-center">Start to sell in all world</p>
+            <p className="text-center max-w-28">Vende en todo el mundo</p>
           </div>
 
-          <div className="flex items-center justify-between w-full py-1 pl-4 pr-1 mt-10 font-light bg-neutral-100 rounded-xs">
-            <p className="text-sm ">Create your account free</p>
+          <Link
+            to={'/register'}
+            className="flex items-center justify-between w-full py-1 pl-4 pr-1 mt-10 font-light bg-neutral-100 rounded-xs"
+          >
+            <p className="text-sm ">Crea tu cuenta gratis</p>
             <p className="px-4 py-2 text-sm text-white bg-black rounded-xs">
-              Try now
+              Probar ahora
             </p>
-          </div>
+          </Link>
         </div>
       </div>
       {/* shops */}
@@ -143,7 +153,7 @@ export const Index = () => {
       {/* What do we do */}
       <div className="mt-20">
         <p className="mb-5 text-xs font-light tracking-[0.3em]  uppercase text-neutral-400">
-          What do we do?
+          ¿Que hacemos?
         </p>
 
         <div className="flex items-stretch gap-3 pl-2">
@@ -161,7 +171,7 @@ export const Index = () => {
       {/* How it works */}
       <div className="p-5 mt-20 bg-neutral-100 rounded-xs">
         <p className="text-xs mb-10 font-light tracking-[0.3em]  uppercase">
-          How ir works
+          ¿Como funciona?
         </p>
         <div className="flex items-stretch gap-3 pl-2">
           <div className="w-[2px] bg-black"></div>
@@ -182,13 +192,13 @@ export const Index = () => {
       <div className="relative mt-20">
         {/* Label */}
         <p className="mb-5 text-xs font-light tracking-[0.35em] uppercase text-neutral-400">
-          Why Spazyo?
+          ¿Por que Spazyo?
         </p>
 
         {/* Title + avatars */}
         <div className="relative">
           <h2 className="max-w-md text-4xl font-light leading-tight">
-            Built for creators who care about design
+            Una forma simple de vender en línea
           </h2>
 
           {/* Avatars near title */}
@@ -232,10 +242,10 @@ export const Index = () => {
           </p>
 
           <p className="text-3xl font-light leading-tight">
-            Free to use —
-            <span className="text-purple-300"> we only charge a </span>
-            <span className="font-medium">10% commission</span>
-            <span className="text-purple-300"> per sale.</span>
+            Gratis de usar —
+            <span className="text-purple-300"> combramos una </span>
+            <span className="font-medium">comision del 10%</span>
+            <span className="text-purple-300"> por venta.</span>
           </p>
         </div>
       </div>
