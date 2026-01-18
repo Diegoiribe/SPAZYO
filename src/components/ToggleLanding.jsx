@@ -82,14 +82,14 @@ export const ToggleLanding = ({
             </p>
             <Link
               to="/login"
-              className="text-sm font-light text-black cursor-pointer"
+              className="text-sm font-light uppercase cursor-pointer text-neutral-600 "
               onClick={() => setIsToggleLandingOpen(false)}
             >
               Iniciar sesion
             </Link>
             <Link
               to="/register"
-              className="text-sm font-light text-black cursor-pointer"
+              className="text-sm font-light uppercase cursor-pointer text-neutral-600"
               onClick={() => setIsToggleLandingOpen(false)}
             >
               Registrarse

@@ -2,6 +2,8 @@ import { Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
 import { login } from '../api/auth';
 import { useNavigate } from 'react-router-dom';
+import { GoogleLogin } from '@react-oauth/google';
+import { post } from '../api/http';
 
 export const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -44,6 +46,7 @@ export const LogIn = () => {
           <p className="mb-10 text-sm font-light text-center w-68 text-black/80">
             Accede a tu spazyo para descubrir y comprar productos únicos.
           </p>
+
           <form onSubmit={handleSubmit}>
             <div className="relative mb-5">
               <input
@@ -82,9 +85,9 @@ export const LogIn = () => {
                 className="absolute p-2 -translate-y-1/2 rounded-full cursor-pointer right-4 top-1/2 text-black/60 hover:bg-black/5"
               >
                 {showPassword ? (
-                  <EyeOff size={20} strokeWidth={2.5} />
+                  <EyeOff size={20} strokeWidth={1.5} />
                 ) : (
-                  <Eye size={20} strokeWidth={2.5} />
+                  <Eye size={20} strokeWidth={1.5} />
                 )}
               </button>
             </div>
@@ -102,24 +105,46 @@ export const LogIn = () => {
             <p className="text-xs font-medium">O</p>
             <div className="w-28 h-[1px] bg-black/30"></div>
           </div>
-          <div
-            className="flex items-center gap-5 px-4 py-3 text-black bg-white border rounded-full cursor-pointer w-72 border-black/30"
-            onClick={() => {
-              window.location.href =
-                '55935514264-u6vkreu9lcv7uf0nr7p1tanv0iae6vvv.apps.googleusercontent.com';
-            }}
-          >
-            <div
-              style={{
-                backgroundImage: `url(https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Google_Favicon_2025.svg/330px-Google_Favicon_2025.svg.png)`,
-                backgroundSize: 'contain',
-                backgroundPosition: 'center',
-                width: '20px',
-                height: '20px',
-                display: 'inline-block'
-              }}
-            ></div>
-            <p className="text-sm">Continuar con Google</p>
+
+          {/* Botón Google visible custom (overlay con el botón real de Google) */}
+          <div className="relative w-72">
+            {/* Tu diseño */}
+            <div className="flex items-center gap-5 px-4 py-3 text-black bg-white border rounded-full w-72 border-black/20 hover:bg-black/5">
+              <div
+                style={{
+                  backgroundImage:
+                    'url(https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Google_Favicon_2025.svg/330px-Google_Favicon_2025.svg.png)',
+                  backgroundSize: 'contain',
+                  backgroundPosition: 'center',
+                  width: '20px',
+                  height: '20px',
+                  display: 'inline-block'
+                }}
+              />
+              <p className="text-sm">Continuar con Google</p>
+            </div>
+
+            {/* Botón real de Google (invisible, captura el click) */}
+            <div className="absolute inset-0 opacity-0">
+              <GoogleLogin
+                onSuccess={async (credentialResponse) => {
+                  try {
+                    const response = await post('/auth/google', {
+                      idToken: credentialResponse.credential
+                    });
+                    localStorage.setItem('token', response.token);
+                    navigate('/admin');
+                  } catch (error) {
+                    console.error('Error con login Google', error);
+                  }
+                }}
+                onError={() => {
+                  console.log('Google Login Failed');
+                }}
+                useOneTap={false}
+                width="288"
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -1,12 +1,64 @@
 import { Check, Dot } from 'lucide-react';
 import { Eye, EyeOff } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { post } from '../api/http';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { login } from '../api/auth';
+
+const CodeInput = ({ length = 6, onComplete }) => {
+  const [values, setValues] = useState(Array(length).fill(''));
+
+  const handleChange = (e, index) => {
+    const val = e.target.value.replace(/[^0-9]/g, '');
+    if (!val) return;
+
+    const newValues = [...values];
+    newValues[index] = val[val.length - 1];
+    setValues(newValues);
+
+    if (index < length - 1) {
+      document.getElementById(`code-${index + 1}`)?.focus();
+    }
+
+    if (newValues.every((v) => v !== '')) {
+      onComplete?.(newValues.join(''));
+    }
+  };
+
+  const handleKeyDown = (e, index) => {
+    if (e.key === 'Backspace') {
+      const newValues = [...values];
+      newValues[index] = '';
+      setValues(newValues);
+
+      if (index > 0) {
+        document.getElementById(`code-${index - 1}`)?.focus();
+      }
+    }
+  };
+
+  return (
+    <div className="flex justify-center gap-3">
+      {values.map((v, i) => (
+        <input
+          key={i}
+          id={`code-${i}`}
+          type="text"
+          inputMode="numeric"
+          maxLength={1}
+          value={v}
+          onChange={(e) => handleChange(e, i)}
+          onKeyDown={(e) => handleKeyDown(e, i)}
+          className="w-8 text-center border rounded-md outline-none text-md h-9 border-black/20 focus:border-blue-400"
+        />
+      ))}
+    </div>
+  );
+};
 
 export const Register = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [step, setStep] = useState(1);
@@ -27,6 +79,15 @@ export const Register = () => {
     email: ''
   });
 
+  useEffect(() => {
+    const stepParam = new URLSearchParams(location.search).get('step');
+    if (!stepParam) return;
+    const parsed = Number(stepParam);
+    if (Number.isInteger(parsed) && parsed >= 1 && parsed <= 3) {
+      setStep(parsed);
+    }
+  }, [location.search]);
+
   const handleChange = (e) => {
     setformDataUser({ ...formDataUser, [e.target.name]: e.target.value });
   };
@@ -40,7 +101,10 @@ export const Register = () => {
 
     setIsLoading(true);
     localStorage.removeItem('token');
-    if (!validateStep()) return;
+    if (!validateStep()) {
+      setIsLoading(false);
+      return;
+    }
 
     const data = {
       name: `${formDataUser.name.trim()} ${formDataUser.lastName.trim()}`,
@@ -51,22 +115,56 @@ export const Register = () => {
     try {
       await post('/auth/register', data, 'core');
 
-      const loginRes = await post(
-        '/auth/login',
-        {
-          email: formDataUser.email,
-          password: formDataUser.password
-        },
-        'core'
-      );
-
-      localStorage.setItem('token', loginRes.token);
       setIsLoading(false);
-      console.log('User registered and logged in', data);
+      console.log('User registered', data);
       setStep(2);
     } catch (error) {
       setIsLoading(false);
       console.error('Error registering/logging in:', error);
+    }
+  };
+
+  const handleVerifyEmail = async (code) => {
+    if (isLoading) return;
+    setIsLoading(true);
+
+    try {
+      await post(
+        '/auth/email/verify',
+        { token: code, email: formDataUser.email.trim() },
+        'core'
+      );
+      await login({
+        email: formDataUser.email,
+        password: formDataUser.password
+      });
+      setIsLoading(false);
+      setStep(3);
+    } catch (error) {
+      setIsLoading(false);
+      console.error('Error verifying email:', error);
+      alert('No se pudo verificar el correo. Inténtalo de nuevo.');
+    }
+  };
+
+  const handleResendEmail = async () => {
+    if (!formDataUser.email.trim()) {
+      alert('Primero ingresa tu email.');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      await post(
+        '/auth/email/resend',
+        { email: formDataUser.email.trim() },
+        'core'
+      );
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      console.error('Error resending email:', error);
+      alert('No se pudo reenviar el correo. Inténtalo más tarde.');
     }
   };
 
@@ -243,6 +341,35 @@ export const Register = () => {
         </div>
       )}
       {step === 2 && (
+        <div className="flex items-center justify-center h-[87dvh] ">
+          <div className="flex flex-col items-center">
+            <h1 className="mb-5 text-2xl font-semibold text-center">
+              Verifica tu correo
+            </h1>
+            <p className="mb-10 text-sm font-light text-center text-black/80 w-72">
+              Ingresa el código de 6 dígitos que te enviamos a tu correo.
+            </p>
+            <CodeInput
+              length={6}
+              onComplete={(code) => {
+                console.log('Código ingresado:', code);
+                handleVerifyEmail(code);
+              }}
+            />
+            <button
+              type="button"
+              onClick={handleResendEmail}
+              className={`px-4 py-3 text-white bg-black mt-10 rounded-full cursor-pointer text-sm w-68 ${
+                isLoading ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
+              disabled={isLoading}
+            >
+              Reenviar correo
+            </button>
+          </div>
+        </div>
+      )}
+      {step === 3 && (
         <div className="flex items-center justify-center ">
           <div className="flex flex-col items-center justify-center">
             <h1 className="mb-10 text-2xl font-semibold text-center">
