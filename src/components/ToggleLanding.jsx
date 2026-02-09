@@ -80,20 +80,25 @@ export const ToggleLanding = ({
             <p className="text-xs font-semibold uppercase text-neutral-300">
               Switch to
             </p>
-            <Link
-              to="/login"
+            <p
               className="text-sm font-light uppercase cursor-pointer text-neutral-600 "
-              onClick={() => setIsToggleLandingOpen(false)}
+              onClick={() => {
+                setIsToggleLandingOpen(false);
+                window.location.href = 'https://admin.spazyo.test:5173/login';
+              }}
             >
               Iniciar sesion
-            </Link>
-            <Link
-              to="/register"
+            </p>
+            <p
               className="text-sm font-light uppercase cursor-pointer text-neutral-600"
-              onClick={() => setIsToggleLandingOpen(false)}
+              onClick={() => {
+                setIsToggleLandingOpen(false);
+                window.location.href =
+                  'https://admin.spazyo.test:5173/register';
+              }}
             >
               Registrarse
-            </Link>
+            </p>
           </div>
         </div>
       )}

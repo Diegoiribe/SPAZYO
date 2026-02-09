@@ -80,11 +80,11 @@ export const Toggle = ({
           {/* Contenido de la sidebar */}
           {!isAdmin ? (
             <div className="flex flex-col gap-3 p-10 mt-24 ">
-              <p className="text-xs font-semibold uppercase text-neutral-300">
+              <p className="text-xs font-light uppercase text-neutral-300">
                 Switch to
               </p>
               <Link
-                to="/main"
+                to="/"
                 className="text-sm font-light uppercase cursor-pointer text-neutral-600"
                 onClick={() => setIsToggleOpen(false)}
               >

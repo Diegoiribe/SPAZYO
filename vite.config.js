@@ -1,8 +1,16 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import tailwindcss from '@tailwindcss/vite';
+import fs from 'fs';
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()]
+  plugins: [react(), tailwindcss()],
+  server: {
+    host: 'spazyo.test',
+    port: 5173,
+    https: {
+      key: fs.readFileSync('./spazyo.test+1-key.pem'),
+      cert: fs.readFileSync('./spazyo.test+1.pem')
+    }
+  }
 });

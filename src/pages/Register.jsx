@@ -1,8 +1,8 @@
 import { Check, Dot } from 'lucide-react';
 import { Eye, EyeOff } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { post } from '../api/http';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { login } from '../api/auth';
 
 const CodeInput = ({ length = 6, onComplete }) => {
@@ -58,7 +58,6 @@ const CodeInput = ({ length = 6, onComplete }) => {
 
 export const Register = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [step, setStep] = useState(1);
@@ -78,15 +77,6 @@ export const Register = () => {
     dominio: '',
     email: ''
   });
-
-  useEffect(() => {
-    const stepParam = new URLSearchParams(location.search).get('step');
-    if (!stepParam) return;
-    const parsed = Number(stepParam);
-    if (Number.isInteger(parsed) && parsed >= 1 && parsed <= 3) {
-      setStep(parsed);
-    }
-  }, [location.search]);
 
   const handleChange = (e) => {
     setformDataUser({ ...formDataUser, [e.target.name]: e.target.value });
