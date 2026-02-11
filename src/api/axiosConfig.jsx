@@ -18,11 +18,3 @@ export const coreInstance = withAuth(
     headers: { 'Content-Type': 'application/json' }
   })
 );
-
-// TENANT API (por defecto zayca, luego lo puedes hacer dinámico)
-export const tenantInstance = withAuth(
-  axios.create({
-    baseURL: 'https://zayca.spazyo.xyz',
-    headers: { 'Content-Type': 'application/json' }
-  })
-);

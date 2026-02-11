@@ -106,11 +106,10 @@ export const LogIn = () => {
     setIsLoading(true);
 
     try {
-      await post(
-        '/auth/email/verify',
-        { token: code, email: formData.email.trim() },
-        'core'
-      );
+      await post('/auth/email/verify', {
+        token: code,
+        email: formData.email.trim()
+      });
       await login({
         email: formData.email,
         password: formData.password
@@ -132,11 +131,9 @@ export const LogIn = () => {
 
     setIsLoading(true);
     try {
-      await post(
-        '/auth/email/resend',
-        { email: formData.email.trim() },
-        'core'
-      );
+      await post('/auth/email/resend', {
+        email: formData.email.trim()
+      });
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
@@ -170,7 +167,7 @@ export const LogIn = () => {
     };
 
     try {
-      await post('/stores', data, 'core');
+      await post('/stores', data);
       localStorage.removeItem('token');
       const response = await login(dataUser);
       setIsLoading(false);

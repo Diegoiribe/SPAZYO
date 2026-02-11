@@ -52,7 +52,7 @@ export const VariantCreate = ({
     const payload = buildVariantPayload(formDataProduct);
     if (!payload) return;
 
-    await patch(`/products/${product.id}`, payload, 'tenant');
+    await patch(`/products/${product.id}`, payload);
     console.log('VARIANTS PAYLOAD →', payload);
   };
 

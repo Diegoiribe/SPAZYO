@@ -19,19 +19,16 @@ export const InventaryTemplate = ({ setProductState, productState }) => {
     try {
       // If only one variant exists, delete the whole product
       if (product.variants.length === 1) {
-        await del(`/products/${product.id}`, 'tenant');
+        await del(`/products/${product.id}`);
         setProductState({ isOpen: false, orderId: null });
         return;
       }
 
       // Otherwise delete only the variant
-      await del(
-        `/products/${product.id}/variants/${activeVariant.id}`,
-        'tenant'
-      );
+      await del(`/products/${product.id}/variants/${activeVariant.id}`);
 
       // Refresh product list
-      const data = await get('/products', null, 'tenant');
+      const data = await get('/products', null);
       setProductInventary(data);
 
       setActiveVariantIndex(0);
@@ -47,7 +44,7 @@ export const InventaryTemplate = ({ setProductState, productState }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await get('/products', null, 'tenant');
+        const data = await get('/products', null);
         console.log('Data fetched:', data);
         setProductInventary(data);
       } catch (error) {

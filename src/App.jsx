@@ -95,6 +95,7 @@ function StoreApp({
               setIsToggleOpen={setIsToggleOpen}
               isBagOpen={isBagOpen}
               setIsBagOpen={setIsBagOpen}
+              subdomain={subdomain}
             />
           }
         />
@@ -130,6 +131,7 @@ function App() {
   const [isBagOpen, setIsBagOpen] = useState(false);
 
   const subdomain = getSubdomain();
+  console.log(subdomain);
 
   // admin.spazyo.xyz
   if (subdomain === 'admin') {

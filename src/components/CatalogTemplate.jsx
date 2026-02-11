@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 import { get } from '../api/http';
 import { useState, useEffect } from 'react';
 
-export const CatalogTemplate = () => {
+export const CatalogTemplate = ({ subdomain }) => {
   const [productsCatalog, setProductsCatalog] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await get('/products', null, 'tenant');
+        const data = await get(`/public/products/${subdomain}`);
         console.log('Data fetched:', data);
         setProductsCatalog(data);
       } catch (error) {
@@ -19,6 +19,8 @@ export const CatalogTemplate = () => {
 
     fetchData();
   }, []);
+
+  console.log('productsCatalog:', productsCatalog);
 
   return (
     <div className="grid grid-cols-2 gap-x-6 gap-y-2">

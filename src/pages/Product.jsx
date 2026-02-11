@@ -8,7 +8,8 @@ export const Product = ({
   isToggleOpen,
   setIsToggleOpen,
   isBagOpen,
-  setIsBagOpen
+  setIsBagOpen,
+  subdomain
 }) => {
   const youMightLikeRef = useRef(null);
   const [showAddCart, setShowAddCart] = useState(true);
@@ -79,10 +80,11 @@ export const Product = ({
           setIsToggleOpen={setIsToggleOpen}
           isBagOpen={isBagOpen}
           setIsBagOpen={setIsBagOpen}
+          subdomain={subdomain}
         />
       </div>
       <div>
-        <ProductTemplate />
+        <ProductTemplate subdomain={subdomain} />
       </div>
       <div
         className={`fixed bottom-0 left-0 p-6 right-0 z-50 bg-white

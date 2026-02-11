@@ -41,7 +41,7 @@ export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
   // Handler to build and log product payload
   const handleSubmitProduct = async () => {
     const payload = buildProductPayload(formDataProduct);
-    await post('/products', payload, 'core');
+    await post('/products', payload);
     console.log('PRODUCT PAYLOAD →', payload);
   };
 

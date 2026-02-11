@@ -9,6 +9,9 @@ export const Toggle = ({
 }) => {
   const [shouldRender, setShouldRender] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [subdomain, _] = useState(() => {
+    return localStorage.getItem('subdomain') || '';
+  });
 
   useEffect(() => {
     let showTimeout;
@@ -38,6 +41,9 @@ export const Toggle = ({
       clearTimeout(hideTimeout);
     };
   }, [isToggleOpen]);
+
+  console.log(subdomain);
+
   return (
     <>
       {shouldRender && (
@@ -49,11 +55,11 @@ export const Toggle = ({
           {/* Botón de cerrar */}
           <div className="flex items-center gap-5 p-10">
             <Link
-              to={isAdmin ? '/admin' : '/main'}
+              to={'/'}
               className="overflow-hidden text-4xl font-bold text-black uppercase"
               onClick={() => setIsToggleOpen(false)}
             >
-              ZAyca
+              {subdomain || 'spazyo'}
             </Link>
             <div className="flex items-center justify-end p-4">
               <button
@@ -80,26 +86,23 @@ export const Toggle = ({
           {/* Contenido de la sidebar */}
           {!isAdmin ? (
             <div className="flex flex-col gap-3 p-10 mt-24 ">
-              <p className="text-xs font-light uppercase text-neutral-300">
-                Switch to
-              </p>
               <Link
                 to="/"
-                className="text-sm font-light uppercase cursor-pointer text-neutral-600"
+                className="text-sm font-medium uppercase cursor-pointer text-neutral-600"
                 onClick={() => setIsToggleOpen(false)}
               >
                 View all
               </Link>
               <Link
                 to="/newdrop"
-                className="text-sm font-light text-[#ff2222]  uppercase cursor-pointer "
+                className="text-sm font-medium text-[#ff2222]  uppercase cursor-pointer "
                 onClick={() => setIsToggleOpen(false)}
               >
                 New drop
               </Link>
               <Link
                 to="/pedido"
-                className="text-sm font-light uppercase cursor-pointer text-neutral-600"
+                className="text-sm font-medium uppercase cursor-pointer text-neutral-600"
                 onClick={() => setIsToggleOpen(false)}
               >
                 Rastrear pedido
@@ -109,14 +112,12 @@ export const Toggle = ({
             /* Si esta logeado admin */
 
             <div className="flex flex-col gap-3 p-10 mt-24 ">
-              <p className="text-xs uppercase text-neutral-300">Dashboard</p>
-
               <p
                 className="text-sm text-black uppercase cursor-pointer"
                 onClick={() => setIsToggleOpen(false)}
               ></p>
               <p
-                className="text-sm font-light uppercase cursor-pointer text-neutral-600"
+                className="text-sm font-medium uppercase cursor-pointer text-neutral-600"
                 onClick={() => {
                   setPage('inventario');
                   setIsToggleOpen(false);
@@ -126,7 +127,7 @@ export const Toggle = ({
               </p>
 
               <p
-                className="text-sm font-light uppercase cursor-pointer text-neutral-600"
+                className="text-sm font-medium uppercase cursor-pointer text-neutral-600"
                 onClick={() => {
                   setPage('pedidos');
                   setIsToggleOpen(false);

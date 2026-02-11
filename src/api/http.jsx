@@ -1,25 +1,21 @@
-import { coreInstance, tenantInstance } from './axiosConfig';
+import { coreInstance } from './axiosConfig';
 
-const resolveInstance = (scope = 'tenant') => {
-  return scope === 'core' ? coreInstance : tenantInstance;
-};
-
-export const get = async (endpoint, params, scope) => {
-  const res = await resolveInstance(scope).get(endpoint, { params });
+export const get = async (endpoint, params = null) => {
+  const res = await coreInstance.get(endpoint, { params });
   return res.data;
 };
 
-export const post = async (endpoint, data, scope) => {
-  const res = await resolveInstance(scope).post(endpoint, data);
+export const post = async (endpoint, data) => {
+  const res = await coreInstance.post(endpoint, data);
   return res.data;
 };
 
-export const patch = async (endpoint, data, scope) => {
-  const res = await resolveInstance(scope).patch(endpoint, data);
+export const patch = async (endpoint, data) => {
+  const res = await coreInstance.patch(endpoint, data);
   return res.data;
 };
 
-export const del = async (endpoint, scope) => {
-  const res = await resolveInstance(scope).delete(endpoint);
+export const del = async (endpoint) => {
+  const res = await coreInstance.delete(endpoint);
   return res.data;
 };

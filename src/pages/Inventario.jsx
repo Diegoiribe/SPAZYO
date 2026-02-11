@@ -11,7 +11,7 @@ export const Inventario = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await get('/products', null, 'tenant');
+        const data = await get('/products', null);
         console.log('Data fetched:', data);
         setProductsInventary(data);
       } catch (error) {

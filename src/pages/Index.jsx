@@ -102,7 +102,7 @@ export const Index = () => {
           </div>
 
           <Link
-            to={'/register'}
+            to={'https://admin.spazyo.test:5173/register'}
             className="flex items-center justify-between w-full py-1 pl-4 pr-1 mt-10 font-light bg-neutral-100 rounded-xs"
           >
             <p className="text-sm ">Crea tu cuenta gratis</p>

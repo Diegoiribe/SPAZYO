@@ -6,7 +6,8 @@ export const Catalog = ({
   isToggleOpen,
   setIsToggleOpen,
   isBagOpen,
-  setIsBagOpen
+  setIsBagOpen,
+  subdomain
 }) => {
   return (
     <div className="max-w-md p-6 mx-auto mt-15">
@@ -17,13 +18,14 @@ export const Catalog = ({
           setIsToggleOpen={setIsToggleOpen}
           isBagOpen={isBagOpen}
           setIsBagOpen={setIsBagOpen}
+          subdomain={subdomain}
         />
       </div>
 
       <p className="mb-2 text-[11px] font-semibold uppercase truncate text-neutral-800">
         view all
       </p>
-      <CatalogTemplate />
+      <CatalogTemplate subdomain={subdomain} />
     </div>
   );
 };

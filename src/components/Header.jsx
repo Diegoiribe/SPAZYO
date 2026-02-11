@@ -10,7 +10,8 @@ export const Header = ({
   isAdmin,
   isBagOpen,
   setIsBagOpen,
-  setPage
+  setPage,
+  subdomain
 }) => {
   const [bagItems, setBagItems] = useState([]);
 
@@ -81,7 +82,9 @@ export const Header = ({
           <path d="M4 12h16" />
           <path d="M4 19h16" />
         </svg>
-        {isVisible && <p className="text-2xl font-bold uppercase">zayca</p>}
+        {isVisible && (
+          <p className="text-2xl font-bold uppercase">{subdomain}</p>
+        )}
         {/* aqui */}
         {!isAdmin && (
           <div className="relative pr-6">

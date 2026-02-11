@@ -103,7 +103,7 @@ export const Register = () => {
     };
 
     try {
-      await post('/auth/register', data, 'core');
+      await post('/auth/register', data);
 
       setIsLoading(false);
       console.log('User registered', data);
@@ -119,11 +119,10 @@ export const Register = () => {
     setIsLoading(true);
 
     try {
-      await post(
-        '/auth/email/verify',
-        { token: code, email: formDataUser.email.trim() },
-        'core'
-      );
+      await post('/auth/email/verify', {
+        token: code,
+        email: formDataUser.email.trim()
+      });
       await login({
         email: formDataUser.email,
         password: formDataUser.password
@@ -145,11 +144,9 @@ export const Register = () => {
 
     setIsLoading(true);
     try {
-      await post(
-        '/auth/email/resend',
-        { email: formDataUser.email.trim() },
-        'core'
-      );
+      await post('/auth/email/resend', {
+        email: formDataUser.email.trim()
+      });
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
@@ -179,7 +176,7 @@ export const Register = () => {
     };
 
     try {
-      await post('/stores', data, 'core');
+      await post('/stores', data);
       localStorage.removeItem('token');
       const response = await login(dataUser);
       setIsLoading(false);

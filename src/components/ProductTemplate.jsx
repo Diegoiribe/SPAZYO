@@ -3,7 +3,7 @@ import { get } from '../api/http';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-export const ProductTemplate = () => {
+export const ProductTemplate = ({ subdomain }) => {
   const { id, idColor } = useParams();
   const [productView, setProductView] = useState([]);
   const product = productView.find((p) => p.id === Number(id));
@@ -14,7 +14,7 @@ export const ProductTemplate = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await get('/products', null, 'tenant');
+        const data = await get(`/public/products/${subdomain}`);
         console.log('Data fetched:', data);
         setProductView(data);
       } catch (error) {
