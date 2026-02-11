@@ -34,9 +34,7 @@ export const Pedidos = () => {
     <div className="max-w-md mx-auto">
       {!orderState.isOpen ? (
         <>
-          <p className="pb-5 text-2xl font-semibold uppercase">Pedidos</p>
-
-          <div className="inline-flex items-center gap-2 p-2 border rounded-md cursor-pointer bg-neutral-50 border-neutral-100">
+          <div className="inline-flex items-center gap-2 p-2 mt-10 border rounded-md cursor-pointer bg-neutral-50 border-neutral-100">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="12"
@@ -89,7 +87,7 @@ export const Pedidos = () => {
               <path d="M12 5v14" />
             </svg>
           </div>
-          <div className="mt-5 border rounded-md border-neutral-100">
+          <div className="mt-10 border rounded-md border-neutral-100">
             <div className="grid grid-cols-[60px_1fr_80px_10px] gap-4 px-3 py-3 text-xs font-light bg-neutral-50 border-b border-neutral-100 rounded-t-md text-neutral-500 uppercase">
               <p>Order</p>
               <p>Name</p>

@@ -170,7 +170,7 @@ export const InventaryTemplate = ({ setProductState, productState }) => {
                     |
                   </p>
                   <p className="text-xs font-light -mt-0.25 uppercase text-neutral-600">
-                    {activeVariant.colorName}
+                    {activeVariant.colorName || activeVariant.color}
                   </p>
                 </>
               )}

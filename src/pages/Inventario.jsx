@@ -58,8 +58,7 @@ export const Inventario = () => {
       />
       {!productState.isOpen ? (
         <>
-          <p className="pb-5 text-2xl font-semibold uppercase">Inventario</p>
-          <div className="flex justify-between">
+          <div className="flex justify-between pt-10">
             <div className="relative inline-flex items-center ">
               <div className="inline-flex items-center gap-2 p-2 border rounded-md cursor-pointer bg-neutral-50 border-neutral-100">
                 <svg
@@ -128,7 +127,7 @@ export const Inventario = () => {
               </svg>
             </div>
           </div>
-          <div className="mt-5 border rounded-md border-neutral-100">
+          <div className="mt-10 border rounded-md border-neutral-100">
             <div className="grid grid-cols-[40px_1fr_80px_10px] gap-4 px-3 py-3 text-xs font-light bg-neutral-50 border-b border-neutral-100 rounded-t-md text-neutral-500 uppercase">
               <p>Items</p>
               <p>Name</p>
@@ -144,13 +143,17 @@ export const Inventario = () => {
                 <div
                   onClick={() => openOrder(product.id)}
                   key={product.id}
-                  className={`grid items-center grid-cols-[40px_1fr_80px_10px] gap-4 px-3 py-3 text-xs  border-b border-neutral-100  cursor-pointer ${
-                    getTotalStockByProduct(product) < 5
-                      ? ' text-amber-400 font-medium'
-                      : 'text-black font-light'
-                  }`}
+                  className={`grid items-center grid-cols-[40px_1fr_80px_10px] gap-4 px-3 py-3 text-xs  border-b border-neutral-100  cursor-pointer font-light`}
                 >
-                  <p className="">{getTotalStockByProduct(product)}</p>
+                  <p
+                    className={`${
+                      getTotalStockByProduct(product) < 5
+                        ? 'font-medium underline'
+                        : 'text-black  '
+                    }`}
+                  >
+                    {getTotalStockByProduct(product)}
+                  </p>
                   <p className="uppercase truncate">{product.name}</p>
 
                   <div className="flex items-center gap-1 py-2">
