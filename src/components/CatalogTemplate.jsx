@@ -50,14 +50,14 @@ export const CatalogTemplate = ({ subdomain }) => {
   return (
     <div className="relative w-full overflow-hidden">
       <div className="flex justify-between px-6 mt-2 mb-3">
-        <div className="relative inline-flex items-center gap-2 rounded-md cursor-pointer ">
-          <span className="text-sm font-medium uppercase ">
+        <div className="relative inline-flex items-center gap-2 cursor-pointer ">
+          <span className="text-xs font-medium uppercase ">
             {selectedCategory}
           </span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
+            width="14"
+            height="14"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -150,16 +150,16 @@ export const CatalogTemplate = ({ subdomain }) => {
               key={item.id}
             >
               <div className="flex flex-col items-start w-full gap-2 mt-2">
-                <p className="w-full mb-2 font-light text-left truncate text-md text-neutral-800">
-                  {item.name}
-                </p>
                 <img
                   src={item.variants[0].photos[0]}
                   alt=""
                   className="object-cover w-full h-[65vh] rounded-xs"
                 />
                 <div className="w-full">
-                  <div className="flex items-center justify-between w-full px-2 mt-2 ">
+                  <div className="flex items-center justify-between w-full gap-5 px-2 mt-2 ">
+                    <p className="font-light truncate w-fulltext-sm text-neutral-800">
+                      {item.name}
+                    </p>
                     <div className="flex items-center gap-1">
                       <div
                         className="w-2.75 h-2.75 border border-neutral-100 "
@@ -167,18 +167,18 @@ export const CatalogTemplate = ({ subdomain }) => {
                           backgroundColor: item.variants[0].color
                         }}
                       />
-                      <p className="text-xs font-light text-black uppercase">
+                      <p className="text-xs font-light text-black uppercase ">
                         +{item.variants.length}
                       </p>
                     </div>
-                    <p className="text-sm uppercase text-neutral-500 ">
-                      ${' '}
-                      {new Intl.NumberFormat('en-US', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
-                      }).format(item.price)}
-                    </p>
                   </div>
+                  <p className="px-2 mt-2 text-xs uppercase text-neutral-500 ">
+                    ${' '}
+                    {new Intl.NumberFormat('en-US', {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                    }).format(item.price)}
+                  </p>
                 </div>
               </div>
             </Link>

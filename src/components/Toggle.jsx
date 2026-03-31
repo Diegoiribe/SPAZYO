@@ -87,21 +87,21 @@ export const Toggle = ({
             <div className="flex flex-col gap-3 p-10 mt-24 ">
               <Link
                 to="/"
-                className="font-medium text-black cursor-pointer text-md"
+                className="font-light text-black cursor-pointer text-md"
                 onClick={() => setIsToggleOpen(false)}
               >
                 View all
               </Link>
               <Link
                 to="/newdrop"
-                className="text-md font-medium text-[#000000]   cursor-pointer "
+                className="text-md font-light text-[#000000]   cursor-pointer "
                 onClick={() => setIsToggleOpen(false)}
               >
                 New drop
               </Link>
               <Link
                 to="/pedido"
-                className="font-medium text-black cursor-pointer text-md"
+                className="font-light text-black cursor-pointer text-md"
                 onClick={() => setIsToggleOpen(false)}
               >
                 Rastrear pedido
@@ -116,7 +116,7 @@ export const Toggle = ({
                 onClick={() => setIsToggleOpen(false)}
               ></p>
               <p
-                className="font-medium text-black cursor-pointer text-medium"
+                className="font-light text-black cursor-pointer text-medium"
                 onClick={() => {
                   setPage('pedidos');
                   setIsToggleOpen(false);
@@ -125,7 +125,7 @@ export const Toggle = ({
                 Pedidos
               </p>
               <p
-                className="font-medium text-black cursor-pointer text-md"
+                className="font-light text-black cursor-pointer text-md"
                 onClick={() => {
                   setPage('inventario');
                   setIsToggleOpen(false);
