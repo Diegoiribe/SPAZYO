@@ -10,8 +10,8 @@ export const Catalog = ({
   subdomain
 }) => {
   return (
-    <div className="max-w-md p-6 mx-auto mt-15">
-      <div className="sticky top-0 z-50">
+    <div className="max-w-md mx-auto mt-15">
+      <div className="sticky top-0 z-50 px-6 pt-6">
         <Header
           isVisible={true}
           isToggleOpen={isToggleOpen}
@@ -22,7 +22,6 @@ export const Catalog = ({
         />
       </div>
 
-      <p className="mt-2 mb-2 text-lg font-medium text-neutral-800">View all</p>
       <CatalogTemplate subdomain={subdomain} />
     </div>
   );
