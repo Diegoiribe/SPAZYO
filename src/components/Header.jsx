@@ -122,7 +122,7 @@ export const Header = ({
                 <path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z" />
               </svg>
               {bagItems.length > 0 && !isBagOpen && (
-                <div className="absolute -bottom-1 -left-1 flex items-center justify-center w-4 h-4 text-[10px] font-medium text-white bg-red-500 rounded-full">
+                <div className="absolute -bottom-1 -left-1 flex items-center justify-center w-3 h-3 text-[8px] font-medium text-white bg-black rounded-full">
                   {bagItems.length}
                 </div>
               )}

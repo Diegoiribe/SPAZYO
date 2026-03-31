@@ -2,12 +2,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import { get } from '../api/http';
 
-export const AddCart = () => {
+export const AddCart = ({ subdomain }) => {
   const { id, idColor } = useParams();
   const navigate = useNavigate();
   const [productAdd, setProductAdd] = useState([]);
   const [showSizes, setShowSizes] = useState(false);
-
   const containerRef = useRef(null);
   const product = productAdd.find((p) => p.id === Number(id));
   const activeVariant = product?.variants.find((v) => v.id === Number(idColor));
@@ -15,7 +14,7 @@ export const AddCart = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await get('/products');
+        const data = await get(`/public/products/${subdomain}`);
         console.log('Data fetched:', data);
         setProductAdd(data);
       } catch (error) {
@@ -142,7 +141,7 @@ export const AddCart = () => {
               }}
               className="flex items-center justify-center w-full py-3 transition cursor-pointer rounded-xs hover:bg-black hover:text-white"
             >
-              <p className="text-xs font-light uppercase">{size}</p>
+              <p className="text-xs font-light underline uppercase">{size}</p>
             </div>
           ))}
         </div>

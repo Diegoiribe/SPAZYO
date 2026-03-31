@@ -215,30 +215,31 @@ export const InventaryTemplate = ({ setProductState, productState }) => {
                 }).format(product.price)}
               </p>
             </div>
+            {product.variants.length > 1 && (
+              <div className="flex justify-between mt-4">
+                <button
+                  onClick={() =>
+                    setActiveVariantIndex((prev) =>
+                      prev === 0 ? product.variants.length - 1 : prev - 1
+                    )
+                  }
+                  className="text-xs font-light text-neutral-500"
+                >
+                  ← Previous
+                </button>
 
-            <div className="flex justify-between mt-4">
-              <button
-                onClick={() =>
-                  setActiveVariantIndex((prev) =>
-                    prev === 0 ? product.variants.length - 1 : prev - 1
-                  )
-                }
-                className="text-xs font-light text-neutral-500"
-              >
-                ← Previous
-              </button>
-
-              <button
-                onClick={() =>
-                  setActiveVariantIndex((prev) =>
-                    prev === product.variants.length - 1 ? 0 : prev + 1
-                  )
-                }
-                className="text-xs font-light text-neutral-500"
-              >
-                Next →
-              </button>
-            </div>
+                <button
+                  onClick={() =>
+                    setActiveVariantIndex((prev) =>
+                      prev === product.variants.length - 1 ? 0 : prev + 1
+                    )
+                  }
+                  className="text-xs font-light text-neutral-500"
+                >
+                  Next →
+                </button>
+              </div>
+            )}
           </div>
         )}
       </>

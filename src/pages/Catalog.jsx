@@ -22,7 +22,7 @@ export const Catalog = ({
         />
       </div>
 
-      <p className="mb-2 text-lg font-medium text-neutral-800">View all</p>
+      <p className="mt-2 mb-2 text-lg font-medium text-neutral-800">View all</p>
       <CatalogTemplate subdomain={subdomain} />
     </div>
   );

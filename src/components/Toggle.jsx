@@ -43,8 +43,6 @@ export const Toggle = ({
     };
   }, [isToggleOpen]);
 
-  console.log(subdomain);
-
   return (
     <>
       {shouldRender && (

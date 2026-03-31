@@ -72,6 +72,8 @@ export const Product = ({
     return () => observer.disconnect();
   }, []);
 
+  console.log(showAddCart, isToggleOpen, isBagOpen);
+
   return (
     <div className="max-w-md p-6 mx-auto mt-15">
       <div className="sticky top-0 z-50">
@@ -87,7 +89,7 @@ export const Product = ({
         <ProductTemplate subdomain={subdomain} />
       </div>
       <div
-        className={`fixed bottom-0 left-0 p-6 right-0 z-50 bg-white
+        className={`fixed  bottom-0 left-0 p-6 right-0 z-50 bg-white
     transition-all duration-500 ease-out
     ${
       showAddCart && !isToggleOpen && !isBagOpen
@@ -95,7 +97,7 @@ export const Product = ({
         : 'opacity-0 translate-y-full pointer-events-none'
     }`}
       >
-        <AddCart />
+        <AddCart subdomain={subdomain} />
       </div>
       <div ref={youMightLikeRef} className="h-1" />
       <YouMightLike />

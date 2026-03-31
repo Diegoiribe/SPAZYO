@@ -23,7 +23,7 @@ export const CatalogTemplate = ({ subdomain }) => {
   console.log('productsCatalog:', productsCatalog);
 
   return (
-    <div className="grid grid-cols-1 gap-x-6 gap-y-2">
+    <div className="grid grid-cols-1 mt-8 gap-x-6 gap-y-6">
       {productsCatalog.map((item) => (
         <Link
           to={`/product/${item.id}/${item.variants[0].id}`}
@@ -34,7 +34,7 @@ export const CatalogTemplate = ({ subdomain }) => {
             <img
               src={item.variants[0].photos[0]}
               alt=""
-              className="object-cover rounded-sm h-30 w-30 "
+              className="object-cover rounded-xs h-30 w-30 "
             />
             <div>
               <p className="pb-4 pr-5 font-medium capitalize w-45 text-md text-neutral-800">
