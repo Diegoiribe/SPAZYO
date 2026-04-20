@@ -14,6 +14,7 @@ import { Drop } from './pages/Drop';
 import { Register } from './pages/Register';
 import { LogIn } from './pages/LogIn';
 import { Index } from './pages/Index';
+import { ResetPassword } from './components/ResetPassword';
 import { NoFound } from './components/NoFound';
 import { get } from './api/http';
 
@@ -50,6 +51,7 @@ function AdminApp({ isToggleOpen, setIsToggleOpen, isBagOpen, setIsBagOpen }) {
       <Router>
         <Routes>
           <Route path="/register" element={<Register />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/*" element={<LogIn />} />
         </Routes>
       </Router>
@@ -74,6 +76,7 @@ function AdminApp({ isToggleOpen, setIsToggleOpen, isBagOpen, setIsBagOpen }) {
         />
         <Route path="/login" element={<LogIn />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/*" element={<NoFound isNoFound={true} />} />
       </Routes>
     </Router>
   );

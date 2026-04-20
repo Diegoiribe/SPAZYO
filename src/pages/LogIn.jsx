@@ -1,7 +1,7 @@
 import { Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
 import { login } from '../api/auth';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
 import { post } from '../api/http';
 
@@ -199,51 +199,62 @@ export const LogIn = () => {
             </p>
 
             <form onSubmit={handleSubmit}>
-              <div className="relative mb-5">
-                <input
-                  value={formData.email}
-                  onChange={(e) => handleChange('email', e.target.value)}
-                  type="email"
-                  id="email"
-                  required
-                  className="px-4 py-3 border rounded-full outline-none border-black/20 peer w-72 focus:border-blue-400"
-                />
-                <label
-                  htmlFor="email"
-                  className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-sm peer-focus:text-blue-400"
+              <div>
+                <div className="relative mb-5">
+                  <input
+                    value={formData.email}
+                    onChange={(e) => handleChange('email', e.target.value)}
+                    type="email"
+                    id="email"
+                    required
+                    className="px-4 py-3 border rounded-full outline-none border-black/20 peer w-72 focus:border-blue-400"
+                  />
+                  <label
+                    htmlFor="email"
+                    className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-sm peer-focus:text-blue-400"
+                  >
+                    Email address
+                  </label>
+                </div>
+                <div className="relative mb-5 w-72">
+                  <input
+                    value={formData.password}
+                    onChange={(e) => handleChange('password', e.target.value)}
+                    type={showPassword ? 'text' : 'password'}
+                    id="password"
+                    required
+                    className="w-full px-4 py-3 border rounded-full outline-none pr-15 border-black/20 peer focus:border-blue-400"
+                  />
+                  <label
+                    htmlFor="password"
+                    className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-sm peer-focus:text-blue-400"
+                  >
+                    Contraseña
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute p-2 -translate-y-1/2 rounded-full cursor-pointer right-4 top-1/2 text-black/60 hover:bg-black/5"
+                  >
+                    {showPassword ? (
+                      <EyeOff size={20} strokeWidth={1.5} />
+                    ) : (
+                      <Eye size={20} strokeWidth={1.5} />
+                    )}
+                  </button>
+                </div>
+                <Link
+                  to="/reset-password"
+                  className="absolute px-1 -mt-3 text-xs font-light text-blue-400"
                 >
-                  Email address
-                </label>
+                  <span className="text-neutral-500">
+                    ¿Olvidaste tu contraseña?{' '}
+                  </span>{' '}
+                </Link>
               </div>
-              <div className="relative mb-5 w-72">
-                <input
-                  value={formData.password}
-                  onChange={(e) => handleChange('password', e.target.value)}
-                  type={showPassword ? 'text' : 'password'}
-                  id="password"
-                  required
-                  className="w-full px-4 py-3 border rounded-full outline-none pr-15 border-black/20 peer focus:border-blue-400"
-                />
-                <label
-                  htmlFor="password"
-                  className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-sm peer-focus:text-blue-400"
-                >
-                  Contraseña
-                </label>
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute p-2 -translate-y-1/2 rounded-full cursor-pointer right-4 top-1/2 text-black/60 hover:bg-black/5"
-                >
-                  {showPassword ? (
-                    <EyeOff size={20} strokeWidth={1.5} />
-                  ) : (
-                    <Eye size={20} strokeWidth={1.5} />
-                  )}
-                </button>
-              </div>
+
               <button
-                className={`px-4 py-3  text-white bg-black rounded-full text-sm cursor-pointer w-72 ${
+                className={`px-4 py-3 mt-6  text-white bg-black rounded-full text-sm cursor-pointer w-72 ${
                   isLoading ? 'opacity-50 cursor-not-allowed' : ''
                 }`}
                 disabled={isLoading}
@@ -296,6 +307,12 @@ export const LogIn = () => {
                   width="288"
                 />
               </div>
+            </div>
+            <div className="bottom-0 mt-20 text-xs font-light text-center">
+              <Link to="/register" className="font-light text-blue-400">
+                <span className="text-neutral-500">No tienes cuenta? </span>{' '}
+                Registrarte
+              </Link>
             </div>
           </div>
         </div>
