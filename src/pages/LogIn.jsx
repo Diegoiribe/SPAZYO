@@ -88,10 +88,13 @@ export const LogIn = () => {
       const res = await login(formData);
       const { subdomain } = res;
       setIsLoading(false);
+      console.log('Login successful, response:', res);
       if (subdomain === null) {
+        console.log('No subdomain, redirecting to store creation');
         setStep(2); // crear tienda
       } else {
-        navigate('https://admin.spazyo.test:5173/'); // dashboard
+        console.log('Subdomain exists, redirecting to dashboard');
+        window.location.href = '/'; // dashboard
       }
     } catch (error) {
       console.error('Error al generar plan:', error);

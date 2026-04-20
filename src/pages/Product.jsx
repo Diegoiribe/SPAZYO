@@ -99,8 +99,8 @@ export const Product = ({
       >
         <AddCart subdomain={subdomain} />
       </div>
-      <div ref={youMightLikeRef} className="h-1" />
-      <YouMightLike />
+      {/* <div ref={youMightLikeRef} className="h-1" />
+      <YouMightLike /> */}
       <p className="w-full text-xs font-light text-center uppercase text-neutral-500 pt-15">
         CREATE WITH SPAZYO
       </p>

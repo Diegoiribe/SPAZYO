@@ -6,6 +6,10 @@ const withAuth = (instance) => {
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+    // Handle FormData correctly
+    if (config.data instanceof FormData) {
+      delete config.headers['Content-Type'];
+    }
     return config;
   });
   return instance;
@@ -14,7 +18,6 @@ const withAuth = (instance) => {
 // CORE API (global)
 export const coreInstance = withAuth(
   axios.create({
-    baseURL: 'https://api.spazyo.xyz',
-    headers: { 'Content-Type': 'application/json' }
+    baseURL: 'https://api.spazyo.xyz'
   })
 );

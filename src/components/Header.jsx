@@ -2,6 +2,7 @@ import React from 'react';
 import { Toggle } from './Toggle';
 import { Bag } from './Bag';
 import { useEffect, useState } from 'react';
+import { get } from '../api/http';
 
 export const Header = ({
   isVisible = false,
@@ -14,6 +15,23 @@ export const Header = ({
   subdomain
 }) => {
   const [bagItems, setBagItems] = useState([]);
+  const [img, setImg] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const endpoint =
+          subdomain === 'admin' ? '/stores/me' : `/public/stores/${subdomain}`;
+        const data = await get(endpoint);
+        console.log('Data fetched:', data);
+        setImg(data.logo);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     let interval;
@@ -68,12 +86,10 @@ export const Header = ({
         h-[calc(64px+env(safe-area-inset-top))]
         "
       >
-        {isVisible && (
-          <img
-            src="https://i.pinimg.com/564x/90/39/0f/90390ff444d95db4f74463b2ef7a1392.jpg"
-            alt=""
-            className="object-cover w-16 h-8 rounded-sm "
-          />
+        {isVisible ? (
+          <img src={img} alt="" className="object-contain size-12 " />
+        ) : (
+          <div></div>
         )}
         <div className="flex items-center gap-2">
           <svg

@@ -14,6 +14,8 @@ import { Drop } from './pages/Drop';
 import { Register } from './pages/Register';
 import { LogIn } from './pages/LogIn';
 import { Index } from './pages/Index';
+import { NoFound } from './components/NoFound';
+import { get } from './api/http';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -41,6 +43,19 @@ const getSubdomain = () => {
 };
 
 function AdminApp({ isToggleOpen, setIsToggleOpen, isBagOpen, setIsBagOpen }) {
+  const token = localStorage.getItem('token');
+
+  if (!token) {
+    return (
+      <Router>
+        <Routes>
+          <Route path="/register" element={<Register />} />
+          <Route path="/*" element={<LogIn />} />
+        </Routes>
+      </Router>
+    );
+  }
+
   return (
     <Router>
       <ScrollToTop />
@@ -110,6 +125,10 @@ function StoreApp({
             />
           }
         />
+        <Route
+          path="/*"
+          element={<NoFound isNoFound={true} subdomain={subdomain} />}
+        />
       </Routes>
     </Router>
   );
@@ -129,9 +148,46 @@ function LandingApp() {
 function App() {
   const [isToggleOpen, setIsToggleOpen] = useState(false);
   const [isBagOpen, setIsBagOpen] = useState(false);
+  const [isValidSubdomain, setIsValidSubdomain] = useState(null);
+  const [loadingSubdomain, setLoadingSubdomain] = useState(true);
 
   const subdomain = getSubdomain();
   console.log(subdomain);
+
+  useEffect(() => {
+    // If no subdomain OR reserved subdomain, skip validation
+    if (!subdomain || subdomain === 'admin') {
+      setLoadingSubdomain(false);
+      return;
+    }
+
+    const validateSubdomain = async () => {
+      try {
+        // Replace with your real endpoint
+        const res = await get(`/public/stores/${subdomain}`);
+
+        // If request succeeds (2xx), axios already resolves
+        setIsValidSubdomain(true);
+        console.log('OK response:', res);
+      } catch (error) {
+        console.error('Error validating subdomain:', error);
+
+        if (error.response) {
+          console.log('Status:', error.response.status);
+        }
+
+        setIsValidSubdomain(false);
+      } finally {
+        setLoadingSubdomain(false);
+      }
+    };
+
+    validateSubdomain();
+  }, [subdomain]);
+
+  if (loadingSubdomain) {
+    return null; // or a loader
+  }
 
   // admin.spazyo.xyz
   if (subdomain === 'admin') {
@@ -146,7 +202,15 @@ function App() {
   }
 
   // store.spazyo.xyz (any other subdomain)
-  if (subdomain) {
+  if (subdomain && subdomain !== 'admin') {
+    if (isValidSubdomain === false) {
+      return (
+        <Router>
+          <NoFound />
+        </Router>
+      );
+    }
+
     return (
       <StoreApp
         subdomain={subdomain}

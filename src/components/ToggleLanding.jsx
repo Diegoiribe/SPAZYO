@@ -84,7 +84,7 @@ export const ToggleLanding = ({
               className="text-sm font-light uppercase cursor-pointer text-neutral-600 "
               onClick={() => {
                 setIsToggleLandingOpen(false);
-                window.location.href = 'https://admin.spazyo.test:5173/login';
+                window.location.href = 'https://admin.spazyo.xyz/login';
               }}
             >
               Iniciar sesion
@@ -93,8 +93,7 @@ export const ToggleLanding = ({
               className="text-sm font-light uppercase cursor-pointer text-neutral-600"
               onClick={() => {
                 setIsToggleLandingOpen(false);
-                window.location.href =
-                  'https://admin.spazyo.test:5173/register';
+                window.location.href = 'https://admin.spazyo.xyz/register';
               }}
             >
               Registrarse

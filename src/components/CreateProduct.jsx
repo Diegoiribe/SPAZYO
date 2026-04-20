@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { post } from '../api/http';
+import { coreInstance } from '../api/axiosConfig';
 
 export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
   const [shouldRenderCreate, setShouldRenderCreate] = useState(false);
@@ -8,59 +9,80 @@ export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
     name: '',
     images: [],
     color: '#000000',
+    colorName: '',
     sizes: [{ size: '', quantity: 0 }],
     price: '',
     description: '',
+    footer: '',
     categoria: '',
     variants: []
   });
+  const [uploadingImages, setUploadingImages] = useState(false);
 
-  // Helper: build product payload for backend
-  const buildProductPayload = (data) => {
-    return {
-      name: data.name,
-      description: data.description,
-      category: data.categoria,
-      price: Number(data.price),
-      isActive: true,
+  const buildVariant = (v) => ({
+    colorName: v.colorName,
+    color: v.color,
+    sizes: v.sizes.reduce((acc, s) => {
+      if (s.size && s.quantity > 0) acc[s.size] = s.quantity;
+      return acc;
+    }, {}),
+    photos: v.photos ?? v.images
+  });
+
+  const handleSubmitProduct = async () => {
+    const savedVariants = formDataProduct.variants.map(buildVariant);
+    const currentVariant = buildVariant({
+      ...formDataProduct,
+      photos: formDataProduct.images
+    });
+    const hasCurrentVariant =
+      currentVariant.photos.length > 0 ||
+      Object.keys(currentVariant.sizes).length > 0;
+    const variants = hasCurrentVariant
+      ? [...savedVariants, currentVariant]
+      : savedVariants;
+
+    const payload = {
+      name: formDataProduct.name,
+      description: formDataProduct.description,
+      footer: formDataProduct.footer,
+      category: formDataProduct.categoria,
+      price: Number(formDataProduct.price),
+      tags: [],
       discount: 0,
       shippingCost: 150,
-      variants: data.variants.map((variant) => ({
-        colorName: variant.colorName || '',
-        color: variant.color,
-        sizes: variant.sizes.reduce((acc, s) => {
-          if (s.size && s.quantity > 0) {
-            acc[s.size] = s.quantity;
-          }
-          return acc;
-        }, {}),
-        photos: variant.photos.map((photo) => photo)
-      }))
+      discountType: 'FIXED',
+      variants
     };
-  };
-  // Handler to build and log product payload
-  const handleSubmitProduct = async () => {
-    const payload = buildProductPayload(formDataProduct);
     await post('/products', payload);
-    console.log('PRODUCT PAYLOAD →', payload);
   };
-
-  // Expose the helper for DevTools testing
-  useEffect(() => {
-    window.__SPAZYO_BUILD_PRODUCT__ = () =>
-      buildProductPayload(formDataProduct);
-  }, [formDataProduct]);
 
   const handleChange = (e) => {
     setFormDataProduct({ ...formDataProduct, [e.target.name]: e.target.value });
   };
 
-  const handleImagesChange = (e) => {
+  const handleImagesChange = async (e) => {
     const files = Array.from(e.target.files);
-    setFormDataProduct({
-      ...formDataProduct,
-      images: [...formDataProduct.images, ...files]
-    });
+    setUploadingImages(true);
+    try {
+      const urls = await Promise.all(
+        files.map(async (file) => {
+          const fd = new FormData();
+          fd.append('files', file);
+          const res = await coreInstance.post('/api/s3/upload', fd);
+          console.log('S3 response:', res.data);
+          if (Array.isArray(res.data)) return res.data[0];
+          if (typeof res.data === 'string') return res.data;
+          return res.data.url ?? res.data.urls?.[0] ?? res.data.fileUrl;
+        })
+      );
+      setFormDataProduct((prev) => ({
+        ...prev,
+        images: [...prev.images, ...urls]
+      }));
+    } finally {
+      setUploadingImages(false);
+    }
   };
 
   const handleColorChange = (e) => {
@@ -98,6 +120,7 @@ export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
       ...prev,
       images: [],
       color: '#000000',
+      colorName: '',
       sizes: [{ size: '', quantity: 0 }]
     }));
   };
@@ -109,13 +132,12 @@ export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
         ...prev.variants,
         {
           color: prev.color,
-          colorName: '',
+          colorName: prev.colorName,
           sizes: prev.sizes,
           photos: prev.images
         }
       ]
     }));
-
     resetCurrentVariant();
   };
 
@@ -201,12 +223,13 @@ export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
             {/* Fixed add images button */}
             <label className="inline-flex items-center w-full gap-1 text-xs font-light leading-none cursor-pointer text-neutral-500">
               <span className="text-lg leading-none">+</span>
-              Agregar imágenes
+              {uploadingImages ? 'Subiendo...' : 'Agregar imágenes'}
               <input
                 type="file"
                 accept="image/*"
                 multiple
                 onChange={handleImagesChange}
+                disabled={uploadingImages}
                 className="hidden"
               />
             </label>
@@ -220,12 +243,12 @@ export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
               [scrollbar-width:none]
               [&::-webkit-scrollbar]:hidden -mt-2"
               >
-                {formDataProduct.images.map((img, index) => (
+                {formDataProduct.images.map((url, index) => (
                   <img
                     key={index}
-                    src={URL.createObjectURL(img)}
+                    src={url}
                     alt="preview"
-                    className="rounded-sm "
+                    className="rounded-sm"
                   />
                 ))}
               </div>
@@ -241,9 +264,18 @@ export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
               <p className="-mt-0.5 text-sm font-light uppercase text-neutral-600">
                 |
               </p>
-              <span className="text-sm font-light uppercase text-neutral-600">
-                {formDataProduct.color}
-              </span>
+              <input
+                type="text"
+                value={formDataProduct.colorName}
+                onChange={(e) =>
+                  setFormDataProduct((prev) => ({
+                    ...prev,
+                    colorName: e.target.value
+                  }))
+                }
+                placeholder="Nombre del color"
+                className="text-sm font-light outline-none text-neutral-600 placeholder:text-neutral-300"
+              />
             </div>
 
             <div className="relative w-full border rounded-full placeholder:capitalize border-black/20 peer focus-within:border-blue-400">
@@ -262,6 +294,24 @@ export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
                 className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-xs peer-focus:text-blue-400 "
               >
                 Descripcion
+              </label>
+            </div>
+
+            <div className="relative w-full border rounded-full placeholder:capitalize border-black/20 peer focus-within:border-blue-400">
+              <input
+                value={formDataProduct.footer}
+                onChange={handleChange}
+                type="text"
+                name="footer"
+                id="footer"
+                required
+                className="px-4 py-3 text-base scale-[0.875] origin-left uppercase peer w-full outline-none placeholder:capitalize"
+              />
+              <label
+                htmlFor="footer"
+                className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-xs peer-focus:text-blue-400"
+              >
+                Footer
               </label>
             </div>
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const Toggle = ({
   setIsToggleOpen,
@@ -13,6 +13,7 @@ export const Toggle = ({
   const [subdomainLocal, _] = useState(() => {
     return localStorage.getItem('subdomain') || '';
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     let showTimeout;
@@ -112,11 +113,7 @@ export const Toggle = ({
 
             <div className="flex flex-col gap-3 p-10 mt-24 ">
               <p
-                className="text-sm text-black uppercase cursor-pointer"
-                onClick={() => setIsToggleOpen(false)}
-              ></p>
-              <p
-                className="font-light text-black cursor-pointer text-medium"
+                className="text-sm font-light text-black uppercase cursor-pointer"
                 onClick={() => {
                   setPage('pedidos');
                   setIsToggleOpen(false);
@@ -125,7 +122,7 @@ export const Toggle = ({
                 Pedidos
               </p>
               <p
-                className="font-light text-black cursor-pointer text-md"
+                className="text-sm font-light text-black uppercase cursor-pointer"
                 onClick={() => {
                   setPage('inventario');
                   setIsToggleOpen(false);
@@ -135,9 +132,15 @@ export const Toggle = ({
               </p>
 
               <p
-                className="text-sm text-black uppercase cursor-pointer"
-                onClick={() => setIsToggleOpen(false)}
-              ></p>
+                className="text-sm font-light text-black uppercase cursor-pointer"
+                onClick={() => {
+                  localStorage.removeItem('token');
+                  setIsToggleOpen(false);
+                  navigate('/login');
+                }}
+              >
+                Salir
+              </p>
             </div>
           )}
         </div>

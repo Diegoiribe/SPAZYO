@@ -78,10 +78,13 @@ export const Inventario = () => {
                   <path d="M10 12h4" />
                 </svg>
 
+                <p className="text-xs font-light uppercase pointer-events-none text-neutral-500">
+                  {selectedCategory}
+                </p>
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="text-xs font-light uppercase bg-transparent outline-none appearance-none cursor-pointer text-neutral-500"
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                 >
                   {categories.map((cat) => (
                     <option key={cat} value={cat}>
@@ -133,13 +136,22 @@ export const Inventario = () => {
               <p>Name</p>
               <p>Colors</p>
             </div>
-            {productsInventary
-              .filter(
+            {(() => {
+              const filteredProducts = productsInventary.filter(
                 (product) =>
                   selectedCategory === 'ALL' ||
                   product.category === selectedCategory
-              )
-              .map((product) => (
+              );
+
+              if (filteredProducts.length === 0) {
+                return (
+                  <div className="flex items-center justify-center py-10 text-xs font-light uppercase text-neutral-400">
+                    Aún no hay productos
+                  </div>
+                );
+              }
+
+              return filteredProducts.map((product) => (
                 <div
                   onClick={() => openOrder(product.id)}
                   key={product.id}
@@ -149,7 +161,7 @@ export const Inventario = () => {
                     className={`${
                       getTotalStockByProduct(product) < 5
                         ? 'font-medium underline'
-                        : 'text-black  '
+                        : 'text-black'
                     }`}
                   >
                     {getTotalStockByProduct(product)}
@@ -190,7 +202,8 @@ export const Inventario = () => {
                     <path d="M19 5L5 19" />
                   </svg>
                 </div>
-              ))}
+              ));
+            })()}
           </div>
         </>
       ) : (

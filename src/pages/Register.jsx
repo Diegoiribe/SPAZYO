@@ -75,7 +75,8 @@ export const Register = () => {
     locationPreview: '',
     name: '',
     dominio: '',
-    email: ''
+    email: '',
+    logo: null
   });
 
   const handleChange = (e) => {
@@ -165,7 +166,7 @@ export const Register = () => {
       password: formDataUser.password
     };
 
-    const data = {
+    const storeData = {
       name: formDataStore.name.trim(),
       hasPhysicalStore: formDataStore.isLocal,
       latitude: formDataStore.latitude,
@@ -175,13 +176,24 @@ export const Register = () => {
       supportEmail: formDataStore.email.trim()
     };
 
+    const formData = new FormData();
+    formData.append(
+      'store',
+      new Blob([JSON.stringify(storeData)], { type: 'application/json' })
+    );
+
+    // Generic placeholder logo (empty file)
+    if (formDataStore.logo) {
+      formData.append('logo', formDataStore.logo);
+    }
+
     try {
-      await post('/stores', data);
+      await post('/stores', formData);
       localStorage.removeItem('token');
       const response = await login(dataUser);
       setIsLoading(false);
       if (response) {
-        navigate('/admin');
+        navigate('/');
       }
 
       setIsLoading(false);
@@ -363,22 +375,81 @@ export const Register = () => {
               Crea tu tienda
             </h1>
             <form onSubmit={handleSubmitStore} className="">
-              <div className="relative mb-5 w-72">
-                <input
-                  value={formDataStore.name}
-                  onChange={handleChangeStore}
-                  type="text"
-                  name="name"
-                  id="nameTienda"
-                  required
-                  className="w-full px-4 py-3 border rounded-full outline-none border-black/20 peer focus:border-blue-400"
-                />
-                <label
-                  htmlFor="nameTienda"
-                  className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-sm peer-focus:text-blue-400"
-                >
-                  Nombre
-                </label>
+              <div className="flex items-center justify-between w-72">
+                <div className="relative w-56 mb-5">
+                  <input
+                    value={formDataStore.name}
+                    onChange={handleChangeStore}
+                    type="text"
+                    name="name"
+                    id="nameTienda"
+                    required
+                    className="w-full px-4 py-3 border rounded-full outline-none border-black/20 peer focus:border-blue-400"
+                  />
+                  <label
+                    htmlFor="nameTienda"
+                    className="absolute px-1 transition-all duration-200 -translate-y-1/2 bg-white text-black/40 left-4 top-1/2 peer-focus:-top-[1px] peer-focus:text-xs text-sm peer-valid:-top-[1px] peer-valid:text-sm peer-focus:text-blue-400"
+                  >
+                    Nombre
+                  </label>
+                </div>
+                {/* Logo */}
+                <div className="relative px-4 py-3 mb-5 border rounded-full outline-none w-13 border-black/20 focus:border-blue-400">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    id="logoTienda"
+                    required
+                    onChange={(e) =>
+                      setformDataStore({
+                        ...formDataStore,
+                        logo: e.target.files[0]
+                      })
+                    }
+                    className="w-full h-full opacity-0 cursor-pointer "
+                  />
+                  <label
+                    htmlFor="logoTienda"
+                    className={`absolute inset-0 flex items-center justify-center cursor-pointer ${
+                      formDataStore.logo ? 'text-blue-400' : 'text-black/40'
+                    }`}
+                  >
+                    {!formDataStore.logo ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="lucide lucide-cloud-upload"
+                      >
+                        <path d="M12 13v8" />
+                        <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+                        <path d="m8 17 4-4 4 4" />
+                      </svg>
+                    ) : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="lucide lucide-cloud-check"
+                      >
+                        <path d="m17 15-5.5 5.5L9 18" />
+                        <path d="M5.516 16.07A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 3.501 7.327" />
+                      </svg>
+                    )}
+                  </label>
+                </div>
               </div>
               <div className="relative w-72">
                 <input
@@ -399,8 +470,8 @@ export const Register = () => {
               </div>
               <p className="px-4 py-1 mb-5 text-xs lowercase text-neutral-400">
                 {formDataStore.dominio === ''
-                  ? 'https://tudominio.spazyo.com'
-                  : `https://www.${formDataStore.dominio}.spazyo.com`}
+                  ? 'https://tudominio.spazyo.xyz'
+                  : `https://www.${formDataStore.dominio}.spazyo.xyz`}
               </p>
 
               <div className="relative mb-5 w-72">

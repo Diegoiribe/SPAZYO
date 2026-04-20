@@ -10,7 +10,7 @@ export const Admin = ({
   isBagOpen,
   setIsBagOpen
 }) => {
-  const [page, setPage] = useState('pedidos');
+  const [page, setPage] = useState('inventario');
 
   return (
     <div className="max-w-md p-6 mx-auto mt-15">

@@ -7,10 +7,15 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     host: 'spazyo.test',
-    port: 5173,
+    port: 3001,
     https: {
       key: fs.readFileSync('./spazyo.test+1-key.pem'),
       cert: fs.readFileSync('./spazyo.test+1.pem')
+    },
+    hmr: {
+      host: 'spazyo.test',
+      protocol: 'wss',
+      port: 3001
     }
   }
 });
