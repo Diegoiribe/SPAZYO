@@ -4,6 +4,7 @@ import { login } from '../api/auth';
 import { useNavigate, Link } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
 import { post } from '../api/http';
+import { showToast } from '../components/Toast';
 
 const CodeInput = ({ length = 6, onComplete }) => {
   const [values, setValues] = useState(Array(length).fill(''));
@@ -90,16 +91,15 @@ export const LogIn = () => {
       setIsLoading(false);
       console.log('Login successful, response:', res);
       if (subdomain === null) {
-        console.log('No subdomain, redirecting to store creation');
+        showToast('No subdomain, redirecting to store creation');
         setStep(2); // crear tienda
       } else {
         console.log('Subdomain exists, redirecting to dashboard');
         window.location.href = '/'; // dashboard
       }
     } catch (error) {
-      console.error('Error al generar plan:', error);
-      alert('Error al iniciar sesión. Por favor, verifica tus credenciales.');
       setIsLoading(false);
+      showToast(error.response?.data?.message || 'Error al iniciar sesión');
     }
     console.log('Form data:', formData);
   };
@@ -121,14 +121,14 @@ export const LogIn = () => {
       setStep(3);
     } catch (error) {
       setIsLoading(false);
-      console.error('Error verifying email:', error);
-      alert('No se pudo verificar el correo. Inténtalo de nuevo.');
+      showToast(
+        error.response?.data?.message || 'No se pudo verificar el correo'
+      );
     }
   };
 
   const handleResendEmail = async () => {
     if (!formData.email.trim()) {
-      alert('Primero ingresa tu email.');
       return;
     }
 
@@ -140,8 +140,9 @@ export const LogIn = () => {
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      console.error('Error resending email:', error);
-      alert('No se pudo reenviar el correo. Inténtalo más tarde.');
+      showToast(
+        error.response?.data?.message || 'No se pudo reenviar el correo'
+      );
     }
   };
 
@@ -182,7 +183,7 @@ export const LogIn = () => {
       console.log('Store created and user logged in');
     } catch (error) {
       setIsLoading(false);
-      console.error('Error registering/logging in:', error);
+      showToast(error.response?.data?.message || 'No se pudo crear la tienda');
     }
   };
 
@@ -297,7 +298,10 @@ export const LogIn = () => {
                       localStorage.setItem('token', response.token);
                       navigate('/admin');
                     } catch (error) {
-                      console.error('Error con login Google', error);
+                      showToast(
+                        error.response?.data?.message ||
+                          'Error con login de Google'
+                      );
                     }
                   }}
                   onError={() => {
@@ -456,7 +460,7 @@ export const LogIn = () => {
                       className="px-4 py-3 text-sm font-light border rounded-full cursor-pointer border-black/20 w-72"
                       onClick={() => {
                         if (!navigator.geolocation) {
-                          alert('Tu navegador no soporta geolocalización');
+                          showToast('Tu navegador no soporta geolocalización');
                           return;
                         }
 
@@ -488,7 +492,7 @@ export const LogIn = () => {
                             }
                           },
                           () => {
-                            alert('No se pudo obtener tu ubicación');
+                            showToast('No se pudo obtener tu ubicación');
                           }
                         );
                       }}

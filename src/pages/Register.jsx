@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { post } from '../api/http';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../api/auth';
+import { showToast } from '../components/Toast';
 
 const CodeInput = ({ length = 6, onComplete }) => {
   const [values, setValues] = useState(Array(length).fill(''));
@@ -111,7 +112,7 @@ export const Register = () => {
       setStep(2);
     } catch (error) {
       setIsLoading(false);
-      console.error('Error registering/logging in:', error);
+      showToast(error.response?.data?.message || 'No se pudo crear la cuenta');
     }
   };
 
@@ -132,14 +133,15 @@ export const Register = () => {
       setStep(3);
     } catch (error) {
       setIsLoading(false);
-      console.error('Error verifying email:', error);
-      alert('No se pudo verificar el correo. Inténtalo de nuevo.');
+      showToast(
+        error.response?.data?.message || 'No se pudo verificar el correo'
+      );
     }
   };
 
   const handleResendEmail = async () => {
     if (!formDataUser.email.trim()) {
-      alert('Primero ingresa tu email.');
+      showToast('Primero ingresa tu email');
       return;
     }
 
@@ -151,8 +153,9 @@ export const Register = () => {
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      console.error('Error resending email:', error);
-      alert('No se pudo reenviar el correo. Inténtalo más tarde.');
+      showToast(
+        error.response?.data?.message || 'No se pudo reenviar el correo'
+      );
     }
   };
 
@@ -200,7 +203,7 @@ export const Register = () => {
       console.log('Store created and user logged in');
     } catch (error) {
       setIsLoading(false);
-      console.error('Error registering/logging in:', error);
+      showToast(error.response?.data?.message || 'No se pudo crear la tienda');
     }
   };
 
@@ -216,7 +219,7 @@ export const Register = () => {
 
     for (const field of requiredFields) {
       if (!formDataUser[field.name]?.trim()) {
-        alert(`Por favor, completa el campo: ${field.label}`);
+        showToast(`Por favor, completa el campo: ${field.label}`);
         return false; // Detiene validación si hay un campo vacío
       }
     }
@@ -536,7 +539,7 @@ export const Register = () => {
                       className="px-4 py-3 text-sm font-light border rounded-full cursor-pointer border-black/20 w-72"
                       onClick={() => {
                         if (!navigator.geolocation) {
-                          alert('Tu navegador no soporta geolocalización');
+                          showToast('Tu navegador no soporta geolocalización');
                           return;
                         }
 
@@ -568,7 +571,7 @@ export const Register = () => {
                             }
                           },
                           () => {
-                            alert('No se pudo obtener tu ubicación');
+                            showToast('No se pudo obtener tu ubicación');
                           }
                         );
                       }}

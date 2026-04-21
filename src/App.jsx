@@ -16,6 +16,7 @@ import { LogIn } from './pages/LogIn';
 import { Index } from './pages/Index';
 import { ResetPassword } from './components/ResetPassword';
 import { NoFound } from './components/NoFound';
+import { Toast } from './components/Toast';
 import { get } from './api/http';
 
 function ScrollToTop() {
@@ -229,4 +230,11 @@ function App() {
   return <LandingApp />;
 }
 
-export default App;
+export const AppWithToast = () => (
+  <>
+    <App />
+    <Toast />
+  </>
+);
+
+export default AppWithToast;
