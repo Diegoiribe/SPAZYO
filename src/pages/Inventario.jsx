@@ -60,7 +60,7 @@ export const Inventario = () => {
         <>
           <div className="flex justify-between pt-10">
             <div className="relative inline-flex items-center ">
-              <div className="inline-flex items-center gap-2 p-2 border rounded-md cursor-pointer bg-neutral-50 border-neutral-100">
+              <div className="inline-flex items-center gap-2 p-2 border rounded-md cursor-pointer bg-neutral-50 border-black/20">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="12"
@@ -71,14 +71,14 @@ export const Inventario = () => {
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="lucide lucide-archive-icon lucide-archive text-neutral-500"
+                  className="lucide lucide-archive-icon lucide-archive text-neutral-800"
                 >
                   <rect width="20" height="5" x="2" y="3" rx="1" />
                   <path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8" />
                   <path d="M10 12h4" />
                 </svg>
 
-                <p className="text-xs font-light uppercase pointer-events-none text-neutral-500">
+                <p className="text-xs font-light uppercase pointer-events-none text-neutral-800">
                   {selectedCategory}
                 </p>
                 <select
@@ -103,14 +103,14 @@ export const Inventario = () => {
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="lucide lucide-chevron-down-icon lucide-chevron-down text-neutral-500"
+                  className="lucide lucide-chevron-down-icon lucide-chevron-down text-neutral-800"
                 >
                   <path d="m6 9 6 6 6-6" />
                 </svg>
               </div>
             </div>
             <div
-              className="inline-flex items-center gap-2 p-2 ml-2 border rounded-md cursor-pointer bg-neutral-50 border-neutral-100"
+              className="inline-flex items-center gap-2 p-2 ml-2 border rounded-md cursor-pointer bg-neutral-50 border-black/20"
               onClick={() => setIsCreateOpen(true)}
             >
               <svg
@@ -123,15 +123,15 @@ export const Inventario = () => {
                 stroke-width="1.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                className="lucide lucide-plus-icon lucide-plus text-neutral-500"
+                className="lucide lucide-plus-icon lucide-plus text-neutral-800"
               >
                 <path d="M5 12h14" />
                 <path d="M12 5v14" />
               </svg>
             </div>
           </div>
-          <div className="mt-10 border rounded-md border-neutral-100">
-            <div className="grid grid-cols-[40px_1fr_80px_10px] gap-4 px-3 py-3 text-xs font-light bg-neutral-50 border-b border-neutral-100 rounded-t-md text-neutral-500 uppercase">
+          <div className="mt-10 border rounded-md border-black/20">
+            <div className="grid grid-cols-[40px_1fr_80px_10px] gap-4 px-3 py-3 text-xs font-light bg-neutral-50 border-b border-black/20 rounded-t-md text-neutral-800 uppercase">
               <p>Items</p>
               <p>Name</p>
               <p>Colors</p>
@@ -155,7 +155,7 @@ export const Inventario = () => {
                 <div
                   onClick={() => openOrder(product.id)}
                   key={product.id}
-                  className={`grid items-center grid-cols-[40px_1fr_80px_10px] gap-4 px-3 py-3 text-xs  border-b border-neutral-100  cursor-pointer font-light`}
+                  className={`grid items-center grid-cols-[40px_1fr_80px_10px] gap-4 px-3 py-3 text-[13px]  border-b border-black/20  cursor-pointer font-light`}
                 >
                   <p
                     className={`${

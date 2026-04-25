@@ -18,6 +18,7 @@ export const Header = ({
   const [img, setImg] = useState('');
 
   useEffect(() => {
+    console.log('Fetching data for subdomain:', subdomain);
     const fetchData = async () => {
       try {
         const endpoint =
@@ -75,6 +76,7 @@ export const Header = ({
         className="
         fixed
         p-6
+        mt-2
         flex
         top-0
         justify-between
@@ -87,7 +89,7 @@ export const Header = ({
         "
       >
         {isVisible ? (
-          <img src={img} alt="" className="object-contain size-12 " />
+          <img src={img} alt="img" className="object-contain size-16" />
         ) : (
           <div></div>
         )}
@@ -95,8 +97,8 @@ export const Header = ({
           <svg
             onClick={() => setIsToggleOpen(true)}
             xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
+            width="22"
+            height="22"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -116,8 +118,8 @@ export const Header = ({
               <svg
                 onClick={() => setIsBagOpen(true)}
                 xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
+                width="22"
+                height="22"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -145,8 +147,8 @@ export const Header = ({
 
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
+                width="22"
+                height="22"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"

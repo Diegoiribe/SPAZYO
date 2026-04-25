@@ -56,12 +56,12 @@ export const Toggle = ({
           <div className="flex items-center gap-5 p-10">
             <Link
               to={'/'}
-              className="overflow-hidden text-4xl font-bold text-black uppercase"
+              className="flex-1 min-w-0 text-4xl font-bold text-black uppercase truncate"
               onClick={() => setIsToggleOpen(false)}
             >
               {subdomainLocal || subdomain}
             </Link>
-            <div className="flex items-center justify-end p-4">
+            <div className="flex items-center justify-end flex-shrink-0 p-4">
               <button
                 onClick={() => setIsToggleOpen(false)}
                 className="text-black cursor-pointer"

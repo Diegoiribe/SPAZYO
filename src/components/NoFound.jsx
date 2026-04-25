@@ -14,7 +14,7 @@ export const NoFound = ({ isNoFound }) => {
   }, [isNoFound]);
 
   return (
-    <div className="max-w-md mx-auto mt-15">
+    <div className="max-w-md px-6 mx-auto mt-15">
       <div className="relative mt-5">
         {/* Label */}
         <div

@@ -34,7 +34,7 @@ export const ProductTemplate = ({ subdomain }) => {
       />
 
       {/* Description */}
-      <p className="pb-10 text-xs font-light uppercase text-neutral-800 pt-15">
+      <p className="pb-10 text-[13px] font-light uppercase text-neutral-800 pt-15">
         {product?.description}
       </p>
       {/* Id */}

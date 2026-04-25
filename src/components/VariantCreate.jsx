@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { patch } from '../api/http';
+import { coreInstance } from '../api/axiosConfig';
 
 export const VariantCreate = ({
   isCreateVariantOpen,
@@ -8,10 +9,12 @@ export const VariantCreate = ({
 }) => {
   const [shouldRenderCreate, setShouldRenderCreate] = useState(false);
   const [isVisibleCreate, setIsVisibleCreate] = useState(false);
+  const [uploadingImages, setUploadingImages] = useState(false);
   const [formDataProduct, setFormDataProduct] = useState({
     name: '',
     images: [],
     color: '#000000',
+    colorName: '',
     sizes: [{ size: '', quantity: 0 }],
     price: '',
     description: '',
@@ -62,12 +65,27 @@ export const VariantCreate = ({
       buildVariantPayload(formDataProduct);
   }, [formDataProduct]);
 
-  const handleImagesChange = (e) => {
+  const handleImagesChange = async (e) => {
     const files = Array.from(e.target.files);
-    setFormDataProduct({
-      ...formDataProduct,
-      images: [...formDataProduct.images, ...files]
-    });
+    setUploadingImages(true);
+    try {
+      const urls = await Promise.all(
+        files.map(async (file) => {
+          const fd = new FormData();
+          fd.append('files', file);
+          const res = await coreInstance.post('/api/s3/upload', fd);
+          if (Array.isArray(res.data)) return res.data[0];
+          if (typeof res.data === 'string') return res.data;
+          return res.data.url ?? res.data.urls?.[0] ?? res.data.fileUrl;
+        })
+      );
+      setFormDataProduct((prev) => ({
+        ...prev,
+        images: [...prev.images, ...urls]
+      }));
+    } finally {
+      setUploadingImages(false);
+    }
   };
 
   const handleColorChange = (e) => {
@@ -98,6 +116,7 @@ export const VariantCreate = ({
       ...prev,
       images: [],
       color: '#000000',
+      colorName: '',
       sizes: [{ size: '', quantity: 0 }]
     }));
   };
@@ -109,7 +128,7 @@ export const VariantCreate = ({
         ...prev.variants,
         {
           color: prev.color,
-          colorName: '',
+          colorName: prev.colorName,
           sizes: prev.sizes,
           photos: prev.images
         }
@@ -187,12 +206,13 @@ export const VariantCreate = ({
             {/* Fixed add images button */}
             <label className="inline-flex items-center w-full gap-1 -mt-5 text-xs font-light leading-none cursor-pointer text-neutral-500">
               <span className="text-lg leading-none">+</span>
-              Agregar imágenes
+              {uploadingImages ? 'Subiendo...' : 'Agregar imágenes'}
               <input
                 type="file"
                 accept="image/*"
                 multiple
                 onChange={handleImagesChange}
+                disabled={uploadingImages}
                 className="hidden"
               />
             </label>
@@ -206,12 +226,12 @@ export const VariantCreate = ({
               [scrollbar-width:none]
               [&::-webkit-scrollbar]:hidden -mt-2"
               >
-                {formDataProduct.images.map((img, index) => (
+                {formDataProduct.images.map((url, index) => (
                   <img
                     key={index}
-                    src={URL.createObjectURL(img)}
+                    src={url}
                     alt="preview"
-                    className="rounded-sm "
+                    className="rounded-sm"
                   />
                 ))}
               </div>
@@ -227,9 +247,18 @@ export const VariantCreate = ({
               <p className="-mt-0.5 text-sm font-light uppercase text-neutral-600">
                 |
               </p>
-              <span className="text-sm font-light uppercase text-neutral-600">
-                {formDataProduct.color}
-              </span>
+              <input
+                type="text"
+                value={formDataProduct.colorName}
+                onChange={(e) =>
+                  setFormDataProduct((prev) => ({
+                    ...prev,
+                    colorName: e.target.value
+                  }))
+                }
+                placeholder="Nombre del color"
+                className="text-sm font-light outline-none text-neutral-600 placeholder:text-neutral-300"
+              />
             </div>
 
             <p className="mb-2 text-sm font-light uppercase text-neutral-600">

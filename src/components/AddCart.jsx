@@ -50,10 +50,10 @@ export const AddCart = ({ subdomain }) => {
         <>
           <div className="flex items-center justify-between">
             <div>
-              <p className="pb-1 text-xs font-light uppercase text-neutral-800">
+              <p className="pb-1 text-[13px] font-light uppercase text-neutral-800">
                 new
               </p>
-              <p className="text-xs font-light uppercase truncate text-neutral-800 w-54">
+              <p className="text-[13px] font-light uppercase truncate text-neutral-800 w-54">
                 {product.name}
               </p>
             </div>
@@ -96,7 +96,7 @@ export const AddCart = ({ subdomain }) => {
             </div>
           </div>
 
-          <p className="pt-3 text-xs font-light text-neutral-800">
+          <p className="pt-3 text-[13px] font-light text-neutral-800">
             $
             {new Intl.NumberFormat('en-US', {
               minimumFractionDigits: 2,
@@ -111,12 +111,14 @@ export const AddCart = ({ subdomain }) => {
           className="flex items-center justify-center w-full py-2 mt-6 border-[.8px] rounded-xs"
           onClick={() => setShowSizes(true)}
         >
-          <p className="text-xs font-light uppercase text-neutral-800">add</p>
+          <p className="text-[13px] font-light uppercase text-neutral-800">
+            add
+          </p>
         </button>
       )}
       {showSizes && activeVariant?.sizes && (
         <div className="">
-          <p className="mb-5 text-xs font-light uppercase truncate text-neutral-800">
+          <p className="mb-5 text-[13px] font-light uppercase truncate text-neutral-800">
             Selecciona la talla
           </p>
           {Object.entries(activeVariant.sizes).map(([size]) => (
@@ -141,7 +143,9 @@ export const AddCart = ({ subdomain }) => {
               }}
               className="flex items-center justify-center w-full py-3 transition cursor-pointer rounded-xs hover:bg-black hover:text-white"
             >
-              <p className="text-xs font-light underline uppercase">{size}</p>
+              <p className="text-[13px] font-light underline uppercase">
+                {size}
+              </p>
             </div>
           ))}
         </div>

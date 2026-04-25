@@ -8,7 +8,8 @@ export const Admin = ({
   setIsToggleOpen,
   isAdmin,
   isBagOpen,
-  setIsBagOpen
+  setIsBagOpen,
+  subdomain
 }) => {
   const [page, setPage] = useState('inventario');
 
@@ -23,6 +24,7 @@ export const Admin = ({
           isBagOpen={isBagOpen}
           setIsBagOpen={setIsBagOpen}
           setPage={setPage}
+          subdomain={subdomain}
         />
       </div>
 

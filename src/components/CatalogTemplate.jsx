@@ -40,7 +40,7 @@ export const CatalogTemplate = ({ subdomain }) => {
     <div className="relative w-full overflow-hidden">
       <div className="flex justify-between px-6 mt-2 mb-3">
         <div className="relative inline-flex items-center gap-2 cursor-pointer ">
-          <span className="text-xs font-medium uppercase ">
+          <span className="text-[13px] font-medium uppercase ">
             {selectedCategory}
           </span>
           <svg
@@ -88,7 +88,7 @@ export const CatalogTemplate = ({ subdomain }) => {
             />
             <div className="w-full">
               <div className="flex items-center justify-between w-full gap-5 px-2 mt-2">
-                <p className="w-full text-sm font-light truncate text-neutral-800">
+                <p className="w-full font-light truncate text-neutral-800">
                   {featured.name}
                 </p>
                 <div className="flex items-center gap-1">
@@ -96,12 +96,12 @@ export const CatalogTemplate = ({ subdomain }) => {
                     className="w-2.75 h-2.75 border border-neutral-100"
                     style={{ backgroundColor: featured.variants[0].color }}
                   />
-                  <p className="text-xs font-light text-black uppercase">
+                  <p className="text-[13px] font-light text-black uppercase">
                     +{featured.variants.length}
                   </p>
                 </div>
               </div>
-              <p className="px-2 mt-2 text-xs uppercase text-neutral-500">
+              <p className="px-2 mt-2 text-[13px] font-light uppercase text-neutral-400">
                 ${' '}
                 {new Intl.NumberFormat('en-US', {
                   minimumFractionDigits: 2,
@@ -128,7 +128,7 @@ export const CatalogTemplate = ({ subdomain }) => {
               />
             </div>
             <div className="flex items-center gap-4 pt-2 pl-2">
-              <p className="text-[12px] uppercase font-light truncate text-neutral-800">
+              <p className="text-[13px] uppercase font-light truncate text-neutral-800">
                 {item.name}
               </p>
               <div className="flex items-center gap-1">
@@ -138,12 +138,12 @@ export const CatalogTemplate = ({ subdomain }) => {
                     backgroundColor: item.variants[0].color
                   }}
                 />
-                <p className="text-[12px] font-light uppercase text-neutral-800">
+                <p className="text-[13px] font-light uppercase text-neutral-800">
                   +{item.variants.length}
                 </p>
               </div>
             </div>
-            <p className="text-[12px] font-light uppercase text-neutral-800 pb-6 pl-2">
+            <p className="text-[13px] font-light uppercase text-neutral-400 pb-6 pl-2">
               ${' '}
               {new Intl.NumberFormat('en-US', {
                 minimumFractionDigits: 2,

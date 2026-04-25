@@ -39,7 +39,7 @@ export const Pedidos = () => {
       {!orderState.isOpen ? (
         <>
           <div className="flex items-center justify-between mt-10 ">
-            <div className="relative inline-flex items-center gap-2 p-2 border rounded-md cursor-pointer bg-neutral-50 border-neutral-100">
+            <div className="relative inline-flex items-center gap-2 p-2 border rounded-md cursor-pointer bg-neutral-50 border-black/20">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="12"
@@ -50,14 +50,14 @@ export const Pedidos = () => {
                 stroke-width="1.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                className="text-xs lucide lucide-calendar-icon lucide-calendar text-neutral-500"
+                className="text-xs lucide lucide-calendar-icon lucide-calendar text-neutral-800"
               >
                 <path d="M8 2v4" />
                 <path d="M16 2v4" />
                 <rect width="18" height="18" x="3" y="4" rx="2" />
                 <path d="M3 10h18" />
               </svg>
-              <p className="text-xs font-light uppercase text-neutral-500">
+              <p className="text-xs font-light uppercase text-neutral-800">
                 {selectedDate !== 'ALL'
                   ? (() => {
                       const now = new Date();
@@ -112,7 +112,7 @@ export const Pedidos = () => {
                 stroke-width="1.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                className="cursor-pointer lucide lucide-chevron-down-icon lucide-chevron-down text-neutral-500"
+                className="cursor-pointer lucide lucide-chevron-down-icon lucide-chevron-down text-neutral-800"
               >
                 <path d="m6 9 6 6 6-6" />
               </svg>
@@ -127,7 +127,7 @@ export const Pedidos = () => {
                 className={`inline-flex items-center p-2 ml-2 border rounded-md cursor-pointer   hover:text-blue-400   ${
                   statusFilter === 'SHIPPED'
                     ? 'text-blue-400 bg-blue-50 border-blue-100'
-                    : 'text-neutral-500 bg-neutral-50 border-neutral-100'
+                    : 'text-neutral-800 bg-neutral-50 border-black/20'
                 }`}
               >
                 <svg
@@ -155,7 +155,7 @@ export const Pedidos = () => {
                 className={`inline-flex items-center p-2 ml-2 border rounded-md cursor-pointer   hover:text-green-400   ${
                   statusFilter === 'DELIVERED'
                     ? 'text-green-400 bg-green-50 border-green-100'
-                    : 'text-neutral-500 bg-neutral-50 border-neutral-100'
+                    : 'text-neutral-800 bg-neutral-50 border-black/20'
                 }`}
               >
                 <svg
@@ -180,8 +180,8 @@ export const Pedidos = () => {
             </div>
           </div>
 
-          <div className="mt-10 border rounded-md border-neutral-100">
-            <div className="grid grid-cols-[60px_1fr_80px_10px] gap-4 px-3 py-3 text-xs font-light bg-neutral-50 border-b border-neutral-100 rounded-t-md text-neutral-500 uppercase">
+          <div className="mt-10 border rounded-md border-black/20">
+            <div className="grid grid-cols-[60px_1fr_80px_10px] gap-4 px-3 py-3 text-xs font-light bg-neutral-50 border-b border-black/20 rounded-t-md text-neutral-800 uppercase">
               <p>Order</p>
               <p>Name</p>
               <p>Total</p>
@@ -230,7 +230,7 @@ export const Pedidos = () => {
 
               if (filteredOrders.length === 0) {
                 return (
-                  <div className="flex items-center justify-center py-10 text-xs font-light uppercase text-neutral-400">
+                  <div className="flex items-center justify-center py-10 text-xs font-light uppercase text-neutral-800">
                     Aún no hay órdenes
                   </div>
                 );
@@ -240,7 +240,7 @@ export const Pedidos = () => {
                 <div
                   onClick={() => openOrder(order.id)}
                   key={order.id}
-                  className="grid items-center grid-cols-[60px_1fr_80px_10px] gap-4 px-3 py-3 text-xs font-light border-b border-neutral-100 cursor-pointer"
+                  className="grid items-center grid-cols-[60px_1fr_80px_10px] gap-4 px-3 py-3 text-xs font-light border-b border-black/20 cursor-pointer"
                 >
                   <p className="">#{order.id}</p>
                   <p className="uppercase truncate">{order.customerName}</p>

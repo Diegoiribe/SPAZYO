@@ -46,7 +46,7 @@ const getSubdomain = () => {
 
 function AdminApp({ isToggleOpen, setIsToggleOpen, isBagOpen, setIsBagOpen }) {
   const token = localStorage.getItem('token');
-
+  const subdomain = getSubdomain();
   if (!token) {
     return (
       <Router>
@@ -72,6 +72,7 @@ function AdminApp({ isToggleOpen, setIsToggleOpen, isBagOpen, setIsBagOpen }) {
               setIsToggleOpen={setIsToggleOpen}
               isBagOpen={isBagOpen}
               setIsBagOpen={setIsBagOpen}
+              subdomain={subdomain}
             />
           }
         />
