@@ -220,7 +220,7 @@ export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
                 <path d="m12 19-7-7 7-7" />
                 <path d="M19 12H5" />
               </svg>
-              <p className="text-sm font-medium uppercase ">Crear Producto</p>
+              <p className="font-medium uppercase ">Crear Producto</p>
             </div>
             <div className="relative w-full border rounded-full placeholder:capitalize border-black/20 peer focus-within:border-blue-400">
               <input
@@ -276,7 +276,7 @@ export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
                     key={index}
                     src={url}
                     alt="preview"
-                    className="rounded-sm"
+                    className="h-56 rounded-sm"
                   />
                 ))}
               </div>
@@ -427,7 +427,7 @@ export const CreateProduct = ({ isCreateOpen, setIsCreateOpen }) => {
                 />
               </div>
 
-              <div className="flex items-center justify-between mt-5">
+              <div className="flex items-center justify-between mt-10">
                 <button
                   type="button"
                   onClick={handleSubmitProduct}

@@ -133,6 +133,7 @@ export const AddCart = ({ subdomain }) => {
                   name: product.name,
                   price: product.price,
                   img: activeVariant.photos?.[0],
+                  colorName: activeVariant.colorName,
                   color: activeVariant.color,
                   size
                 };

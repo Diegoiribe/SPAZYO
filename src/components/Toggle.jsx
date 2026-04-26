@@ -48,7 +48,7 @@ export const Toggle = ({
     <>
       {shouldRender && (
         <div
-          className={`fixed top-0 left-0 h-full w-full bg-white/80 backdrop-blur-xl transition-opacity z-100 duration-300 overflow-y-auto ${
+          className={`fixed top-0 left-0 h-full w-full bg-white transition-opacity z-100 duration-300 overflow-y-auto ${
             isVisible ? 'opacity-100' : 'opacity-0'
           }`}
         >

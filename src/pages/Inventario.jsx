@@ -7,6 +7,7 @@ export const Inventario = () => {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [productsInventary, setProductsInventary] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('ALL');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,6 +17,8 @@ export const Inventario = () => {
         setProductsInventary(data);
       } catch (error) {
         console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchData();
@@ -137,6 +140,24 @@ export const Inventario = () => {
               <p>Colors</p>
             </div>
             {(() => {
+              if (loading) {
+                return Array.from({ length: 5 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="grid items-center grid-cols-[40px_1fr_80px_10px] gap-4 px-3 py-3 border-b border-black/20 animate-pulse"
+                  >
+                    <div className="h-3 rounded bg-neutral-200 w-6" />
+                    <div className="h-3 rounded bg-neutral-200 w-3/4" />
+                    <div className="flex items-center gap-1">
+                      <div className="w-3 h-3 rounded-sm bg-neutral-200" />
+                      <div className="w-3 h-3 rounded-sm bg-neutral-200" />
+                      <div className="w-3 h-3 rounded-sm bg-neutral-200" />
+                    </div>
+                    <div className="w-3 h-3 rounded bg-neutral-200" />
+                  </div>
+                ));
+              }
+
               const filteredProducts = productsInventary.filter(
                 (product) =>
                   selectedCategory === 'ALL' ||

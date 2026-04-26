@@ -16,6 +16,7 @@ export const Header = ({
 }) => {
   const [bagItems, setBagItems] = useState([]);
   const [img, setImg] = useState('');
+  const [imgLoading, setImgLoading] = useState(true);
 
   useEffect(() => {
     console.log('Fetching data for subdomain:', subdomain);
@@ -28,6 +29,8 @@ export const Header = ({
         setImg(data.logo);
       } catch (error) {
         console.error('Error fetching data:', error);
+      } finally {
+        setImgLoading(false);
       }
     };
 
@@ -86,10 +89,15 @@ export const Header = ({
         z-50
         bg-white
         h-[calc(64px+env(safe-area-inset-top))]
+        
         "
       >
         {isVisible ? (
-          <img src={img} alt="img" className="object-contain size-16" />
+          imgLoading ? (
+            <div className="rounded-sm size-14 bg-neutral-200 animate-pulse" />
+          ) : (
+            <img src={img} alt="img" className="object-contain size-14" />
+          )
         ) : (
           <div></div>
         )}

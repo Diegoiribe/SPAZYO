@@ -73,7 +73,7 @@ export const Bag = ({ isBagOpen, bagItems, setBagItems }) => {
                     </p>
                     <div className="flex gap-2">
                       <p className="-mt-1 text-xs font-light uppercase text-neutral-600">
-                        {item.colorName}
+                        {item.colorName || item.color}
                       </p>
                       <p className="-mt-1 text-xs font-light uppercase text-neutral-600">
                         |

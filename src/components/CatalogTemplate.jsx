@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 export const CatalogTemplate = ({ subdomain }) => {
   const [productsCatalog, setProductsCatalog] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('VIEW ALL');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -15,6 +16,8 @@ export const CatalogTemplate = ({ subdomain }) => {
         setProductsCatalog(data);
       } catch (error) {
         console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -75,84 +78,108 @@ export const CatalogTemplate = ({ subdomain }) => {
         </div>
       </div>
 
-      <div className="px-6 mt-2">
-        {featured && (
-          <Link
-            to={`/product/${featured.id}/${featured.variants[0].id}`}
-            className="block cursor-pointer"
-          >
-            <img
-              src={featured.variants[0].photos[0]}
-              alt=""
-              className="object-cover w-full rounded-xs"
-            />
-            <div className="w-full">
-              <div className="flex items-center justify-between w-full gap-5 px-2 mt-2">
-                <p className="w-full font-light truncate text-neutral-800">
-                  {featured.name}
-                </p>
-                <div className="flex items-center gap-1">
-                  <div
-                    className="w-2.75 h-2.75 border border-neutral-100"
-                    style={{ backgroundColor: featured.variants[0].color }}
-                  />
-                  <p className="text-[13px] font-light text-black uppercase">
-                    +{featured.variants.length}
-                  </p>
+      {loading ? (
+        <div className="px-6 mt-2 animate-pulse">
+          <div className="w-full bg-neutral-200 rounded-xs aspect-[3/4]" />
+          <div className="px-2 mt-3 space-y-2">
+            <div className="w-2/3 h-3 rounded bg-neutral-200" />
+            <div className="w-1/4 h-3 rounded bg-neutral-200" />
+          </div>
+
+          <div className="grid grid-cols-2 mt-6 gap-x-6 gap-y-6">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i}>
+                <div className="w-full bg-neutral-200 rounded-sm aspect-[3/4]" />
+                <div className="pt-2 pl-2 space-y-2">
+                  <div className="w-3/4 h-3 rounded bg-neutral-200" />
+                  <div className="w-1/4 h-3 rounded bg-neutral-200" />
                 </div>
               </div>
-              <p className="px-2 mt-2 text-[13px] font-light uppercase text-neutral-400">
-                ${' '}
-                {new Intl.NumberFormat('en-US', {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2
-                }).format(featured.price)}
-              </p>
-            </div>
-          </Link>
-        )}
-      </div>
-
-      <div className="grid grid-cols-2 px-6 mt-6 gap-x-6 gap-y-2">
-        {rest.map((item) => (
-          <Link
-            to={`/product/${item.id}/${item.variants[0].id}`}
-            className="cursor-pointer"
-            key={item.id}
-          >
-            <div className="w-full overflow-hidden rounded-sm ">
-              <img
-                src={item.variants[0].photos[0]}
-                alt=""
-                className="object-cover w-full h-full"
-              />
-            </div>
-            <div className="flex items-center gap-4 pt-2 pl-2">
-              <p className="text-[13px] uppercase font-light truncate text-neutral-800">
-                {item.name}
-              </p>
-              <div className="flex items-center gap-1">
-                <div
-                  className="w-2.75 h-2.75 border border-neutral-100 "
-                  style={{
-                    backgroundColor: item.variants[0].color
-                  }}
+            ))}
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className="px-6 mt-2">
+            {featured && (
+              <Link
+                to={`/product/${featured.id}/${featured.variants[0].id}`}
+                className="block cursor-pointer"
+              >
+                <img
+                  src={featured.variants[0].photos[0]}
+                  alt=""
+                  className="object-cover w-full rounded-xs"
                 />
-                <p className="text-[13px] font-light uppercase text-neutral-800">
-                  +{item.variants.length}
+                <div className="w-full">
+                  <div className="flex items-center justify-between w-full gap-5 px-2 mt-2">
+                    <p className="w-full font-light truncate text-neutral-800">
+                      {featured.name}
+                    </p>
+                    <div className="flex items-center gap-1">
+                      <div
+                        className="w-2.75 h-2.75 border border-neutral-100"
+                        style={{ backgroundColor: featured.variants[0].color }}
+                      />
+                      <p className="text-[13px] font-light text-black uppercase">
+                        +{featured.variants.length}
+                      </p>
+                    </div>
+                  </div>
+                  <p className="px-2 mt-2 text-[13px] font-light uppercase text-neutral-400">
+                    ${' '}
+                    {new Intl.NumberFormat('en-US', {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                    }).format(featured.price)}
+                  </p>
+                </div>
+              </Link>
+            )}
+          </div>
+
+          <div className="grid grid-cols-2 px-6 mt-6 gap-x-6 gap-y-2">
+            {rest.map((item) => (
+              <Link
+                to={`/product/${item.id}/${item.variants[0].id}`}
+                className="cursor-pointer"
+                key={item.id}
+              >
+                <div className="w-full overflow-hidden rounded-sm ">
+                  <img
+                    src={item.variants[0].photos[0]}
+                    alt=""
+                    className="object-cover w-full h-full"
+                  />
+                </div>
+                <div className="flex items-center gap-4 pt-2 pl-2">
+                  <p className="text-[13px] uppercase font-light truncate text-neutral-800">
+                    {item.name}
+                  </p>
+                  <div className="flex items-center gap-1">
+                    <div
+                      className="w-2.75 h-2.75 border border-neutral-100 "
+                      style={{
+                        backgroundColor: item.variants[0].color
+                      }}
+                    />
+                    <p className="text-[13px] font-light uppercase text-neutral-800">
+                      +{item.variants.length}
+                    </p>
+                  </div>
+                </div>
+                <p className="text-[13px] font-light uppercase text-neutral-400 pb-6 pl-2">
+                  ${' '}
+                  {new Intl.NumberFormat('en-US', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  }).format(item.price)}
                 </p>
-              </div>
-            </div>
-            <p className="text-[13px] font-light uppercase text-neutral-400 pb-6 pl-2">
-              ${' '}
-              {new Intl.NumberFormat('en-US', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-              }).format(item.price)}
-            </p>
-          </Link>
-        ))}
-      </div>
+              </Link>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 };

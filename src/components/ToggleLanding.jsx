@@ -40,7 +40,7 @@ export const ToggleLanding = ({
     <>
       {shouldRender && (
         <div
-          className={`fixed top-0 left-0 h-full w-full bg-white/80 backdrop-blur-xl transition-opacity z-100 duration-300 overflow-y-auto ${
+          className={`fixed top-0 left-0 h-full w-full bg-white transition-opacity z-100 duration-300 overflow-y-auto ${
             isVisible ? 'opacity-100' : 'opacity-0'
           }`}
         >
@@ -77,11 +77,8 @@ export const ToggleLanding = ({
 
           {/* Contenido de la sidebar */}
           <div className="flex flex-col gap-3 p-10 mt-24 ">
-            <p className="text-xs font-semibold uppercase text-neutral-300">
-              Switch to
-            </p>
             <p
-              className="text-sm font-light uppercase cursor-pointer text-neutral-600 "
+              className="text-sm font-light uppercase cursor-pointer "
               onClick={() => {
                 setIsToggleLandingOpen(false);
                 window.location.href = 'https://admin.spazyo.xyz/login';
@@ -90,7 +87,7 @@ export const ToggleLanding = ({
               Iniciar sesion
             </p>
             <p
-              className="text-sm font-light uppercase cursor-pointer text-neutral-600"
+              className="text-sm font-light uppercase cursor-pointer "
               onClick={() => {
                 setIsToggleLandingOpen(false);
                 window.location.href = 'https://admin.spazyo.xyz/register';

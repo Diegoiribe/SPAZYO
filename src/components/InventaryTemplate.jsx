@@ -102,7 +102,7 @@ export const InventaryTemplate = ({ setProductState, productState }) => {
                     <path d="m12 19-7-7 7-7" />
                     <path d="M19 12H5" />
                   </svg>
-                  <p className="text-sm font-medium uppercase ">Productos</p>
+                  <p className="font-medium uppercase ">Productos</p>
                 </div>
                 <div className="flex items-center gap-1">
                   <div

@@ -142,17 +142,23 @@ export const EditVariant = ({
                 <path d="m12 19-7-7 7-7" />
                 <path d="M19 12H5" />
               </svg>
-              <p className="text-sm font-medium uppercase">Editar Variante</p>
+              <p className="font-medium uppercase ">Editar Variante</p>
             </div>
 
-            <p className="mt-2 mb-2 text-sm font-light uppercase truncate text-neutral-600">
+            <p className="mt-2 mb-2 font-light uppercase truncate text-neutral-600">
               {product?.name}
             </p>
-
-            {/* Add images */}
-            <label className="inline-flex items-center w-full gap-1 -mt-5 text-xs font-light leading-none cursor-pointer text-neutral-500">
-              <span className="text-lg leading-none">+</span>
-              {uploadingImages ? 'Subiendo...' : 'Agregar imágenes'}
+            <label className="inline-flex items-center w-full gap-1 -mt-3 text-xs font-light leading-none cursor-pointer ">
+              {/* Add images */}
+              {uploadingImages ? (
+                <span className="flex items-center justify-center mt-3 ml-2 text-sm font-medium leading-none ">
+                  Subiendo...
+                </span>
+              ) : (
+                <span className="flex items-center justify-center text-xl leading-none border rounded-full border-black/30 text-neutral-400 size-10">
+                  +
+                </span>
+              )}
               <input
                 type="file"
                 accept="image/*"
@@ -174,7 +180,7 @@ export const EditVariant = ({
               >
                 {form.photos.map((url, index) => (
                   <div key={index} className="relative flex-shrink-0">
-                    <img src={url} alt="preview" className="rounded-sm" />
+                    <img src={url} alt="preview" className="h-56 rounded-sm" />
                     <button
                       type="button"
                       onClick={() => handleRemovePhoto(index)}
@@ -195,9 +201,9 @@ export const EditVariant = ({
                 onChange={(e) =>
                   setForm((prev) => ({ ...prev, color: e.target.value }))
                 }
-                className="w-4 h-4 cursor-pointer rounded-xs border-neutral-100"
+                className="cursor-pointer size-5 aspect-square rounded-xs border-neutral-100"
               />
-              <p className="-mt-0.5 text-sm font-light uppercase text-neutral-600">
+              <p className="-mt-0.5 text-sm font-light uppercase text-neutral-800">
                 |
               </p>
               <input
@@ -206,15 +212,15 @@ export const EditVariant = ({
                 onChange={(e) =>
                   setForm((prev) => ({ ...prev, colorName: e.target.value }))
                 }
-                placeholder="Nombre del color"
-                className="text-sm font-light outline-none text-neutral-600 placeholder:text-neutral-300"
+                placeholder="Color"
+                className="text-sm font-light outline-none text-neutral-600 placeholder:text-neutral-400"
               />
             </div>
 
             {/* Sizes table */}
             <div>
-              <div className="overflow-hidden border rounded-md border-neutral-100">
-                <div className="grid grid-cols-2 px-4 py-2 text-xs font-light uppercase bg-neutral-50 border-neutral-100 text-neutral-500">
+              <div className="overflow-hidden border rounded-md border-black/20">
+                <div className="grid grid-cols-2 px-4 py-2 text-sm font-light uppercase bg-neutral-50 border-black/20 text-neutral-800 ">
                   <span>Talla</span>
                   <span className="text-right">Cantidad</span>
                 </div>
@@ -222,7 +228,7 @@ export const EditVariant = ({
                 {form.sizes.map((row, index) => (
                   <div
                     key={index}
-                    className="grid items-center grid-cols-2 px-4 py-3 border-t text-neutral-700 border-neutral-100"
+                    className="grid items-center grid-cols-2 px-4 py-3 text-sm border-t text-neutral-800 border-black/20"
                   >
                     <input
                       type="text"
@@ -231,7 +237,7 @@ export const EditVariant = ({
                         handleSizeChange(index, 'size', e.target.value)
                       }
                       placeholder="Ej: S"
-                      className="w-full outline-none origin-left text-base scale-[0.75]"
+                      className="w-full text-sm font-light origin-left outline-none placeholder:font-light placeholder:text-neutral-400"
                     />
                     <input
                       type="number"
@@ -245,7 +251,7 @@ export const EditVariant = ({
                           e.target.value === '' ? 0 : Number(e.target.value)
                         )
                       }
-                      className="w-20 origin-left ml-auto text-right outline-none text-base scale-[0.75]"
+                      className="w-20 ml-auto text-sm font-light text-right origin-left outline-none placeholder:font-light placeholder:text-neutral-400"
                     />
                   </div>
                 ))}
@@ -254,16 +260,15 @@ export const EditVariant = ({
               <button
                 type="button"
                 onClick={handleAddSizeRow}
-                className="flex items-center gap-1 px-1 mt-3 text-xs font-light text-neutral-500"
+                className="flex items-center justify-center mt-3 text-xl leading-none border rounded-full border-black/30 text-neutral-400 size-10"
               >
-                <span className="text-lg leading-none">+</span>
-                Agregar talla
+                <span className="text-xl leading-none">+</span>
               </button>
             </div>
 
             {/* Price (read-only) */}
-            <div className="flex flex-col p-3 font-light border rounded-md bg-neutral-50 border-neutral-100">
-              <label className="w-full text-xs font-light uppercase text-end text-neutral-500">
+            <div className="flex flex-col p-3 mt-5 font-light border rounded-md bg-neutral-50 border-black/20">
+              <label className="w-full text-sm font-light uppercase text-end text-neutral-800">
                 Price
               </label>
               <input
@@ -271,17 +276,18 @@ export const EditVariant = ({
                 value={product?.price ?? ''}
                 readOnly
                 placeholder="0.00"
-                className="mt-1 origin-right text-base scale-[0.75] font-light text-right bg-transparent outline-none text-neutral-700"
+                className="mt-1 text-sm font-light text-right origin-right bg-transparent outline-none text-neutral-800"
               />
             </div>
-
-            <button
-              type="button"
-              onClick={handleSubmit}
-              className="flex items-center gap-2 px-1 text-xs font-semibold text-blue-400 rounded-sm"
-            >
-              Guardar
-            </button>
+            <div className="flex items-center justify-between mt-10">
+              <button
+                type="button"
+                onClick={handleSubmit}
+                className="flex items-center gap-2 px-5 py-2 text-sm font-medium text-white uppercase bg-black rounded-2xl"
+              >
+                Guardar
+              </button>
+            </div>
           </div>
         </div>
       )}
